@@ -9,24 +9,6 @@
       "id": "92223a7f150a2a62e7ccf2a5df8d157e8b90d687"
     },
     {
-      "url": "https://www.bangkokbank.com/500.aspx?aspxerrorpath=/en/About-Us/News-and-Media/News-Detail",
-      "source": "CRAWL",
-      "targetPath": "/500-aspx",
-      "id": "e6e054ab85ccbb37f0dfb6c991b681c1dc433119"
-    },
-    {
-      "url": "https://www.bangkokbank.com/500.aspx?aspxerrorpath=/Essentials/Datasources/PopUp-Container-Folder/Personal/Digital-Banking/Bualuang-mBanking",
-      "source": "CRAWL",
-      "targetPath": "/500-aspx",
-      "id": "41b42b4c5fe98d7edd6f650d399a30df308ee0c9"
-    },
-    {
-      "url": "https://www.bangkokbank.com/500.aspx?aspxerrorpath=/th-TH/About-Us/News-and-Media/News-Detail",
-      "source": "CRAWL",
-      "targetPath": "/500-aspx",
-      "id": "e25be2ea699f9d9f34546c4b2a551345aa92d4c5"
-    },
-    {
       "url": "https://www.bangkokbank.com/en/",
       "source": "CRAWL",
       "targetPath": "/en",
