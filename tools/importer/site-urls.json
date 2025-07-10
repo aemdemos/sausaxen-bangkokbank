@@ -588,22 +588,19 @@
       "url": "https://www.bangkokbank.com/en/About-Us/News-and-Media?year=2019&page=2",
       "source": "CRAWL",
       "targetPath": "/en/about-us/news-and-media",
-      "id": "b8ce52552bd1d6ef7e07da52c698d917a5d3332a",
-      "status": "EXCLUDED"
+      "id": "b8ce52552bd1d6ef7e07da52c698d917a5d3332a"
     },
     {
       "url": "https://www.bangkokbank.com/en/About-Us/News-and-Media?year=2019&page=3",
       "source": "CRAWL",
       "targetPath": "/en/about-us/news-and-media",
-      "id": "1fb1ebfd1bb78f9ca1d42340cfbdaa61de966f3a",
-      "status": "EXCLUDED"
+      "id": "1fb1ebfd1bb78f9ca1d42340cfbdaa61de966f3a"
     },
     {
       "url": "https://www.bangkokbank.com/en/About-Us/News-and-Media?year=2019&page=4",
       "source": "CRAWL",
       "targetPath": "/en/about-us/news-and-media",
-      "id": "3f9d914431aaadb4e1ab787e8bc920c6d73206a9",
-      "status": "EXCLUDED"
+      "id": "3f9d914431aaadb4e1ab787e8bc920c6d73206a9"
     },
     {
       "url": "https://www.bangkokbank.com/en/About-Us/News-and-Media?year=2019&page=5",
