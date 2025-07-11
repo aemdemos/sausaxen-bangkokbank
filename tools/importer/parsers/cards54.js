@@ -1,62 +1,53 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const headerRow = ['Cards (cards54)'];
-  const cells = [headerRow];
+  // Find the currently active tab (2025, the most recent)
+  const activeInner = element.querySelector('.inner.active');
+  if (!activeInner) return;
+  const scrollingX = activeInner.querySelector('.scrolling-x');
+  if (!scrollingX) return;
+  const cols = scrollingX.querySelectorAll('.row > .col-md-4');
 
-  // Find the card containers
-  const row = element.querySelector('.row');
-  if (!row) return;
-  const cardDivs = row.querySelectorAll(':scope > .col-md-4');
+  const cells = [
+    ['Cards (cards54)']
+  ];
 
-  cardDivs.forEach(card => {
-    // Image: left cell (should be an <img>)
-    let imageEl = null;
-    const thumbImg = card.querySelector('.thumb img');
+  cols.forEach((col) => {
+    // Get image (first cell)
+    let imgEl = null;
+    const thumbImg = col.querySelector('.thumb img');
     if (thumbImg) {
-      imageEl = thumbImg;
+      imgEl = thumbImg;
     }
 
-    // Right cell: description, date, link
-    const rightCellNodes = [];
-
-    // Description (always present, inside .desc)
-    const descDiv = card.querySelector('.caption .desc');
-    if (descDiv) {
-      // Use existing element, but wrap description as paragraph for clarity
-      const para = document.createElement('p');
-      para.innerHTML = descDiv.innerHTML.trim();
-      rightCellNodes.push(para);
+    // Build text content (second cell)
+    const textParts = [];
+    // Description
+    const desc = col.querySelector('.caption .desc');
+    if (desc) {
+      // Reference the existing element (preserves any markup)
+      textParts.push(desc);
     }
-
-    // Date (inside .promotion-valid)
-    const dateP = card.querySelector('.button-group .promotion-valid');
-    if (dateP && dateP.textContent.trim()) {
-      // Use <div> and keep text, add style to make it less prominent
-      const dateDiv = document.createElement('div');
-      dateDiv.textContent = dateP.textContent.trim();
-      dateDiv.style.fontSize = '0.95em';
-      dateDiv.style.color = '#555';
-      dateDiv.style.margin = '0.5em 0';
-      rightCellNodes.push(dateDiv);
+    // Date (as a <p> element, after desc)
+    const date = col.querySelector('.button-group .promotion-valid');
+    if (date && date.textContent.trim().length > 0) {
+      // Use the existing element but wrap in p for separation if not already
+      const p = document.createElement('p');
+      p.textContent = date.textContent.trim();
+      textParts.push(p);
     }
-
-    // CTA link (usually present)
-    const cta = card.querySelector('.button-group a');
+    // CTA link (Read more)
+    const cta = col.querySelector('.button-group .btn-primary');
     if (cta) {
-      rightCellNodes.push(cta);
+      textParts.push(cta);
     }
 
-    // Add the row if there's at least image and description
-    if (imageEl && rightCellNodes.length > 0) {
-      cells.push([
-        imageEl,
-        rightCellNodes.length === 1 ? rightCellNodes[0] : rightCellNodes
-      ]);
-    }
+    // Add this card row
+    cells.push([
+      imgEl,
+      textParts
+    ]);
   });
 
-  if (cells.length > 1) {
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    element.replaceWith(table);
-  }
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

@@ -1,48 +1,55 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare header row
+  // Carousel block header
   const headerRow = ['Carousel (carousel40)'];
 
-  // Find the single slide (figure)
-  const figure = element.querySelector('figure.thumb-large, figure');
-  if (!figure) return;
+  // Find the slide: .thumb-large figure with img and caption
+  const figure = element.querySelector('figure.thumb-large');
 
-  // Extract image (mandatory, first cell)
-  let img = figure.querySelector('img');
-  // Edge case: if no img found, skip this slide
-  let imageCell = img || '';
+  let img = null;
+  let captionContent = [];
 
-  // Extract caption area (second cell; may be empty)
-  const caption = figure.querySelector('figcaption');
-  const textCellContent = [];
-  if (caption) {
-    // Title (h3)
-    const h3 = caption.querySelector('h3');
-    if (h3) textCellContent.push(h3);
-    // Description (desc > p or all .desc children)
-    const desc = caption.querySelector('.desc');
-    if (desc) {
-      // If desc has multiple children, add all; else add desc
-      if (desc.children.length) {
-        Array.from(desc.children).forEach(child => textCellContent.push(child));
-      } else {
-        textCellContent.push(desc);
+  if (figure) {
+    // Image: must be in first cell and is required
+    img = figure.querySelector('img');
+
+    // Caption: may contain title, description, CTA
+    const figcaption = figure.querySelector('figcaption.intro-info');
+    if (figcaption) {
+      // Title (h3)
+      const title = figcaption.querySelector('h3');
+      if (title) {
+        captionContent.push(title);
+      }
+      // Description (desc)
+      const desc = figcaption.querySelector('.desc');
+      if (desc) {
+        // Add each child node (e.g. <p>)
+        Array.from(desc.childNodes).forEach((n) => {
+          captionContent.push(n);
+        });
+      }
+      // CTA (button-group > a)
+      const buttonGroup = figcaption.querySelector('.button-group');
+      if (buttonGroup) {
+        const cta = buttonGroup.querySelector('a');
+        if (cta) {
+          captionContent.push(cta);
+        }
       }
     }
-    // CTA (button-group > a)
-    const btn = caption.querySelector('.button-group a');
-    if (btn) textCellContent.push(btn);
   }
-  // Only use array if there is content, else empty string
-  let textCell = textCellContent.length ? textCellContent : '';
 
-  // Build table structure
+  // If no image was found, don't create the block (edge case guard)
+  if (!img) return;
+
+  // Build the table: header, then one row for the slide
   const cells = [
     headerRow,
-    [imageCell, textCell],
+    [img, captionContent]
   ];
 
-  // Create and replace with block table
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // Create and replace
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

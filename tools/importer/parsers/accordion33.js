@@ -1,25 +1,19 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accordion block name as header
+  // Find all collapse items (accordion sections)
+  const collapseItems = element.querySelectorAll('.collapse-item');
+  // The header row should be a single cell (matching the example)
   const headerRow = ['Accordion (accordion33)'];
   const rows = [headerRow];
-
-  // Find all .collapse-item elements (accordion items)
-  const collapseItems = element.querySelectorAll('.collapse-item');
-  collapseItems.forEach((collapseItem) => {
-    // Title cell: the header
-    const header = collapseItem.querySelector('.collapse-header');
-    // Content cell: everything in .collapse-inner
-    const content = collapseItem.querySelector('.collapse-inner');
-    
-    // Defensive: only add if both header and content exist
-    if (header && content) {
-      rows.push([header, content]);
+  // For each collapse item, create a row with two cells: title and content
+  collapseItems.forEach((item) => {
+    const headerEl = item.querySelector('.collapse-header');
+    const contentEl = item.querySelector('.collapse-inner');
+    if (headerEl && contentEl) {
+      rows.push([headerEl, contentEl]);
     }
   });
-
-  // Create the block table
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  // Replace the original block
-  element.replaceWith(block);
+  // Replace the element with the new table block
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

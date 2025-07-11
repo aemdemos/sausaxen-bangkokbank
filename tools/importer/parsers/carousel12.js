@@ -1,97 +1,100 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the .col-md-4 column containing the carousel
-  let carouselCol = null;
-  const directDivs = element.querySelectorAll(':scope > div');
-  for (const div of directDivs) {
-    if (div.querySelector('.tips_insight_carousal_container')) {
-      carouselCol = div;
-      break;
-    }
-  }
-  if (!carouselCol) return;
-
-  // Find the carousel container and the actual carousel
-  const carousalContainer = carouselCol.querySelector('.tips_insight_carousal_container');
-  if (!carousalContainer) return;
-  const carousal = carousalContainer.querySelector('.tips_insight_carousal');
-  if (!carousal) return;
-
-  // Get all carousal items/slides
-  const slideEls = carousal.querySelectorAll('.tips_insight_carousal_item');
-  if (!slideEls.length) return;
-
-  // Helper to get the background image URL from a div
-  function bgUrlFromDiv(div) {
-    if (!div) return null;
-    const style = div.getAttribute('style') || '';
-    const match = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/i);
-    if (match && match[1]) {
-      // Resolve relative URLs
-      const a = document.createElement('a');
-      a.href = match[1];
-      return a.href;
-    }
-    return null;
+  // Helper to resolve relative URLs
+  function resolveUrl(url) {
+    if (!url) return '';
+    const a = document.createElement('a');
+    a.href = url;
+    return a.href;
   }
 
-  // Build table rows
-  const rows = [['Carousel (carousel12)']];
+  // Find the carousel container inside the provided element
+  const carouselContainer = element.querySelector('.tips_insight_carousal_container');
+  if (!carouselContainer) return;
+  const carousel = carouselContainer.querySelector('.tips_insight_carousal');
+  if (!carousel) return;
 
-  for (const slide of slideEls) {
-    // 1st cell: Image
-    const desktopBgDiv = slide.querySelector('.tips_insight_carousal_bg');
-    const mobileBgDiv = slide.querySelector('.tips_insight_carousal_bg_mobile');
-    let imgUrl = bgUrlFromDiv(desktopBgDiv) || bgUrlFromDiv(mobileBgDiv);
+  // Get all carousel items
+  const items = carousel.querySelectorAll('.tips_insight_carousal_item');
+
+  // Prepare the table rows
+  const rows = [];
+  // Header row, exactly as in example
+  rows.push(['Carousel (carousel12)']);
+
+  items.forEach((item) => {
+    // --- IMAGE CELL ---
+    let imageUrl = '';
+    const desktopBg = item.querySelector('.tips_insight_carousal_bg');
+    if (desktopBg) {
+      const bgStyle = desktopBg.style.backgroundImage;
+      const match = bgStyle.match(/url\(["']?(.*?)["']?\)/);
+      if (match && match[1]) {
+        imageUrl = resolveUrl(match[1]);
+      }
+    }
+    // Fallback to mobile image if desktop not found
+    if (!imageUrl) {
+      const mobileBg = item.querySelector('.tips_insight_carousal_bg_mobile');
+      if (mobileBg) {
+        const bgStyle = mobileBg.style.backgroundImage;
+        const match = bgStyle.match(/url\(["']?(.*?)["']?\)/);
+        if (match && match[1]) {
+          imageUrl = resolveUrl(match[1]);
+        }
+      }
+    }
     let imgEl = null;
-    if (imgUrl) {
+    if (imageUrl) {
       imgEl = document.createElement('img');
-      imgEl.src = imgUrl;
-      imgEl.setAttribute('loading', 'lazy');
+      imgEl.src = imageUrl;
+      imgEl.loading = 'lazy';
     }
-
-    // 2nd cell: Compose all text/cta content from .tips_insight_carousal_content
-    const contentDiv = slide.querySelector('.tips_insight_carousal_content');
+    // --- CONTENT CELL ---
+    const content = item.querySelector('.tips_insight_carousal_content');
     let cellContent = [];
-    if (contentDiv) {
-      // Gather all content as per HTML structure, reference elements directly
-      // Badge/category
-      const badge = Array.from(contentDiv.childNodes).find(el => el.classList && el.classList.contains('tips_insight_carousal_badge'));
-      if (badge && badge.textContent.trim()) {
-        const badgeDiv = document.createElement('div');
-        badgeDiv.textContent = badge.textContent.trim();
-        badgeDiv.style.fontWeight = 'bold';
-        badgeDiv.style.fontSize = '0.9em';
-        cellContent.push(badgeDiv);
-      }
-      // Title
-      const title = Array.from(contentDiv.childNodes).find(el => el.classList && el.classList.contains('tips_insight_carousal_title'));
-      if (title && title.textContent.trim()) {
-        const h2 = document.createElement('h2');
-        h2.textContent = title.textContent.trim();
-        cellContent.push(h2);
-      }
-      // CTA (link)
-      const cta = Array.from(contentDiv.childNodes).find(el => el.tagName === 'A' && el.classList.contains('tips_insight_carousal_cta'));
-      if (cta) {
-        cellContent.push(cta);
-      }
-      // In case there is any other (text) content in contentDiv that is not badge/title/cta (edge case)
-      // Go through children and add any text nodes
-      Array.from(contentDiv.childNodes).forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-          const textNode = document.createTextNode(node.textContent.trim());
-          cellContent.push(textNode);
+    if (content) {
+      // Instead of cloning or creating elements, reference children directly
+      // Remove hidden <span>s
+      Array.from(content.children).forEach((n) => {
+        if (n.tagName === 'SPAN' && n.style.display === 'none') return;
+        // For badge: use as a <div> (simply reference)
+        if (n.classList.contains('tips_insight_carousal_badge')) {
+          cellContent.push(n);
+        }
+        // For title: use as a <h2>
+        else if (n.classList.contains('tips_insight_carousal_title')) {
+          // Use heading for semantic meaning
+          const heading = document.createElement('h2');
+          heading.textContent = n.textContent.trim();
+          cellContent.push(heading);
+        }
+        // For CTA button: reference directly in a paragraph for separation
+        else if (n.classList.contains('tips_insight_carousal_cta')) {
+          const p = document.createElement('p');
+          p.appendChild(n);
+          cellContent.push(p);
+        }
+        // Otherwise, if it's any extra element (shouldn't be, but for flexibility)
+        else if (n.textContent && n.textContent.trim()) {
+          cellContent.push(n);
         }
       });
+      // If no child nodes, fallback to text
+      if (!cellContent.length && content.textContent.trim()) {
+        cellContent = [content.textContent.trim()];
+      }
+    } else {
+      cellContent = [''];
     }
     rows.push([
       imgEl || '',
-      cellContent.length > 0 ? cellContent : ''
+      cellContent.length === 1 ? cellContent[0] : cellContent
     ]);
-  }
+  });
 
-  // Create the block table with extracted rows
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  // Build table block
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  // Replace carousel container with block table
+  carouselContainer.replaceWith(block);
 }

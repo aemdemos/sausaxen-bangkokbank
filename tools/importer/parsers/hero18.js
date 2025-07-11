@@ -1,22 +1,37 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the first visible banner (display !== 'none')
-  const list = element.querySelector('ul.banner_container');
-  if (!list) return;
-  const banners = Array.from(list.children);
-  const visibleBanner = banners.find(li => li.style.display !== 'none');
-  if (!visibleBanner) return;
-
-  // Extract desktop background image
-  const desktopImgDiv = visibleBanner.querySelector('.banner_container_desktop_img');
-  let bgImgUrl = '';
-  if (desktopImgDiv) {
-    const bgStyle = desktopImgDiv.style.backgroundImage;
-    if (bgStyle) {
-      const match = bgStyle.match(/url\(["']?(.*?)["']?\)/);
-      bgImgUrl = match ? match[1] : '';
-    }
+  // Helper: Get absolute URL for images
+  function absoluteUrl(url) {
+    if (!url) return url;
+    const a = document.createElement('a');
+    a.href = url;
+    return a.href;
   }
+
+  // Get the visible banner <li> (first one not display:none)
+  const mainImgContainer = element.querySelector('.main-img-container');
+  if (!mainImgContainer) return;
+  const bannerList = mainImgContainer.querySelector('ul.banner_container');
+  if (!bannerList) return;
+  const bannerItems = Array.from(bannerList.children);
+  let banner = bannerItems.find(li => li.style.display !== 'none');
+  if (!banner) return;
+
+  // Extract background image from desktop (prefer), fallback to mobile
+  function extractBgUrl(div) {
+    if (!div) return null;
+    const style = div.getAttribute('style') || '';
+    const match = style.match(/background-image: url\(([^)]+)\)/i);
+    if (match && match[1]) {
+      let url = match[1].replace(/^['"]|['"]$/g, '').trim();
+      return absoluteUrl(url);
+    }
+    return null;
+  }
+  const desktopImgDiv = banner.querySelector('.banner_container_desktop_img');
+  const mobileImgDiv = banner.querySelector('.banner_container_mobile_img');
+  let bgImgUrl = extractBgUrl(desktopImgDiv) || extractBgUrl(mobileImgDiv);
+
   let bgImgEl = null;
   if (bgImgUrl) {
     bgImgEl = document.createElement('img');
@@ -24,33 +39,40 @@ export default function parse(element, { document }) {
     bgImgEl.alt = '';
   }
 
-  // Prefer desktop content, fallback to mobile content
-  let contentBlock = visibleBanner.querySelector('.home_page_banner_content.home_page_banner_content_desktop')
-    || visibleBanner.querySelector('.home_page_banner_content_desktop')
-    || visibleBanner.querySelector('.home_page_banner_content.home_page_banner_content_mobile')
-    || visibleBanner.querySelector('.home_page_banner_content_mobile');
-
-  let contentCell = '';
-  if (contentBlock) {
-    // Collect all text and element content (preserving semantic structure)
-    // Use all children so as not to miss headings/paragraphs/buttons
-    const children = Array.from(contentBlock.querySelectorAll(':scope > *'));
-    // If there are no element children, fallback to textContent
-    if (children.length > 0) {
-      contentCell = children;
+  // Extract all content nodes from desktop content (prefer), else mobile
+  let contentBlock = null;
+  // Prefer the desktop version if it exists and is visible
+  let desktopContent = banner.querySelector('.home_page_banner_content_desktop .home_page_banner_content_inner');
+  if (desktopContent) {
+    // Move its children into a div (to preserve all text and layout)
+    contentBlock = document.createElement('div');
+    Array.from(desktopContent.childNodes).forEach(node => contentBlock.appendChild(node));
+  } else {
+    // Else fallback to mobile version
+    let mobileContent = banner.querySelector('.home_page_banner_content_mobile .home_page_banner_content_inner');
+    if (mobileContent) {
+      contentBlock = document.createElement('div');
+      Array.from(mobileContent.childNodes).forEach(node => contentBlock.appendChild(node));
     } else {
-      const text = contentBlock.textContent.trim();
-      contentCell = text ? [text] : '';
+      // Fallback: use whatever content is available
+      let anyContent = banner.querySelector('.home_page_banner_content_inner');
+      if (anyContent) {
+        contentBlock = document.createElement('div');
+        Array.from(anyContent.childNodes).forEach(node => contentBlock.appendChild(node));
+      } else {
+        // As a last resort, provide an empty div
+        contentBlock = document.createElement('div');
+      }
     }
   }
 
-  // Build table rows: header, image, content
+  // Compose table rows - always 1 column and 3 rows as per spec
   const rows = [
     ['Hero (hero18)'],
-    [bgImgEl || ''],
-    [contentCell]
+    [bgImgEl ? bgImgEl : ''],
+    [contentBlock],
   ];
 
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

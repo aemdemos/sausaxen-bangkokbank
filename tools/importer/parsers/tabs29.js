@@ -1,58 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the tab labels
+  // 1. Extract tab labels from tab header (ul) or dropdown select
   let tabLabels = [];
-  const tabHeaderList = element.querySelector('ul[data-tab-header]');
-  if (tabHeaderList) {
-    tabLabels = Array.from(tabHeaderList.querySelectorAll('li > a')).map(a => a.textContent.trim());
+  const tabHeader = element.querySelector('ul[data-tab-header]');
+  if (tabHeader) {
+    tabLabels = Array.from(tabHeader.querySelectorAll('li')).map(li => {
+      const a = li.querySelector('a');
+      return a ? a.textContent.trim() : li.textContent.trim();
+    });
   } else {
-    // fallback: select dropdown
-    const dropdown = element.querySelector('.tabs-dropdown select');
+    const dropdown = element.querySelector('select[data-select]');
     if (dropdown) {
       tabLabels = Array.from(dropdown.querySelectorAll('option')).map(opt => opt.textContent.trim());
     }
   }
 
-  // Get tab contents in order
-  let tabContents = [];
-  const contentSection = element.querySelector('section[data-tab-content]');
-  if (contentSection) {
-    tabContents = Array.from(contentSection.querySelectorAll('div[data-tab-content-item]')).map(item => {
-      // Gather all child nodes (elements and text nodes)
-      const parts = [];
-      item.childNodes.forEach(node => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          parts.push(node);
-        } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-          const p = document.createElement('p');
-          p.textContent = node.textContent.trim();
-          parts.push(p);
-        }
-      });
-      if (parts.length === 0) return '';
-      if (parts.length === 1) return parts[0];
-      return parts;
+  // 2. Extract tab content blocks in order
+  const section = element.querySelector('section[data-tab-content]');
+  if (!section) return;
+  const tabContentDivs = Array.from(section.querySelectorAll('[data-tab-content-item]'));
+
+  // 3. For each tab, collect all HTML content (text, elements, and images)
+  const tabContents = tabContentDivs.map(div => {
+    // Gather all nodes (including text nodes and elements)
+    const container = document.createElement('div');
+    Array.from(div.childNodes).forEach(node => {
+      container.appendChild(node);
     });
-  }
+    // If the container only contains whitespace, return an empty string
+    if (container.innerHTML.trim() === '') return '';
+    return container;
+  });
 
-  // Compose table rows: first row header (single cell), subsequent rows two cells
-  const rows = [];
-  // The header row: one cell only
-  rows.push(['Tabs']);
-
-  // For each tab, a two-column row
-  const numTabs = Math.min(tabLabels.length, tabContents.length);
-  for (let i = 0; i < numTabs; i++) {
+  // 4. Build table rows: header is single cell, then each tab is [label, content]
+  const rows = [ ['Tabs'] ]; // Header row EXACTLY as in the example: single cell
+  for (let i = 0; i < Math.min(tabLabels.length, tabContents.length); i++) {
     rows.push([tabLabels[i], tabContents[i]]);
   }
-
-  // Create the table
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  // Fix the header cell to have colspan=2
-  const th = block.querySelector('tr:first-child th');
-  if (th && block.rows.length > 1 && block.rows[1].cells.length === 2) {
-    th.setAttribute('colspan', '2');
-  }
-
-  element.replaceWith(block);
+  // 5. Create and replace
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

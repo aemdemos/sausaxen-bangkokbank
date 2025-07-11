@@ -1,32 +1,37 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare the table header
+  // Table header must match the block name exactly
   const headerRow = ['Cards (cards2)'];
   const rows = [];
-  // Select all card columns (direct children of the row)
-  const cards = element.querySelectorAll(':scope > div');
-  cards.forEach(card => {
-    // Get the card's main image (first <img> inside .thumb or .inner)
-    let img = card.querySelector('.thumb img, .inner img, img');
-    // If no image found, set to empty string
-    if (!img) img = '';
-    // Get the caption div, fallback to card if not found
-    let textDiv = card.querySelector('.caption.editor, .caption, .editor') || card;
-    // Build the text cell: include heading and all paragraph elements in order
-    const cellText = [];
-    // Heading (h1, h2, h3, ...), if present
-    const heading = textDiv.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) cellText.push(heading);
-    // All paragraphs in order
-    const paragraphs = textDiv.querySelectorAll('p');
-    paragraphs.forEach(p => cellText.push(p));
-    // Add the row: [image, [heading, paragraphs]]
-    rows.push([img, cellText]);
+
+  // Defensive: ensure 'element' exists
+  if (!element) return;
+
+  // Get all direct card columns (should be .col-md-4, but robust to structure)
+  const cardCols = element.querySelectorAll(':scope > div');
+
+  cardCols.forEach((col) => {
+    // Find image inside possible .thumb > img
+    const img = col.querySelector('img');
+    // Find the caption/text block
+    const caption = col.querySelector('.caption');
+    // Only process if both image and caption exist
+    if (img && caption) {
+      rows.push([img, caption]);
+    } else if (img) {
+      rows.push([img, '']);
+    } else if (caption) {
+      rows.push(['', caption]);
+    }
+    // If neither img nor caption, skip
   });
-  // Compose the table and replace the original element
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    ...rows
-  ], document);
-  element.replaceWith(table);
+
+  // Only build the table if there's at least one card
+  if (rows.length > 0) {
+    const table = WebImporter.DOMUtils.createTable([
+      headerRow,
+      ...rows
+    ], document);
+    element.replaceWith(table);
+  }
 }

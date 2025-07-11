@@ -1,65 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as in the markdown example
-  const headerRow = ['Hero (hero21)'];
-
-  // Extract background image URL from .thumb-full.large
-  let bgImgUrl = '';
-  const thumbFull = element.querySelector('.thumb-full.large');
-  if (thumbFull && thumbFull.style && thumbFull.style.backgroundImage) {
-    const match = thumbFull.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/);
-    if (match && match[1]) {
-      bgImgUrl = match[1];
-    }
+  // Helper: extract background image URL from style attribute
+  function getBackgroundImageUrl(div) {
+    if (!div) return null;
+    const style = div.getAttribute('style') || '';
+    const match = style.match(/background-image:\s*url\(["']?([^"')]+)["']?\)/i);
+    return match ? match[1] : null;
   }
 
-  // Reference the background image element or ''
-  let bgImgEl = '';
+  // Get background image from .thumb-full (prefer .large if present)
+  const bgDiv = element.querySelector('.thumb-full.large') || element.querySelector('.thumb-full');
+  const bgImgUrl = getBackgroundImageUrl(bgDiv);
+
+  // Only create an <img> if background image exists
+  let bgImgElem = '';
   if (bgImgUrl) {
-    bgImgEl = document.createElement('img');
-    bgImgEl.src = bgImgUrl;
-    bgImgEl.alt = '';
+    bgImgElem = document.createElement('img');
+    bgImgElem.src = bgImgUrl;
+    bgImgElem.alt = '';
   }
 
-  // Prefer .desktop-tools .inner, fallback to .mobile-tools .inner
-  let contentContainer = element.querySelector('.desktop-tools .inner');
-  if (!contentContainer) {
-    contentContainer = element.querySelector('.mobile-tools .inner');
-  }
-  // Fallback: if neither is found, use entire thumbFull
-  if (!contentContainer && thumbFull) {
-    contentContainer = thumbFull;
-  }
-  // Fallback: if nothing is found, use the whole input element
-  if (!contentContainer) {
-    contentContainer = element;
+  // Get content from desktop variant if present, else mobile
+  let contentInner = element.querySelector('.inner-container.desktop-tools .inner');
+  if (!contentInner) {
+    contentInner = element.querySelector('.inner-container.mobile-tools .inner');
   }
 
-  // Collect all direct children (including text nodes and elements) in order
-  // and ensure ALL text is included
-  let contentChildren = [];
-  contentContainer.childNodes.forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      if (node.textContent.trim() !== '') {
-        // Text node retained as a text node
-        contentChildren.push(document.createTextNode(node.textContent));
-      }
-    } else {
-      contentChildren.push(node);
-    }
-  });
+  // Gather all direct children of contentInner into an array in document order
+  const contentParts = [];
+  if (contentInner) {
+    Array.from(contentInner.children).forEach(child => {
+      contentParts.push(child);
+    });
+  }
 
-  // Remove leading or trailing empty text nodes
-  while (contentChildren.length && contentChildren[0].nodeType === Node.TEXT_NODE && contentChildren[0].textContent.trim() === '') contentChildren.shift();
-  while (contentChildren.length && contentChildren[contentChildren.length-1].nodeType === Node.TEXT_NODE && contentChildren[contentChildren.length-1].textContent.trim() === '') contentChildren.pop();
-
-  // Table structure as per spec: header, background image, content
-  const rows = [
-    headerRow,
-    [bgImgEl ? bgImgEl : ''],
-    [contentChildren.length > 0 ? contentChildren : ''],
+  // Compose the table rows as per spec
+  const cells = [
+    ['Hero (hero21)'],
+    [bgImgElem],
+    [contentParts]
   ];
 
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+  // Create the table and replace the element
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

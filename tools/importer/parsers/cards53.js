@@ -1,29 +1,24 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as in the markdown example
-  const headerRow = ['Cards (cards53)'];
-  const cardRows = [];
+  // Define the header row as per spec
+  const rows = [['Cards (cards53)']];
+  
+  // Get all cards (immediate .col-md-4 children inside .row.row-left)
+  const cardColumns = element.querySelectorAll('.row.row-left > .col-md-4');
 
-  // Find all cards: .row > .col-md-4
-  const cols = element.querySelectorAll('.row > .col-md-4');
-  cols.forEach(col => {
-    // Image/icon cell
-    const visualImg = col.querySelector('.thumb-info .visual-img');
-    let imgEl = null;
-    if (visualImg) {
-      imgEl = visualImg.querySelector('img');
-    }
-
-    // Text cell: preserve h3 and p as in the HTML
+  cardColumns.forEach(col => {
+    // First cell: image (icon)
+    const img = col.querySelector('.thumb-info .visual-img img');
+    // Second cell: text content (heading and description)
     const caption = col.querySelector('.thumb-info .caption');
-    // Only add the row if both image and caption exist
-    if (imgEl && caption) {
-      cardRows.push([imgEl, caption]);
-    }
+
+    // Defensive: If missing, fill with empty
+    const imgCell = img || '';
+    const captionCell = caption || '';
+
+    rows.push([imgCell, captionCell]);
   });
 
-  // Compose table rows
-  const tableRows = [headerRow, ...cardRows];
-  const block = WebImporter.DOMUtils.createTable(tableRows, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

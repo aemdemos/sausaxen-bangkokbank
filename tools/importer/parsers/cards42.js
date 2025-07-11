@@ -1,38 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header
+  // Compose header row
   const headerRow = ['Cards (cards42)'];
   const rows = [headerRow];
 
-  // Get the card columns
-  const cardCols = element.querySelectorAll('.row > .col-md-4');
-  cardCols.forEach(col => {
-    // Image: always present in .thumb img
-    let imageEl = null;
-    const img = col.querySelector('.thumb img');
-    if (img) {
-      imageEl = img;
-    }
+  // Find all cards
+  const cardNodes = element.querySelectorAll('.col-md-4');
+  cardNodes.forEach((col) => {
+    // Image (first cell)
+    let imgEl = col.querySelector('.thumb img');
+    let imageCell = imgEl ? imgEl : '';
 
-    // Text content cell
-    const textCell = [];
-    // Description (main text)
+    // Text content (second cell)
+    const textCellContent = [];
+
+    // Description (caption)
     const desc = col.querySelector('.caption .desc');
-    if (desc) textCell.push(desc);
-    // Date (as a <p>)
-    const date = col.querySelector('.button-group .promotion-valid');
-    if (date) textCell.push(date);
-    // CTA (Read more link)
-    const cta = col.querySelector('.button-group a');
-    if (cta) textCell.push(cta);
+    if (desc) textCellContent.push(desc);
 
-    // Add row only if at least image and some text exists
-    if (imageEl && textCell.length > 0) {
-      rows.push([imageEl, textCell]);
+    // Date (if present)
+    const date = col.querySelector('.button-group .promotion-valid');
+    if (date) {
+      const dateDiv = document.createElement('div');
+      dateDiv.textContent = date.textContent.trim();
+      dateDiv.style.fontSize = '0.92em';
+      dateDiv.style.color = '#888';
+      textCellContent.push(dateDiv);
     }
+
+    // CTA (if present)
+    const cta = col.querySelector('.button-group a');
+    if (cta) textCellContent.push(cta);
+
+    rows.push([imageCell, textCellContent]);
   });
 
-  // Create and replace with cards table
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

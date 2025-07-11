@@ -1,57 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the currently active inner block with cards
+  // Find the inner div with class 'active' (cards are only there)
   const activeInner = element.querySelector('.inner.active');
   if (!activeInner) return;
-  // Cards are inside .row-left, but sometimes may be direct children
-  const rowLeft = activeInner.querySelector('.row-left') || activeInner;
-  const cards = Array.from(rowLeft.querySelectorAll(':scope > .col-md-4'));
+  const scrolling = activeInner.querySelector('.scrolling-x');
+  if (!scrolling) return;
+  const row = scrolling.querySelector('.row');
+  if (!row) return;
+  const cols = row.querySelectorAll(':scope > .col-md-4');
+  const cells = [['Cards (cards39)']];
+  cols.forEach(col => {
+    // Image cell: first image in the card
+    const thumbImg = col.querySelector('.thumb img');
+    const imageCell = thumbImg || '';
 
-  // Table header row as in the example
-  const rows = [['Cards (cards39)']];
-
-  cards.forEach(card => {
-    // === IMAGE CELL ===
-    // Use the actual <img> element from the card if available
-    let imgCell = null;
-    const img = card.querySelector('.thumb img');
-    if (img) imgCell = img;
-
-    // === TEXT CELL ===
-    // Use a <div> to wrap the elements as a cell block
-    const textDiv = document.createElement('div');
-
-    // Title - from .caption .desc, styled as <strong> (visually closest to example)
-    const desc = card.querySelector('.caption .desc');
-    if (desc && desc.textContent && desc.textContent.trim()) {
+    // Textual cell
+    const content = [];
+    // Title: as in example, styled as heading (bold)
+    const desc = col.querySelector('.caption .desc');
+    if (desc && desc.textContent.trim()) {
       const strong = document.createElement('strong');
       strong.textContent = desc.textContent.trim();
-      textDiv.appendChild(strong);
+      content.push(strong);
     }
-
-    // Description is not separate: only a title in this HTML
-    // But sometimes there could be additional description (not here)
-
-    // Date (if any)
-    const date = card.querySelector('.button-group p');
-    if (date && date.textContent && date.textContent.trim()) {
-      const dateDiv = document.createElement('div');
-      dateDiv.textContent = date.textContent.trim();
-      textDiv.appendChild(document.createElement('br'));
-      textDiv.appendChild(dateDiv);
+    // Date: add as a <p> below title (if present)
+    const date = col.querySelector('.button-group .promotion-valid');
+    if (date && date.textContent.trim()) {
+      const dateP = document.createElement('p');
+      dateP.textContent = date.textContent.trim();
+      content.push(dateP);
     }
-
-    // CTA link (if any)
-    const cta = card.querySelector('.button-group a');
+    // CTA: the 'Read More' link (if present)
+    const cta = col.querySelector('.button-group a.btn-primary');
     if (cta) {
-      textDiv.appendChild(document.createElement('br'));
-      textDiv.appendChild(cta);
+      content.push(cta);
     }
-
-    rows.push([imgCell, textDiv]);
+    cells.push([imageCell, content]);
   });
-
-  // Create table using the helper
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

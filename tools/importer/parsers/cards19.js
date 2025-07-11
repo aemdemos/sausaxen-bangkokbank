@@ -1,25 +1,45 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The table header row: single column as per requirements
-  const cells = [['Cards (cards19)']];
+  // Defensive: Only proceed if element contains .breadcrumb
+  const breadcrumb = element.querySelector('.breadcrumb');
+  if (!breadcrumb) return;
 
-  // Extract all visible content for the card row
-  const inner = element.querySelector('.inner-container');
+  const inner = breadcrumb.querySelector('.inner-container');
   if (!inner) return;
 
-  // Collect the breadcrumb navigation (ul) and share icon (a.icon-share)
-  const nav = inner.querySelector('ul');
-  const share = inner.querySelector('a.icon-share');
+  // Breadcrumbs list (should always exist)
+  const ul = inner.querySelector('ul');
+  // Social share div (may be empty)
+  const socialShare = inner.querySelector('.social-share');
 
-  // Compose the card's content cell (second col)
-  const cardContent = [];
-  if (nav) cardContent.push(nav);
-  if (share) cardContent.push(share);
+  // Compose a div containing both breadcrumbs and social share block
+  const textCell = document.createElement('div');
+  if (ul) textCell.appendChild(ul);
+  if (socialShare) textCell.appendChild(socialShare);
 
-  // Add the card row: 2 columns (first column empty, second = content)
-  cells.push(['', cardContent]);
+  // The Cards (cards19) block requires an image/icon. Try to find an icon or make a fallback.
+  // Search for a .icon-share in the socialShare as a possible visual element
+  let iconCell = null;
+  if (socialShare) {
+    const iconShare = socialShare.querySelector('.icon-share');
+    if (iconShare) {
+      iconCell = iconShare;
+    }
+  }
+  // Fallback: use a transparent 1x1 pixel gif if no icon present, to keep cell non-empty
+  if (!iconCell) {
+    const img = document.createElement('img');
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+    img.alt = '';
+    iconCell = img;
+  }
 
-  // Create the table and replace the original element
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Compose rows for the block
+  const rows = [
+    ['Cards (cards19)'],
+    [iconCell, textCell],
+  ];
+
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

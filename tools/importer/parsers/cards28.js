@@ -1,51 +1,64 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row exactly as requested
-  const rows = [['Cards (cards28)']];
+  // Cards28 block header
+  const headerRow = ['Cards (cards28)'];
+  const rows = [headerRow];
 
-  // Get all card columns (each card)
-  const cardCols = element.querySelectorAll(':scope > div');
-
+  // Get all top-level card columns
+  const cardCols = element.querySelectorAll(':scope > .col-md-3');
   cardCols.forEach((col) => {
-    // Image/Icon (first cell)
-    const img = col.querySelector('.visual-img img');
-    const imageEl = img || '';
+    // First cell: image or icon (must use reference to the existing <img>)
+    const img = col.querySelector('.thumb-info .visual-img img');
 
-    // Text content (second cell)
-    const textCell = [];
+    // Second cell: text content, may include title, description, and cta
+    const textContent = [];
 
-    // Title (h3, may have extra spaces)
-    const title = col.querySelector('.caption h3');
-    if (title) textCell.push(title);
-
-    // Look for description (not present in this HTML, but left for future robustness)
-    // Example HTML does not contain description paragraph, so do not force an empty p
-
-    // CTA(s) logic
-    const buttonGroup = col.querySelector('.button-group');
-    if (buttonGroup) {
-      // Check for .custom-links (dropdown of links)
-      const customLinks = buttonGroup.querySelectorAll('.custom-links');
-      if (customLinks.length > 0) {
-        customLinks.forEach((cl) => {
-          // The label (e.g., "Select Job Lists")
-          const label = cl.querySelector('.text');
-          if (label) textCell.push(label);
-          // All <a>s in the dropdown (even if hidden by default)
-          const allLinks = cl.querySelectorAll('ul li a');
-          allLinks.forEach((a) => textCell.push(a));
-        });
-      }
-      // Direct <a> (regular button style, e.g. "Read More", "Register")
-      const directLinks = buttonGroup.querySelectorAll(':scope > a');
-      directLinks.forEach((a) => textCell.push(a));
+    // Title (as <strong> for block heading style, but keep element reference)
+    const title = col.querySelector('.caption .title-3, .caption h3');
+    if (title) {
+      // Use existing element, but as block expects heading to be bold, wrap in <strong> if not already
+      const strong = document.createElement('strong');
+      strong.textContent = title.textContent.replace(/\s+/g, ' ').trim();
+      textContent.push(strong);
+      textContent.push(document.createElement('br'));
     }
-    // If nothing present in text cell, add empty string
-    if (textCell.length === 0) textCell.push('');
 
-    rows.push([imageEl, textCell.length === 1 ? textCell[0] : textCell]);
+    // Description (none in the provided HTML, but if there were, would be here)
+    // e.g. look for a <p> after title or in caption
+    // We can future-proof by including all caption content except the heading
+    if (title && title.parentElement) {
+      Array.from(title.parentElement.childNodes).forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE && node !== title && node.tagName.toLowerCase() !== 'br') {
+          textContent.push(node);
+        }
+      });
+    }
+    // Find CTA (either a set of links or a button)
+    // Custom links: <ul>
+    const linksList = col.querySelector('.custom-links .all-links ul');
+    if (linksList) {
+      textContent.push(linksList);
+    } else {
+      // Single CTA button
+      const cta = col.querySelector('.button-group > a');
+      if (cta) {
+        textContent.push(cta);
+      }
+    }
+
+    // Remove any undefined or empty from textContent
+    const filteredTextContent = textContent.filter(e =>
+      (typeof e === 'string' && e.trim().length > 0) || (e && e.nodeType === Node.ELEMENT_NODE)
+    );
+
+    // Add row with [image, text content]
+    rows.push([
+      img,
+      filteredTextContent.length === 1 ? filteredTextContent[0] : filteredTextContent
+    ]);
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  // Create table and replace element
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }

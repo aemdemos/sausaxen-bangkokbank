@@ -1,33 +1,24 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare the header row
-  const headerRow = ['Cards (cards26)'];
+  // Extract all direct children (elements and text) from element
+  let content = Array.from(element.childNodes).filter(node =>
+    node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '')
+  );
 
-  // Extract all text content, preserving structure
-  // We'll try to reference the immediate child container if possible
-  // so that all presentational structure is preserved.
-  // If no children, fallback to simple text content.
-  let contentEl;
-  // If the element has a direct child that contains content, prefer that
-  if (element.children.length === 1) {
-    contentEl = element.children[0];
-  } else if (element.children.length > 1) {
-    // Wrap all children in a single div for structure preservation
-    contentEl = document.createElement('div');
-    Array.from(element.children).forEach(child => contentEl.appendChild(child));
-  } else {
-    // Only text node
-    contentEl = document.createElement('div');
-    contentEl.textContent = element.textContent.trim();
+  // If there's a single container (like .inner-container), extract its contents
+  if (content.length === 1 && content[0].nodeType === Node.ELEMENT_NODE && content[0].childNodes.length > 0) {
+    content = Array.from(content[0].childNodes).filter(node =>
+      node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '')
+    );
   }
 
-  // Build the table cells
+  // Build the table so the header row is a single column (matching the spec!)
+  // The card row is still two columns, per the block structure
   const cells = [
-    headerRow,
-    [contentEl]
+    ['Cards (cards26)'],
+    ['', content]
   ];
 
-  // Create table and replace
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

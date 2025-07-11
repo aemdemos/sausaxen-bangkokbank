@@ -1,56 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header matches example exactly
   const headerRow = ['Cards (cards51)'];
   const rows = [headerRow];
-
-  // Get all direct child columns representing cards
-  const cardCols = element.querySelectorAll('.row > .col-md-4');
-
-  cardCols.forEach(col => {
-    // First cell: the image element (mandatory)
-    const img = col.querySelector('.thumb-info .visual-img img');
-
-    // Second cell: text content (title, description, CTA)
-    const caption = col.querySelector('.caption');
-    const textCellContent = [];
-    
+  // Find all card columns in the row
+  const row = element.querySelector('.scrolling-x .row');
+  if (!row) return;
+  const colDivs = Array.from(row.children).filter(div => div.classList.contains('col-md-4'));
+  colDivs.forEach(col => {
+    // Image cell
+    const card = col.querySelector('.thumb-info');
+    if (!card) return;
+    const imgEl = card.querySelector('.visual-img img');
+    // Text cell
+    const textCell = document.createElement('div');
+    // Title
+    const caption = card.querySelector('.caption');
     if (caption) {
-      // Title (optional)
-      const title = caption.querySelector('h3');
-      if (title) {
-        textCellContent.push(title);
-      }
-      // Description (optional, <p> after h3, only if has text)
-      // This "description" p is often empty in this set, so let's check
+      const h3 = caption.querySelector('h3');
+      if (h3) textCell.appendChild(h3);
+      // Description (only if not empty and not just dashes)
       const desc = caption.querySelector('p');
-      if (desc && desc.textContent.trim() !== '') {
-        textCellContent.push(desc);
+      if (desc && desc.textContent && desc.textContent.trim() && desc.textContent.trim() !== '--') {
+        textCell.appendChild(desc);
       }
     }
-
-    // CTA (button group) (optional)
-    const buttonGroup = col.querySelector('.button-group');
-    // CTA should be linked text only if present
+    // CTA
+    const buttonGroup = card.querySelector('.button-group');
     if (buttonGroup) {
-      const btn = buttonGroup.querySelector('a');
-      if (btn) {
-        textCellContent.push(btn);
-      }
+      const a = buttonGroup.querySelector('a');
+      if (a) textCell.appendChild(a);
     }
-    // If there's nothing in the right cell, add empty string (shouldn't happen here, but for safety)
-    if (textCellContent.length === 0) {
-      textCellContent.push('');
-    }
-
-    // Add the row: [image, text content]
     rows.push([
-      img,
-      textCellContent.length === 1 ? textCellContent[0] : textCellContent
+      imgEl || '',
+      textCell
     ]);
   });
-
-  // Create and replace
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

@@ -1,43 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as per spec and example
-  const cells = [
-    ['Cards (cards8)']
-  ];
+  // Table header as specified in the requirements and markdown example
+  const cells = [['Cards (cards8)']];
 
-  // Find the row of cards
-  const row = element.querySelector('.row');
-  if (!row) return;
+  // Extract all card columns
+  const cardCols = element.querySelectorAll('.row > .col-md-4');
 
-  // Each card is a .col-md-4 inside .row
-  const cardCols = Array.from(row.querySelectorAll(':scope > .col-md-4'));
-
-  cardCols.forEach((col) => {
-    // Get image (if present)
+  cardCols.forEach(col => {
+    // Image: .thumb-info .visual-img img
     const img = col.querySelector('.thumb-info .visual-img img');
+    // Title: .caption h3
+    const title = col.querySelector('.thumb-info .caption h3');
+    // Description: .caption p (can be empty)
+    const desc = col.querySelector('.thumb-info .caption p');
+    // CTA: .button-group a (contains <p> inside)
+    const cta = col.querySelector('.thumb-info .button-group a');
 
-    // Get card heading (h3), description (p.text-default), and CTA (a inside .button-group)
-    const caption = col.querySelector('.thumb-info .caption');
-    const content = [];
-    if (caption) {
-      const heading = caption.querySelector('h3');
-      if (heading) content.push(heading);
-      const desc = caption.querySelector('p');
-      // Only add if not empty
-      if (desc && desc.textContent.trim()) content.push(desc);
-      else if (desc && !desc.textContent.trim()) {
-        // If it's empty, but visually there in source, add for spacing consistency
-        content.push(desc);
+    // First cell: image (or blank string if missing)
+    const cell1 = img || '';
+
+    // Second cell: group text content
+    const cell2Content = [];
+    if (title) cell2Content.push(title);
+    // If description has text, include it; if not, include a blank <p> for layout (only if a title is present)
+    if (desc) {
+      if (desc.textContent.trim()) {
+        cell2Content.push(desc);
+      } else if (title) {
+        // For visual/structural parity
+        const emptyP = document.createElement('p');
+        cell2Content.push(emptyP);
       }
     }
-    // CTA link
-    const cta = col.querySelector('.thumb-info .button-group a');
-    if (cta) content.push(cta);
+    if (cta) cell2Content.push(cta);
 
-    cells.push([
-      img || '',
-      content.length === 1 ? content[0] : content
-    ]);
+    // Always make sure there's at least one element in the text cell
+    if (cell2Content.length === 0) cell2Content.push('');
+
+    cells.push([cell1, cell2Content]);
   });
 
   const table = WebImporter.DOMUtils.createTable(cells, document);

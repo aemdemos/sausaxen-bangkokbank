@@ -1,36 +1,34 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header as required
+  // The table header row, matching the block name and variant
   const headerRow = ['Columns (columns45)'];
 
-  // Find left column content: .content
-  const leftContent = element.querySelector('.content');
-  // Find right column background image: .thumb
-  const rightThumb = element.querySelector('.thumb');
+  // Get the left column content (all content except the image)
+  // Find the left side .content
+  const leftCol = element.querySelector('.content');
+  // Reference the actual .content element as the cell (not clone)
 
-  // Prepare right column: extract background-image as <img>
-  let rightImg = null;
-  if (rightThumb && rightThumb.style && rightThumb.style.backgroundImage) {
-    const match = rightThumb.style.backgroundImage.match(/url\((['"]?)(.*?)\1\)/);
-    if (match && match[2]) {
-      rightImg = document.createElement('img');
-      rightImg.src = match[2];
-      rightImg.alt = '';
+  // Get the right column image (from .thumb background-image)
+  const thumbDiv = element.querySelector('.thumb');
+  let rightImg = '';
+  if (thumbDiv) {
+    const style = thumbDiv.getAttribute('style') || '';
+    // Extract URL from background-image
+    const match = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/i);
+    if (match && match[1]) {
+      const img = document.createElement('img');
+      img.src = match[1];
+      img.alt = '';
+      rightImg = img;
     }
   }
 
-  // Defensive: if leftContent is missing, use empty div
-  const leftCell = leftContent || document.createElement('div');
-  // Defensive: if rightImg is missing, use empty div
-  const rightCell = rightImg || document.createElement('div');
-
-  // Table rows: header, then columns
-  const cells = [
+  // Compose the data rows as per the example: header, then a single row with two columns
+  const table = WebImporter.DOMUtils.createTable([
     headerRow,
-    [leftCell, rightCell],
-  ];
+    [leftCol, rightImg]
+  ], document);
 
-  // Build and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Replace the original element with the new table
   element.replaceWith(table);
 }

@@ -1,32 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as in the example
+  // Build the header row exactly as specified
   const headerRow = ['Cards (cards13)'];
-  // Get all cards (each .col-md-4 is a card)
-  const cards = Array.from(element.querySelectorAll(':scope > .col-md-4'));
-  const rows = cards.map(card => {
-    // First cell: image (keep original reference)
-    const img = card.querySelector('.thumb img');
-    // Second cell: content
-    const content = [];
-    const caption = card.querySelector('.caption');
-    if (caption) {
-      // Title (h3)
-      const h3 = caption.querySelector('h3');
-      if (h3) content.push(h3);
-      // Description (first <p> inside .caption)
-      const p = caption.querySelector('p');
-      if (p) content.push(p);
+  const rows = [];
+  // Select all immediate children with class 'col-md-4'
+  const cardCols = element.querySelectorAll(':scope > .col-md-4');
+  cardCols.forEach((col) => {
+    // IMAGE CELL: always the image element (don't clone, use a reference)
+    const img = col.querySelector('img');
+    const imgCell = img;
+    // TEXT CELL: wrap title, description, cta together
+    const caption = col.querySelector('.caption');
+    // Compose a fragment for the text cell
+    const textCell = document.createElement('div');
+    // Title (keep as heading if present)
+    const h3 = caption && caption.querySelector('h3');
+    if (h3) textCell.appendChild(h3);
+    // Description (paragraph)
+    const desc = caption && caption.querySelector('p');
+    if (desc) textCell.appendChild(desc);
+    // Optional CTA:
+    const btn = col.querySelector('.button-group a');
+    if (btn) {
+      // Use the existing element, but remove unnecessary nesting
+      const cta = document.createElement('a');
+      cta.href = btn.href;
+      // Prefer the button's inner p's text if present
+      const btnP = btn.querySelector('p');
+      cta.textContent = btnP ? btnP.textContent : btn.textContent;
+      cta.className = 'button-link';
+      textCell.appendChild(cta);
     }
-    // Call-to-action button (link)
-    const btn = card.querySelector('.button-group a');
-    if (btn) content.push(btn);
-    return [img, content];
+    rows.push([imgCell, textCell]);
   });
-
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    ...rows
-  ], document);
+  // Compose the table (header + all card rows)
+  const cells = [headerRow, ...rows];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

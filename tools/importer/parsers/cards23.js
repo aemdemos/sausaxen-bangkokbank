@@ -1,86 +1,57 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row exactly as the example
-  const headerRow = ['Cards (cards23)'];
-  const rows = [headerRow];
+  // Table must have header row matching example exactly
+  const cells = [['Cards (cards23)']];
 
-  // Helper to extract card info from a card container row
-  function extractCards(cardRow) {
-    const cards = [];
-    if (!cardRow) return cards;
-    // Select only direct children (columns)
-    const cardCols = cardRow.querySelectorAll(':scope > div');
-    cardCols.forEach((col) => {
+  // Find both desktop and mobile rows, but process only the first available with cards
+  let cardsRow = element.querySelector('.desktop-teaser-container .row.row-left');
+  if (!cardsRow) {
+    cardsRow = element.querySelector('.mobile-teaser-container .row.row-left');
+  }
+  if (cardsRow) {
+    // Each card column
+    cardsRow.querySelectorAll(':scope > div').forEach((col) => {
       const thumb = col.querySelector('.thumb-square-caption');
-      if (thumb) {
-        // Extract image from background-image
-        let imgUrl = '';
-        const bgStyle = thumb.style.backgroundImage;
-        if (bgStyle && bgStyle.startsWith('url(')) {
-          imgUrl = bgStyle.slice(4, -1).replace(/['"]/g, '');
-        }
-        let imgEl = '';
-        if (imgUrl) {
-          imgEl = document.createElement('img');
-          imgEl.src = imgUrl;
-          imgEl.alt = '';
-        }
-        // Extract all children of .info for text content
-        const info = thumb.querySelector('.info');
-        let textContent = [];
-        if (info) {
-          // Reference only real elements (not empty text nodes)
-          textContent = Array.from(info.childNodes).filter(n => {
-            if (n.nodeType === 1) return n.textContent.trim();
-            if (n.nodeType === 3) return n.textContent.trim();
-            return false;
-          });
-        }
-        cards.push([imgEl, textContent]);
-      }
-    });
-    return cards;
-  }
+      if (!thumb) return;
 
-  // Only extract from the FIRST matching row with .thumb-square-caption (desktop version)
-  let cardRow = element.querySelector('.desktop-teaser-container .row');
-  if (!cardRow) {
-    // fallback for mobile or alternate markup
-    cardRow = element.querySelector('.row');
-  }
-  if (cardRow) {
-    extractCards(cardRow).forEach(row => rows.push(row));
-  }
-
-  // If no cards found, try fallback to any direct .thumb-square-caption in element
-  if (rows.length === 1) {
-    element.querySelectorAll('.thumb-square-caption').forEach((thumb) => {
-      // Same extraction logic as above
-      let imgUrl = '';
-      const bgStyle = thumb.style.backgroundImage;
-      if (bgStyle && bgStyle.startsWith('url(')) {
-        imgUrl = bgStyle.slice(4, -1).replace(/['"]/g, '');
-      }
-      let imgEl = '';
-      if (imgUrl) {
+      // Extract image from background-image CSS
+      let imgEl = null;
+      const style = thumb.getAttribute('style') || '';
+      const match = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
+      if (match) {
         imgEl = document.createElement('img');
-        imgEl.src = imgUrl;
+        imgEl.src = match[1];
         imgEl.alt = '';
       }
+
+      // Extract text content as a single block, preserving semantic structure
       const info = thumb.querySelector('.info');
-      let textContent = [];
+      let textContent = null;
       if (info) {
-        textContent = Array.from(info.childNodes).filter(n => {
-          if (n.nodeType === 1) return n.textContent.trim();
-          if (n.nodeType === 3) return n.textContent.trim();
-          return false;
+        // Instead of cloning, reference the block in-place if possible
+        // But we want only h3 and p from within info (preserves heading and paragraph semantics)
+        const frag = document.createDocumentFragment();
+        info.childNodes.forEach((node) => {
+          if (
+            (node.nodeType === 1 && (node.tagName.toLowerCase() === 'h3' || node.tagName.toLowerCase() === 'p'))
+          ) {
+            frag.appendChild(node);
+          }
         });
+        // If we have at least one node (title or description)
+        if (frag.childNodes.length > 0) {
+          textContent = frag;
+        }
       }
-      rows.push([imgEl, textContent]);
+      if (imgEl && textContent) {
+        cells.push([imgEl, textContent]);
+      }
     });
   }
 
-  // Replace the section with the new table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  // Only create the table if we have cards (rows > 1)
+  if (cells.length > 1) {
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    element.replaceWith(table);
+  }
 }

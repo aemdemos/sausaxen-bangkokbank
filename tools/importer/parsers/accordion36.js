@@ -1,36 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row matches spec
+  // Build header row matching the required block name
   const headerRow = ['Accordion (accordion36)'];
 
-  // Only consider direct children with class 'collapse-item'
+  // Find all accordion items (collapse-item class)
   const items = Array.from(element.querySelectorAll(':scope > .collapse-item'));
+  const rows = [headerRow];
 
-  // Edge case: If no items, do nothing
-  if (items.length === 0) return;
-
-  // For each collapse-item, extract the header and content
-  const rows = items.map(item => {
-    // Title cell
+  items.forEach((item) => {
+    // Get the header (title) element
     const header = item.querySelector(':scope > .collapse-header');
-    let titleCell = '';
-    if (header) {
-      titleCell = header.textContent.trim();
-    }
-    // Content cell: all content of .collapse-inner except empty spans and .button-group
+    const titleCell = header || '';
+
+    // Get the content (collapse-inner)
     const inner = item.querySelector(':scope > .collapse-inner');
     let contentCell = '';
     if (inner) {
-      // Collect only node elements that are not empty <span> or .button-group
-      const nodes = Array.from(inner.childNodes).filter(node => {
-        // Filter empty <span>
-        if (node.nodeType === 1 && node.tagName === 'SPAN' && node.textContent.trim() === '') return false;
-        // Filter .button-group
-        if (node.nodeType === 1 && node.classList.contains('button-group')) return false;
-        // Filter empty text nodes
-        if (node.nodeType === 3 && node.textContent.trim() === '') return false;
+      // Gather all content except empty spans, button groups, and whitespace
+      const nodes = Array.from(inner.childNodes).filter((n) => {
+        // Remove empty text
+        if (n.nodeType === Node.TEXT_NODE && n.textContent.trim() === '') return false;
+        // Remove empty span
+        if (n.nodeType === Node.ELEMENT_NODE && n.tagName === 'SPAN' && n.textContent.trim() === '' && !n.children.length) return false;
+        // Remove button-group
+        if (n.nodeType === Node.ELEMENT_NODE && n.classList.contains('button-group')) return false;
         return true;
       });
+      // If only one node, use as is, else as array
       if (nodes.length === 1) {
         contentCell = nodes[0];
       } else if (nodes.length > 1) {
@@ -39,11 +35,10 @@ export default function parse(element, { document }) {
         contentCell = '';
       }
     }
-    return [titleCell, contentCell];
+    rows.push([titleCell, contentCell]);
   });
 
-  // Build table rows
-  const tableRows = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
-  element.replaceWith(table);
+  // Create the block table and replace the original element
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }
