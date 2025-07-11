@@ -1,45 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
+  // Table header as required
   const headerRow = ['Cards (cards38)'];
   const rows = [];
-  // Find all direct card columns
-  const cardCols = element.querySelectorAll(':scope > .row > div');
+
+  // Find all direct card elements
+  const cardCols = element.querySelectorAll(':scope > .row > .col-md-4');
   cardCols.forEach((col) => {
-    // Image: get the first img inside .thumb
-    const img = col.querySelector('.thumb img');
-    // Title: h3.title-3.line
-    const title = col.querySelector('h3.title-3');
-    // Description: .caption .desc (can be empty)
-    const desc = col.querySelector('.caption .desc');
-    // CTA: .button-group a
-    const cta = col.querySelector('.button-group a');
+    // Image: use the <img> (not a link)
+    const img = col.querySelector('img');
 
-    // Image cell: reference the <img> if present, else ""
-    const imgCell = img || '';
+    // Text content: title (h3), description, and CTA
+    const caption = col.querySelector('.caption');
+    const contentEls = [];
 
-    // Text cell: build contents
-    const textCellContent = [];
-    if (title && title.textContent.trim()) {
-      const strong = document.createElement('strong');
-      strong.textContent = title.textContent.trim();
-      textCellContent.push(strong);
+    if (caption) {
+      // Title
+      const title = caption.querySelector('h1, h2, h3, h4, h5, h6');
+      if (title) contentEls.push(title);
+      // Description (desc): always include, even if empty
+      const desc = caption.querySelector('.desc');
+      if (desc) contentEls.push(desc);
     }
-    if (desc && desc.textContent.trim()) {
-      const p = document.createElement('p');
-      p.textContent = desc.textContent.trim();
-      textCellContent.push(p);
+
+    // CTA button (link)
+    const buttonGroup = col.querySelector('.button-group');
+    if (buttonGroup) {
+      const cta = buttonGroup.querySelector('a');
+      if (cta) contentEls.push(cta);
     }
-    // Add a <br> for visual separation, but only if there's a CTA
-    if (cta) {
-      if (textCellContent.length > 0) {
-        // Only add a <br> if there is already title or description above
-        textCellContent.push(document.createElement('br'));
-      }
-      textCellContent.push(cta);
-    }
-    rows.push([imgCell, textCellContent]);
+
+    // If contentEls is empty (should not happen), leave blank cell
+    rows.push([img, contentEls.length === 1 ? contentEls[0] : contentEls]);
   });
-  const tableRows = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
+
+  // Build and replace with table
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows
+  ], document);
   element.replaceWith(table);
 }

@@ -4,44 +4,47 @@ export default function parse(element, { document }) {
   const carousel = element.querySelector('[data-carousel-product]');
   if (!carousel) return;
 
-  // Only select the real slides (not slick-cloned)
-  const items = Array.from(carousel.querySelectorAll('.item.slick-slide'))
-    .filter(item => {
-      const i = parseInt(item.getAttribute('data-slick-index'), 10);
-      return !isNaN(i) && i >= 0;
-    });
-  if (!items.length) return;
+  // Find the track of slides
+  const track = carousel.querySelector('.slick-track');
+  if (!track) return;
 
-  // Table header row matches the example exactly
-  const rows = [['Carousel (carousel27)']];
+  // Collect unique slides (exclude clones)
+  const slides = Array.from(track.children)
+    .filter(div => div.classList.contains('slick-slide') && !div.classList.contains('slick-cloned'));
 
-  items.forEach(item => {
-    // First cell: first <img> in the item (may be null)
-    const img = item.querySelector('img');
-    const imgCell = img || '';
+  // Try to find any possible text overlays or captions: look for elements that are not the carousel,
+  // but are siblings inside .center-content or .inner-container
+  // In this specific HTML, there are no such overlays, but make it robust for future variations
+  let textBlocks = [];
+  let possibleCaptionContainers = [];
 
-    // Second cell: gather all content except <img> and whitespace text nodes
-    const textNodes = [];
-    item.childNodes.forEach(node => {
-      if (node.nodeType === 1 && node.tagName.toLowerCase() === 'img') {
-        // skip image
-      } else if (node.nodeType === 1 || (node.nodeType === 3 && node.textContent.trim() !== '')) {
-        textNodes.push(node);
-      }
-    });
+  // Search up for containers that may have overlay/caption text
+  if (carousel.parentElement) {
+    const parent = carousel.parentElement;
+    possibleCaptionContainers = Array.from(parent.children).filter(child => child !== carousel);
+  }
+  if (possibleCaptionContainers.length > 0) {
+    // Pick only containers that have visible/meaningful text
+    textBlocks = possibleCaptionContainers.filter(el => el.textContent.trim().length > 0);
+  }
+
+  // Now build the rows
+  const rows = [];
+  // Header row matches the example exactly
+  rows.push(['Carousel (carousel27)']);
+
+  // For each slide, first cell is its <img>, second cell is corresponding text block if present
+  slides.forEach((slide, idx) => {
+    const img = slide.querySelector('img');
+    let imageElem = img || '';
+    // If there are caption/text overlays, assign them to slides in order
     let textCell = '';
-    if (textNodes.length === 1) {
-      textCell = textNodes[0];
-    } else if (textNodes.length > 1) {
-      // If more than one, wrap in a <div>
-      const div = document.createElement('div');
-      textNodes.forEach(node => div.appendChild(node));
-      textCell = div;
+    if (textBlocks.length > idx) {
+      textCell = textBlocks[idx]; // reference existing element!
     }
-    rows.push([imgCell, textCell]);
+    rows.push([imageElem, textCell]);
   });
 
-  // Create and replace
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

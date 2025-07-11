@@ -1,35 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row: exactly one cell
-  const rows = [
-    ['Cards (cards25)']
-  ];
+  // Header row as per block guidelines
+  const headerRow = ['Cards (cards25)'];
 
-  // Parse for the card(s): no image/icon, so left cell is empty string, right cell is the main text
-  // Try to get the active tab label from <a> or <option>
-  let cardText = '';
-  const activeA = element.querySelector('a.active');
-  if (activeA && activeA.textContent.trim()) {
-    cardText = activeA.textContent.trim();
-  } else {
-    const activeOption = element.querySelector('option.active');
-    if (activeOption && activeOption.textContent.trim()) {
-      cardText = activeOption.textContent.trim();
-    } else {
-      // fallback: any tab label
-      const anyTab = element.querySelector('a, option');
-      if (anyTab && anyTab.textContent.trim()) {
-        cardText = anyTab.textContent.trim();
-      }
-    }
-  }
+  // Collect all unique visible card titles (from both tab header and dropdown)
+  const cardTitles = new Set();
 
-  // Add card row (with two columns) if content found
-  if (cardText) {
-    rows.push(['', cardText]);
-  }
+  // Get text from .tab-header a
+  element.querySelectorAll('.tab-header a').forEach(a => {
+    const t = a.textContent.trim();
+    if (t) cardTitles.add(t);
+  });
 
-  // Create the table and replace the element
+  // Get text from dropdown options
+  element.querySelectorAll('select[data-select] option').forEach(option => {
+    const t = option.textContent.trim();
+    if (t) cardTitles.add(t);
+  });
+
+  // Compose card rows: two columns, first cell blank (no image), second cell is the card content
+  const cardRows = Array.from(cardTitles).map(title => {
+    const strong = document.createElement('strong');
+    strong.textContent = title;
+    return ['', strong];
+  });
+
+  // Assemble block table and replace
+  const rows = [headerRow, ...cardRows];
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

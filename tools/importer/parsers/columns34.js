@@ -1,21 +1,36 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the row that contains the columns
+  // Find the row containing the columns
   const row = element.querySelector('.row');
   if (!row) return;
-  // Get all direct column children
-  const columns = Array.from(row.querySelectorAll(':scope > .col-md-2'));
-  // For each column, get its group-link content (as a single cell for that column)
-  const colContents = columns.map(col => {
-    const groupLink = col.querySelector(':scope > .group-link, :scope > .group-link.no-padding-bottom');
-    // fallback to full col if not found
+
+  // Get all column elements
+  const columns = Array.from(row.children);
+
+  // For each col, extract the group-link (if it exists)
+  const cellElements = columns.map(col => {
+    const groupLink = col.querySelector('.group-link, .group-link.no-padding-bottom');
     return groupLink || col;
   });
-  // Build the cells: header row (single column), then a single row with N columns
-  const cells = [
-    ['Columns (columns34)'],
-    colContents
-  ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Create the table manually to ensure header is a single th with correct colspan
+  const table = document.createElement('table');
+  const headerRow = document.createElement('tr');
+  const th = document.createElement('th');
+  th.textContent = 'Columns (columns34)';
+  th.colSpan = cellElements.length;
+  headerRow.appendChild(th);
+  table.appendChild(headerRow);
+
+  // Second row: one td per column (cellElements)
+  const secondRow = document.createElement('tr');
+  cellElements.forEach(cell => {
+    const td = document.createElement('td');
+    td.append(cell);
+    secondRow.appendChild(td);
+  });
+  table.appendChild(secondRow);
+
+  // Replace the original element with the new table
   element.replaceWith(table);
 }

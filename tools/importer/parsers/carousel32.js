@@ -1,57 +1,64 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper: Get the currently active year carousel slides
-  function getActiveCarouselSlides() {
-    const stories = element.querySelector('article.stories');
-    if (!stories) return [];
-    const section = stories.querySelector('section[data-tab-content]');
-    if (!section) return [];
-    const activeInner = section.querySelector('.inner.active');
-    if (!activeInner) return [];
-    const carousel = activeInner.querySelector('[data-carousel]');
-    if (!carousel) return [];
-    // Only real slides (not slick-cloned)
-    return Array.from(carousel.querySelectorAll('.slick-slide')).filter(slide => !slide.classList.contains('slick-cloned'));
-  }
+  // 1. Find the active year section (the currently visible tab content)
+  const activeYearSection = element.querySelector('article.stories section[data-tab-content] > .inner.active');
+  if (!activeYearSection) return;
 
-  const cells = [['Carousel (carousel32)']];
-  const slides = getActiveCarouselSlides();
+  // 2. Find the carousel container within the active year section
+  const carousel = activeYearSection.querySelector('[data-carousel]');
+  if (!carousel) return;
 
-  slides.forEach((slide) => {
-    // No images per slide, so first cell is blank
-    let leftCell = '';
-    let rightCell = '';
+  // 3. Extract only the real slides (not slick-cloned)
+  let slides = Array.from(carousel.querySelectorAll('.col-md-4.slick-slide'));
+  slides = slides.filter(slide => {
+    const idx = parseInt(slide.getAttribute('data-slick-index'), 10);
+    return !slide.classList.contains('slick-cloned') && idx >= 0;
+  });
+  if (!slides.length) return;
+
+  // 4. Prepare the header row as in the example
+  const cells = [];
+  cells.push(['Carousel (carousel32)']);
+
+  // 5. For each slide, populate the table row
+  slides.forEach(slide => {
     const caption = slide.querySelector('.caption.editor');
-    if (caption) {
-      // Create a fragment that references all non-empty, visible content
-      const frag = document.createElement('div');
-      // Move all non-empty nodes, preserving ul, li, br, and text nodes
-      Array.from(caption.childNodes).forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.nodeName === 'P' && !node.textContent.trim()) {
-            // skip empty paragraphs
-            return;
-          }
-          if ((node.nodeName === 'P' || node.nodeName === 'BR' || node.nodeName === 'UL' || node.nodeName === 'LI')) {
-            frag.appendChild(node);
-            return;
-          }
-        } else if (node.nodeType === Node.TEXT_NODE) {
-          if (node.textContent.trim()) {
-            frag.appendChild(document.createTextNode(node.textContent));
-          }
+    if (!caption) return;
+
+    // Collect all meaningful content in caption, preserving order, referencing original nodes
+    const contentArr = [];
+    // Loop through all children, including text nodes
+    for (let node = caption.firstChild; node; node = node.nextSibling) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        // Only include elements with visible text or list items
+        if (
+          (node.tagName === 'UL' && node.querySelectorAll('li').length) ||
+          (node.tagName === 'OL' && node.querySelectorAll('li').length) ||
+          (node.textContent && node.textContent.trim())
+        ) {
+          contentArr.push(node);
         }
-      });
-      // If there's still no content, fallback to caption's textContent
-      if (!frag.textContent.trim()) {
-        frag.textContent = caption.textContent.trim();
+      } else if (node.nodeType === Node.TEXT_NODE) {
+        if (node.textContent && node.textContent.trim()) {
+          // Wrap significant text nodes in a <p> (to match HTML semantics)
+          const p = document.createElement('p');
+          p.textContent = node.textContent.trim();
+          contentArr.push(p);
+        }
       }
-      // If fragment ends up empty (all empty), set blank string
-      rightCell = frag.childNodes.length ? frag : '';
     }
-    cells.push([leftCell, rightCell]);
+    // Defensive: fallback to all caption text if empty
+    if (!contentArr.length && caption.textContent.trim()) {
+      const p = document.createElement('p');
+      p.textContent = caption.textContent.trim();
+      contentArr.push(p);
+    }
+    if (contentArr.length) {
+      cells.push(['', contentArr]);
+    }
   });
 
+  // 6. Create and replace with the table
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

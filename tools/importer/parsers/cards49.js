@@ -1,36 +1,21 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header according to the guidelines
+  // Table header exactly as required
   const headerRow = ['Cards (cards49)'];
+  // Collect the card columns in this block
+  const cardCols = element.querySelectorAll(':scope > .col-md-4');
   const rows = [];
-
-  // Find all immediate child columns (cards)
-  const cardCols = element.querySelectorAll(':scope > div');
   cardCols.forEach((col) => {
-    const card = col.querySelector('.thumb-default');
-    if (!card) return;
-    const caption = card.querySelector('.caption');
-    if (!caption) return;
-
-    // Assemble card content (reference EXISTING elements, do not clone)
-    // 1. Try to find heading/title
-    const heading = caption.querySelector('h3, .title-3');
-    // 2. Try to find download link
-    const downloadLink = caption.querySelector('a.download-file');
-
-    // Build cell content array, referencing actual elements
-    const cellContent = [];
-    if (heading) cellContent.push(heading);
-    if (downloadLink) cellContent.push(downloadLink);
-    // Only push non-empty cards
-    if (cellContent.length) {
-      rows.push([cellContent]);
+    // For each card: get the .caption.editor element (contains heading + link)
+    const caption = col.querySelector('.caption');
+    if (caption) {
+      rows.push([caption]);
     }
   });
-
-  // The block table has a single column (no images/icons present)
-  const tableRows = [headerRow, ...rows];
-  const block = WebImporter.DOMUtils.createTable(tableRows, document);
-
-  element.replaceWith(block);
+  // Only create if there are cards (but must always create header row)
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows
+  ], document);
+  element.replaceWith(table);
 }

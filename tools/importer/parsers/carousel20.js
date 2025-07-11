@@ -1,74 +1,67 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to get absolute URL for images
-  function getAbsoluteUrl(url) {
-    const a = document.createElement('a');
-    a.href = url;
-    return a.href;
-  }
+  // Header row as in the example
+  const headerRow = ['Carousel (carousel20)'];
+  const rows = [headerRow];
 
-  // Find track containing slides
-  const track = element.querySelector('.slick-list .slick-track');
-  if (!track) return;
-  const slides = Array.from(track.children).filter((c) => c.classList.contains('slick-slide'));
-  const cells = [
-    ['Carousel (carousel20)'],
-  ];
-  slides.forEach((slide) => {
-    // Each slide has a .item
+  // Get all slides
+  const slideElements = element.querySelectorAll('.slick-track > .slick-slide');
+
+  slideElements.forEach(slide => {
     const item = slide.querySelector('.item');
     if (!item) return;
-    // Image: Prefer <img> inside .imgContainer > .active > picture
-    let img = null;
+
+    // --- Image Cell ---
+    let imageEl = null;
+    // Use the active picture's img as the main image
     const activeImg = item.querySelector('.imgContainer .active img');
-    if (activeImg) {
-      // Reference the actual <img> node from the DOM, but adjust src to full URL
-      activeImg.src = getAbsoluteUrl(activeImg.src);
-      img = activeImg;
-      // If there's a desktop source available, prefer that for src
-      const picture = activeImg.closest('picture');
-      if (picture) {
-        const source = picture.querySelector('source[media]');
-        if (source && source.srcset) {
-          img.src = getAbsoluteUrl(source.srcset);
-        }
+    if (activeImg && activeImg.src) {
+      imageEl = activeImg;
+    } else {
+      // fallback to any image inside .imgContainer
+      const fallbackImg = item.querySelector('.imgContainer img');
+      if (fallbackImg && fallbackImg.src) {
+        imageEl = fallbackImg;
       }
     }
-    // Text content: pull from .item-desc
+
+    // --- Text/Content Cell ---
     const desc = item.querySelector('.item-desc');
-    let cell2Content = [];
+    let cellContent = [];
     if (desc) {
-      // The anchor with title and text (ignore the CTA at bottom for now)
+      // The main block link wraps the meta, h3, p
       const mainLink = desc.querySelector('a:not(.btn-primary)');
       if (mainLink) {
-        // Promotion tag: .item_meta
+        // Promotion tag (optional)
         const meta = mainLink.querySelector('.item_meta');
-        if (meta && meta.textContent.trim()) {
-          // Use a <p> for meta/tag
-          cell2Content.push(meta);
-        }
-        // Title: <h3>
-        const h3 = mainLink.querySelector('h3');
-        if (h3) {
-          cell2Content.push(h3);
-        }
-        // Description: <p>
+        if (meta) cellContent.push(meta);
+        // Title (h3, required if present)
+        const title = mainLink.querySelector('h3');
+        if (title) cellContent.push(title);
+        // Description (p)
         const para = mainLink.querySelector('p');
-        if (para) {
-          cell2Content.push(para);
-        }
+        if (para) cellContent.push(para);
       }
-      // CTA: anchor.btn-primary
+      // CTA button (a.btn-primary)
       const cta = desc.querySelector('a.btn-primary');
-      if (cta) {
-        cell2Content.push(cta);
-      }
+      if (cta) cellContent.push(cta);
     }
-    cells.push([
-      img ? img : '',
-      cell2Content.length > 0 ? cell2Content : '',
+    
+    let contentCell;
+    if (cellContent.length === 0) {
+      contentCell = '';
+    } else if (cellContent.length === 1) {
+      contentCell = cellContent[0];
+    } else {
+      contentCell = cellContent;
+    }
+
+    rows.push([
+      imageEl || '',
+      contentCell
     ]);
   });
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

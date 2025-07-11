@@ -1,27 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract background-image URL from style attribute
-  let bgUrl = '';
+  // Extract background image URL from the style attribute
   const style = element.getAttribute('style') || '';
-  const bgMatch = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
-  if (bgMatch && bgMatch[1]) {
-    bgUrl = bgMatch[1].startsWith('http') ? bgMatch[1] : `${bgMatch[1].startsWith('/') ? '' : '/'}${bgMatch[1]}`;
+  let imageUrl = null;
+  const match = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
+  if (match && match[1]) {
+    imageUrl = match[1];
+    // If the URL is relative, convert to absolute
+    if (imageUrl.startsWith('/')) {
+      const a = document.createElement('a');
+      a.href = imageUrl;
+      imageUrl = a.href;
+    }
   }
 
-  let imgEl = null;
-  if (bgUrl) {
-    imgEl = document.createElement('img');
-    imgEl.src = bgUrl;
-    imgEl.alt = '';
+  let imageEl = '';
+  if (imageUrl) {
+    imageEl = document.createElement('img');
+    imageEl.src = imageUrl;
+    imageEl.alt = '';
   }
 
+  // Create the rows for the block table
   const headerRow = ['Hero (hero22)'];
-  // Row 2: image (if present)
-  const imageRow = [imgEl ? imgEl : ''];
-  // Row 3: content (empty, since provided HTML has no headings or CTAs)
-  const contentRow = [''];
-  const rows = [headerRow, imageRow, contentRow];
+  const imageRow = [imageEl];
+  const contentRow = ['']; // No heading, subheading, or CTA in this HTML
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const cells = [headerRow, imageRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

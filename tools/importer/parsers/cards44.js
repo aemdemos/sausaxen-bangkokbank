@@ -1,32 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as required by the block spec
-  const headerRow = ['Cards (cards44)'];
+  // Find all cards
+  const cardCols = element.querySelectorAll(':scope .row > .col-md-4');
+  const rows = [];
+  // Block header (matches exactly)
+  rows.push(['Cards (cards44)']);
 
-  // Find all card columns (immediate children under .row.row-center)
-  const cardCols = element.querySelectorAll('.row.row-center > .col-md-4');
+  cardCols.forEach((col) => {
+    // Get image element, prefer the <img>, fallback to background style
+    let imgEl = col.querySelector('.img-print');
+    if (!imgEl) {
+      const thumbDiv = col.querySelector('.thumb');
+      if (thumbDiv && thumbDiv.style.backgroundImage) {
+        const urlMatch = thumbDiv.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+        if (urlMatch && urlMatch[1]) {
+          const fallbackImg = document.createElement('img');
+          fallbackImg.src = urlMatch[1];
+          imgEl = fallbackImg;
+        }
+      }
+    }
 
-  const rows = Array.from(cardCols).map((col) => {
-    // Image: prefer <img> inside .thumb
-    const img = col.querySelector('.thumb img');
-    // Text content: .caption (title), .button-group (CTA)
-    const caption = col.querySelector('.caption');
-    const cta = col.querySelector('.button-group'); // Wraps the CTA link and any containing <p>
-
-    // Compose right cell contents
-    const contents = [];
-    if (caption) contents.push(caption);
-    if (cta) contents.push(cta);
-    // If both missing, fallback to all inner text (shouldn't happen in this structure)
-    if (!caption && !cta) contents.push(col);
-
-    return [img, contents];
+    // Text content cell
+    const textCell = document.createElement('div');
+    // Title (as heading)
+    const titleEl = col.querySelector('.caption .title-3');
+    if (titleEl) {
+      textCell.appendChild(titleEl);
+    }
+    // There is no description, but CTA link is present
+    const ctaLink = col.querySelector('.button-group a');
+    if (ctaLink) {
+      textCell.appendChild(ctaLink);
+    }
+    // Add the row: [image, text content]
+    rows.push([
+      imgEl || '',
+      textCell
+    ]);
   });
 
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    ...rows
-  ], document);
-
+  // Create and replace
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

@@ -1,83 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const headerRow = ['Cards (cards4)'];
-  const rows = [];
-
-  // Find the currently active year tab (with cards in .row)
+  // Find the active tab's .inner
   const activeInner = element.querySelector('.inner.active');
   if (!activeInner) return;
-  const cardCols = activeInner.querySelectorAll('.row > .col-md-4');
+  const row = activeInner.querySelector('.row');
+  if (!row) return;
+  const cardCols = Array.from(row.children).filter(col => col.classList.contains('col-md-4'));
+
+  const cells = [];
+  cells.push(['Cards (cards4)']);
 
   cardCols.forEach(col => {
-    // --- Image cell ---
-    let imgCell = null;
-    const img = col.querySelector('img');
-    if (img) {
-      imgCell = img;
-    } else {
-      // Fallback: try to get from background-image if present
-      const thumb = col.querySelector('.thumb-default .inner .thumb');
-      if (thumb && thumb.style.backgroundImage) {
-        const m = thumb.style.backgroundImage.match(/url\(["']?(.+?)["']?\)/);
-        if (m && m[1]) {
-          const fallbackImg = document.createElement('img');
-          fallbackImg.src = m[1];
-          imgCell = fallbackImg;
-        }
-      }
+    // Get the card container
+    const card = col.querySelector('.thumb-default.full');
+    if (!card) return;
+    // Get the image (first img inside .thumb)
+    const thumb = card.querySelector('.thumb');
+    let img = null;
+    if (thumb) {
+      img = thumb.querySelector('img');
     }
-    if (!imgCell) {
-      // If still not found, just use an empty div to keep table structure
-      imgCell = document.createElement('div');
-    }
+    // Get description, date, and CTA
+    const desc = card.querySelector('.caption .desc');
+    const date = card.querySelector('.button-group p');
+    const cta = card.querySelector('.button-group a.btn-primary');
 
-    // --- Text cell ---
-    const textCell = document.createElement('div');
-    // Title/Description - wrap first line as strong if possible
-    const desc = col.querySelector('.caption .desc');
+    // Build the text block as a single element
+    const textDiv = document.createElement('div');
     if (desc) {
-      // If desc contains <br>, split into title and rest
-      const html = desc.innerHTML;
-      const brIdx = html.indexOf('<br');
-      if (brIdx > -1) {
-        // Text before <br> is title
-        const strong = document.createElement('strong');
-        strong.textContent = desc.textContent.split('\n')[0].trim();
-        textCell.appendChild(strong);
-        textCell.appendChild(document.createElement('br'));
-        // Rest (after first <br>) is description
-        const frag = document.createElement('span');
-        frag.innerHTML = html.slice(brIdx + 4).replace(/^.*?>/, '').trim();
-        textCell.appendChild(frag);
-      } else {
-        // No <br>, treat all as title
-        const strong = document.createElement('strong');
-        strong.textContent = desc.textContent.trim();
-        textCell.appendChild(strong);
-      }
+      // Use strong for semantic heading inside the card text cell
+      const strong = document.createElement('strong');
+      strong.innerHTML = desc.innerHTML;
+      textDiv.appendChild(strong);
     }
-    // Date below
-    const date = col.querySelector('.button-group .promotion-valid');
     if (date) {
-      textCell.appendChild(document.createElement('br'));
-      textCell.appendChild(date);
+      textDiv.appendChild(document.createElement('br'));
+      textDiv.appendChild(document.createTextNode(date.textContent.trim()));
     }
-    // CTA link
-    const cta = col.querySelector('.button-group a.btn-primary');
     if (cta) {
-      textCell.appendChild(document.createElement('br'));
-      textCell.appendChild(cta);
+      textDiv.appendChild(document.createElement('br'));
+      textDiv.appendChild(cta);
     }
-
-    rows.push([imgCell, textCell]);
+    cells.push([img, textDiv]);
   });
 
-  // Only create the table if there is at least one card
-  if (rows.length > 0) {
-    const table = WebImporter.DOMUtils.createTable([
-      headerRow,
-      ...rows
-    ], document);
-    element.replaceWith(table);
-  }
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

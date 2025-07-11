@@ -1,37 +1,52 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare block header row exactly as in the example
-  const cells = [['Cards (cards16)']];
+  // The header row: always one cell
+  const headerRow = ['Cards (cards16)'];
 
-  // Collect all direct content of the block efficiently
-  // The block is a navigation/control bar, so we extract all visible and meaningful text (excluding scripts/styles)
-  // Reference the original elements directly, not clones
-  const contentNodes = [];
+  // Extract all the relevant text and nav links into a single content element
+  const contentWrapper = document.createElement('div');
 
-  // Grab all direct children for robustness
-  const children = Array.from(element.children);
-  children.forEach((child) => {
-    // If it has visible text (including nested anchors/divs/li/spans), reference the whole child
-    if (child.textContent && child.textContent.trim().length > 0) {
-      contentNodes.push(child);
-    }
-  });
-
-  // If no direct children have content, fallback to whole element's text
-  if (contentNodes.length === 0) {
-    const fallbackText = element.textContent.trim();
-    if (fallbackText) {
-      const p = document.createElement('p');
-      p.textContent = fallbackText;
-      contentNodes.push(p);
-    }
+  // Section title as heading if present
+  const sectionName = element.querySelector('#spFirstSectionName');
+  if (sectionName && sectionName.textContent.trim()) {
+    const heading = document.createElement('strong');
+    heading.textContent = sectionName.textContent.trim();
+    contentWrapper.appendChild(heading);
+    contentWrapper.appendChild(document.createElement('br'));
   }
 
-  // Only add a card row if there's visible content
-  if (contentNodes.length > 0) {
-    cells.push([contentNodes.length === 1 ? contentNodes[0] : contentNodes]);
+  // BACK button if present
+  const backBtn = element.querySelector('a.btn-back');
+  if (backBtn) {
+    contentWrapper.appendChild(backBtn);
+    contentWrapper.appendChild(document.createElement('br'));
   }
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Section nav links (as nav or just text with separators)
+  const sectionLinks = element.querySelectorAll('#ulSectionTitles a.ancSectionTitle');
+  if (sectionLinks.length > 0) {
+    const nav = document.createElement('div');
+    sectionLinks.forEach((a, idx) => {
+      nav.appendChild(a);
+      if (idx < sectionLinks.length - 1) {
+        nav.appendChild(document.createTextNode(' | '));
+      }
+    });
+    contentWrapper.appendChild(nav);
+  }
+
+  // If there's no content in the wrapper (edge case), use all text
+  if (!contentWrapper.textContent.trim()) {
+    contentWrapper.textContent = element.textContent.trim();
+  }
+
+  // Each row should match the Cards (cards16) variant: header = 1 col, each card = 2 cols (image, content). If no image, first cell empty.
+  // As per the prompt, even a single simple card should be two columns: ['', content].
+  const rows = [
+    headerRow,
+    ['', contentWrapper]
+  ];
+
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

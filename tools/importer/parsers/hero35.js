@@ -1,48 +1,73 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as per block name
+  // Header row: must match the block name exactly
   const headerRow = ['Hero (hero35)'];
 
-  // 2nd row: Background image (optional)
-  let imageRow = [''];
-  const img = element.querySelector('figure.thumb-large .thumb img');
-  if (img) {
-    imageRow = [img]; // Reference the existing <img>
-  }
+  // Get the figure containing the image and text
+  const figure = element.querySelector('figure');
 
-  // 3rd row: Title, subtitle, description, CTA
-  // We'll gather all relevant caption content in the correct order
-  const cellContent = [];
-  const figcaption = element.querySelector('figure.thumb-large figcaption.intro-info');
-  if (figcaption) {
-    // Title (h3 title-2)
-    const title = figcaption.querySelector('.title-2');
-    if (title) cellContent.push(title);
-
-    // Description div (may contain p, a, br, etc)
-    const desc = figcaption.querySelector('.desc');
-    if (desc) {
-      // Add all children (text, paragraphs, links, breaks) in order
-      desc.childNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          cellContent.push(node);
-        } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-          const p = document.createElement('p');
-          p.textContent = node.textContent.trim();
-          cellContent.push(p);
+  // --- Row 2: Background Image ---
+  let imageEl = null;
+  if (figure) {
+    // Try to find an <img> in the .thumb div
+    const thumbDiv = figure.querySelector('.thumb');
+    if (thumbDiv) {
+      // Prefer the <img> if present
+      const imgEl = thumbDiv.querySelector('img');
+      if (imgEl && imgEl.src) {
+        imageEl = imgEl;
+      } else {
+        // fallback to background-image style
+        const bg = thumbDiv.style.backgroundImage;
+        const match = bg && bg.match(/url\(["']?([^"')]+)["']?\)/);
+        if (match && match[1]) {
+          // Create an <img> only if no real <img> exists
+          imageEl = document.createElement('img');
+          imageEl.src = match[1];
         }
-      });
+      }
     }
   }
-  const textRow = [cellContent];
+  // Always put something, even if imageEl is null (edge case)
+  const row2 = [imageEl || ''];
 
-  // Compose the table as per instructions
+  // --- Row 3: Headline, Description, CTA ---
+  // The figcaption contains the text, headline, and CTA
+  let row3Content = [];
+  if (figure) {
+    const figcaption = figure.querySelector('figcaption');
+    if (figcaption) {
+      // Collect headline, description, cta (in order)
+      // Title (optional)
+      const title = figcaption.querySelector('h3, h1, h2');
+      if (title) row3Content.push(title);
+      // Description (could be a <div class="desc"><p>...</p></div>)
+      const desc = figcaption.querySelector('.desc');
+      if (desc) {
+        // Description is a <p>
+        const p = desc.querySelector('p');
+        if (p) row3Content.push(p);
+      }
+      // There may be additional content; ensure all relevant text is included
+      // If there is a button group, and it's not empty, add it
+      const btnGroup = figcaption.querySelector('.button-group');
+      if (btnGroup && btnGroup.children.length > 0) {
+        row3Content.push(...btnGroup.children);
+      }
+    }
+  }
+  if (row3Content.length === 0) row3Content = [''];
+  // Ensure all content is referenced (not cloned)
+  const row3 = [row3Content];
+
+  // Compose final block table, no Section Metadata required
   const cells = [
     headerRow,
-    imageRow,
-    textRow
+    row2,
+    row3
   ];
 
+  // Create and replace
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

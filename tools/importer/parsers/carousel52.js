@@ -1,56 +1,48 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the carousel block
+  // Find the carousel container
   const carousel = element.querySelector('[data-carousel-product]');
   if (!carousel) return;
 
-  // Find the slick-track containing slides
+  // The slick-track contains all the slides
   const track = carousel.querySelector('.slick-track');
   if (!track) return;
 
-  // Get all real slide items (exclude .slick-cloned)
-  const slides = Array.from(track.children).filter(div => div.classList.contains('item') && !div.classList.contains('slick-cloned'));
+  // Get all unique slides (skip clones by checking data-slick-index >= 0)
+  const slides = Array.from(track.children)
+    .filter(div => div.classList.contains('item') && Number(div.getAttribute('data-slick-index')) >= 0);
 
-  const cells = [['Carousel (carousel52)']];
+  // Header as per example: single cell, correct text
+  const rows = [['Carousel (carousel52)']];
 
+  // For each slide, create a row: [image, text content (if any)]
   slides.forEach(slide => {
-    // Image cell: first image in the slide
+    // Find the image (should be the first img)
     const img = slide.querySelector('img');
-    const imgCell = img || '';
 
-    // Text cell: collect all non-image content from the slide (deep)
-    // We'll create a fragment containing all content except <img> elements
-    const contentFragment = document.createDocumentFragment();
-    const walker = document.createTreeWalker(slide, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
-    let node = walker.currentNode;
-    while(node) {
-      if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'img') {
-        // skip images
-      } else if (node !== slide) {
-        // Only add top-level non-img nodes (skip the slide root)
-        // If it's a text node
-        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-          const p = document.createElement('p');
-          p.textContent = node.textContent.trim();
-          contentFragment.appendChild(p);
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-          // Only add if parent is slide or not inside <img>
-          if (!node.closest('img')) {
-            contentFragment.appendChild(node);
-          }
-        }
+    // Try to find possible overlay/caption content inside the slide
+    // Collect all direct children except for the image element
+    const overlayCandidates = Array.from(slide.children).filter(el => el !== img);
+    // If no direct children except img, also check for text nodes
+    let textContent = '';
+    if (overlayCandidates.length > 0) {
+      // Use all overlay candidates together if multiple
+      textContent = overlayCandidates.length === 1 ? overlayCandidates[0] : overlayCandidates;
+    } else {
+      // Fallback: if there's meaningful text directly (outside children)
+      // Collect all text nodes that are not just whitespace
+      const textNodes = Array.from(slide.childNodes).filter(node => 
+        node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0
+      );
+      if (textNodes.length > 0) {
+        // Join all text nodes as a single string
+        textContent = textNodes.map(node => node.textContent.trim()).join(' ');
       }
-      node = walker.nextSibling();
     }
-    // If contentFragment has any children, use it as the text cell
-    let textCell = '';
-    if (contentFragment.childNodes.length > 0) {
-      textCell = Array.from(contentFragment.childNodes);
-    }
-    cells.push([imgCell, textCell]);
+    rows.push([img, textContent]);
   });
 
-  // Create the block table and replace the original element
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Create table and replace the original element
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

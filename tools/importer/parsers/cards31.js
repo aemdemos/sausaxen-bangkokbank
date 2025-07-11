@@ -1,56 +1,34 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row
+  // Header row as in example
   const headerRow = ['Cards (cards31)'];
-  const rows = [];
-  // Each card is a .col-md-4
-  const cards = element.querySelectorAll('.col-md-4');
-  cards.forEach((card) => {
-    // Get image element (not a clone)
-    const img = card.querySelector('.thumb img');
-    // Build array for text content
-    const cellContent = [];
-    // Title (h3)
-    const caption = card.querySelector('.caption');
+  // Find all top-level card columns
+  const row = element.querySelector('.row.row-center');
+  if (!row) return;
+  const cardCols = Array.from(row.querySelectorAll(':scope > .col-md-4'));
+  const rows = cardCols.map(col => {
+    // 1st cell: image (mandatory)
+    const img = col.querySelector('.thumb img');
+    // 2nd cell: text content (title, description, CTA)
+    const textContent = [];
+    const caption = col.querySelector('.caption');
     if (caption) {
-      const h3 = caption.querySelector('h3');
-      if (h3) {
-        // Use strong for "visual heading", matching example
-        const strong = document.createElement('strong');
-        strong.textContent = h3.textContent.trim();
-        cellContent.push(strong);
-      }
-      // Description: All <p> in caption
-      const paragraphs = caption.querySelectorAll('p');
-      paragraphs.forEach((p) => {
-        // Ignore empty content or whitespace
-        if (p.textContent && p.textContent.trim().length > 0) {
-          // Use the existing element, but remove any trailing <br>
-          if (
-            p.lastChild &&
-            p.lastChild.nodeType === Node.ELEMENT_NODE &&
-            p.lastChild.tagName === 'BR'
-          ) {
-            p.removeChild(p.lastChild);
-          }
-          cellContent.push(document.createElement('br'));
-          cellContent.push(p);
-        }
-      });
+      // Title (h3)
+      const heading = caption.querySelector('h3');
+      if (heading) textContent.push(heading);
+      // Description (p)
+      const desc = caption.querySelector('p');
+      if (desc) textContent.push(desc);
     }
-    // CTA: .button-group a
-    const cta = card.querySelector('.button-group a');
-    if (cta) {
-      // Place on a new line
-      cellContent.push(document.createElement('br'));
-      cellContent.push(cta);
-    }
-    rows.push([
-      img,
-      cellContent
-    ]);
+    // Call-to-Action link (if present)
+    const cta = col.querySelector('.button-group a');
+    if (cta) textContent.push(cta);
+    return [img, textContent];
   });
-  const tableArr = [headerRow, ...rows];
-  const block = WebImporter.DOMUtils.createTable(tableArr, document);
-  element.replaceWith(block);
+  if (rows.length === 0) return;
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows
+  ], document);
+  element.replaceWith(table);
 }
