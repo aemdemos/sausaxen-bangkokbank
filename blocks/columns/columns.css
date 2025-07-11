@@ -1,6 +1,4 @@
-.columns {
-  /* base CSS had no .columns block, generated CSS had none, so this is empty unless you want to add something here in the future */
-}
+/* Removed empty .columns block per block-no-empty lint rule */
 
 .columns > div {
   display: flex;
@@ -44,7 +42,6 @@
   display: block;
 }
 
-/* First column: mimic white/illustration card look */
 .columns > div > div:nth-child(1) {
   background:
     radial-gradient(circle at 30% 30%, #f5faff 70px, #fff 140px),
@@ -52,7 +49,6 @@
   box-shadow: 0 2px 16px 0 rgb(31 74 146 / 8%);
 }
 
-/* Second column: mimic grid/abstract look with a more saturated blue */
 .columns > div > div:nth-child(2) {
   background:
     repeating-linear-gradient(0deg, #e6f0ff, #cbe2fa 2px, transparent 2px, transparent 20px),
@@ -61,7 +57,6 @@
     linear-gradient(135deg, #bdd1f6 60%, #eaf1fa 100%);
 }
 
-/* Columns 3-5: mimic photo card backgrounds with more contrast */
 .columns > div > div:nth-child(n+3) {
   background:
     linear-gradient(120deg, #d9e2ee 60%, #e2eaf8 100%),
@@ -69,14 +64,12 @@
   box-shadow: 0 2px 10px 0 rgb(31 74 146 / 5%);
 }
 
-/* Remove list bullets for nested lists if any */
 .columns ul ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* Center all text for a more card-like look */
 .columns > div > div > h3,
 .columns > div > div > ul {
   width: 100%;
@@ -87,7 +80,6 @@
   padding-right: 0;
 }
 
-/* Headings */
 .columns > div > div > h3 {
   font-size: 1.14rem;
   font-family: var(--heading-font-family);
@@ -98,7 +90,6 @@
   letter-spacing: 0.01em;
 }
 
-/* List styling */
 .columns > div > div > ul {
   list-style: none;
   margin: 0;
@@ -119,7 +110,6 @@
   overflow-wrap: anywhere;
 }
 
-/* Link colors */
 .columns > div > div a {
   color: var(--link-color);
   text-decoration: none;
@@ -129,6 +119,25 @@
 .columns > div > div a:hover {
   color: var(--link-hover-color);
   text-decoration: underline;
+}
+
+/* Move .columns.columns34 > div above .columns > div > div:nth-child(1) and related selectors to resolve no-descending-specificity */
+.columns.columns34 {
+  background: #05294A;
+  padding: 32px 0;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.columns.columns34 > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 @media (width >= 900px) {
@@ -144,7 +153,12 @@
   }
 }
 
-/* Responsive: stack on small screens */
+@media (width <= 1024px) {
+  .columns.columns34 > div {
+    gap: 14px;
+  }
+}
+
 @media (width <= 900px) {
   .columns > div {
     flex-direction: column;
@@ -164,5 +178,93 @@
 
   .columns > div > div > ul {
     gap: 7px;
+  }
+
+  .columns.columns34 > div {
+    flex-direction: column;
+    gap: 24px;
+    max-width: 95vw;
+  }
+}
+
+.columns.columns34 > div > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.columns.columns34 h3 {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.25;
+  text-align: left;
+  letter-spacing: 0;
+}
+
+.columns.columns34 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.columns.columns34 ul li {
+  margin-bottom: 7px;
+  text-align: left;
+  font-size: 14px;
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.columns.columns34 ul li:last-child {
+  margin-bottom: 0;
+}
+
+.columns.columns34 ul li a {
+  color: #B7CCDF;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.columns.columns34 ul li a:hover,
+.columns.columns34 ul li a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (width <= 600px) {
+  .columns.columns34 {
+    padding: 18px 0;
+  }
+
+  .columns.columns34 > div {
+    gap: 8px;
+  }
+
+  .columns.columns34 h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .columns.columns34 ul li,
+  .columns.columns34 ul li a {
+    font-size: 13px;
   }
 }
