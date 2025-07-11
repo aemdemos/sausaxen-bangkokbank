@@ -1,4 +1,5 @@
 
+
 /* Removed empty .columns block per block-no-empty lint rule */
 
 .columns {
@@ -129,11 +130,10 @@
 
 /* Move .columns.columns34 > div above .columns > div > div:nth-child(1) and related selectors to resolve no-descending-specificity */
 .columns.columns34 {
-  background: #05294A;
+  background: #06335b;
   padding: 32px 0;
   width: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 .columns.columns34 > div {
@@ -431,4 +431,12 @@
 .columns {
   background: transparent;
   padding: 0;
+}
+
+/* --- MERGED SELECTOR FOR .columns.columns34 --- */
+.columns.columns34 {
+  background: #06335b;
+  padding: 32px 0;
+  width: 100%;
+  box-sizing: border-box;
 }
