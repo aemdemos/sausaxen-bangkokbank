@@ -244,6 +244,7 @@
   line-height: 1.25;
 }
 
+.cards .button,
 .cards.cards1 ul > li .button-container .button,
 .cards.cards15 > ul > li > .cards-card-body:last-child .button {
   background: none;
@@ -597,13 +598,112 @@
   }
 }
 
-/* --- Start of Merged Selector --- */
-
-.cards.cards3 {
+.cards {
   display: flex;
   justify-content: center;
-  background: #fff;
-  padding: 48px 0;
+  background: #f8f9fb;
+  padding: 40px 0;
 }
 
-/* --- End of Merged Selector --- */
+.cards > ul {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cards > ul > li {
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgb(24 49 92 / 12%);
+  overflow: hidden;
+  width: 100%;
+  min-width: 340px;
+  max-width: 1100px;
+  margin: 0 auto 32px;
+  border: none;
+}
+
+.cards > ul > li > .cards-card-body:first-child {
+  background: #18315c;
+  min-width: 180px;
+  width: 220px;
+  max-width: 240px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px 0 0 14px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cards > ul > li > .cards-card-body:last-child {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 40px 42px 40px 32px;
+  background: #fff;
+  border-radius: 0 14px 14px 0;
+  min-height: 200px;
+  box-sizing: border-box;
+}
+
+.cards > ul > li > .cards-card-body:last-child .button-container {
+  width: auto;
+  align-self: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.cards > ul > li > .cards-card-body:last-child .button {
+  min-width: 148px;
+  max-width: 220px;
+  width: auto;
+  padding: 14px 36px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #006cff;
+  color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgb(0 108 255 / 10%);
+  border: none;
+  margin: 0;
+  transition: background 0.2s;
+  letter-spacing: 0.4px;
+  align-self: flex-start;
+}
+
+@media (width <= 799px) {
+  .cards > ul > li {
+    flex-direction: column;
+    max-width: 98vw;
+    min-width: 0;
+  }
+
+  .cards > ul > li > .cards-card-body:first-child {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 100px;
+    height: 100px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .cards > ul > li > .cards-card-body:last-child {
+    border-radius: 0 0 14px 14px;
+    padding: 28px 18px;
+    min-height: 100px;
+  }
+}
+
+.cards .button {
+  margin: 0;
+}
