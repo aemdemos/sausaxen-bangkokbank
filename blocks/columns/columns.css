@@ -1,12 +1,29 @@
-
-
-/* Removed empty .columns block per block-no-empty lint rule */
+/* --- CLEANED AND VALIDATED CSS --- */
 
 .columns {
   background: transparent;
   padding: 0;
 }
 
+.columns.columns7 {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+.columns.columns34 {
+  background: #06335b;
+  padding: 32px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.columns img {
+  width: 100%;
+}
+
+/* --- Shared Layouts for Columns --- */
 .columns > div {
   display: flex;
   flex-direction: row;
@@ -18,10 +35,7 @@
   box-sizing: border-box;
 }
 
-.columns img {
-  width: 100%;
-}
-
+/* --- Card Styles --- */
 .columns > div > div {
   order: 1;
   flex: 1 1 0;
@@ -128,14 +142,7 @@
   text-decoration: underline;
 }
 
-/* Move .columns.columns34 > div above .columns > div > div:nth-child(1) and related selectors to resolve no-descending-specificity */
-.columns.columns34 {
-  background: #06335b;
-  padding: 32px 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
+/* --- columns34 Block --- */
 .columns.columns34 > div {
   display: flex;
   flex-direction: row;
@@ -144,53 +151,6 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-}
-
-@media (width >= 900px) {
-  .columns > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
-  }
-
-  .columns > div > div {
-    flex: 1;
-    order: unset;
-  }
-}
-
-@media (width <= 1024px) {
-  .columns.columns34 > div {
-    gap: 14px;
-  }
-}
-
-@media (width <= 900px) {
-  .columns > div {
-    flex-direction: column;
-    gap: 16px;
-    min-height: 0;
-  }
-
-  .columns > div > div {
-    min-height: 0;
-    padding: 18px 4px 16px;
-  }
-
-  .columns > div > div > h3 {
-    font-size: 1rem;
-    margin-bottom: 8px;
-  }
-
-  .columns > div > div > ul {
-    gap: 7px;
-  }
-
-  .columns.columns34 > div {
-    flex-direction: column;
-    gap: 24px;
-    max-width: 95vw;
-  }
 }
 
 .columns.columns34 > div > div {
@@ -255,6 +215,195 @@
   text-decoration: underline;
 }
 
+/* --- columns7 Block --- */
+.columns.columns7 > div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 380px;
+  box-sizing: border-box;
+  background: none;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.columns.columns7 > div > div {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 380px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: none;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  border-radius: 0;
+  box-shadow: none;
+  max-width: none;
+}
+
+.columns.columns7 > div > div:first-child {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0;
+}
+
+.columns.columns7 > div > div:first-child > div {
+  padding: 56px 0 56px 64px;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.columns.columns7 h4 {
+  color: #191919;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--heading-font-family);
+  margin: 0 0 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.columns.columns7 h2 {
+  color: #191919;
+  font-size: 36px;
+  font-weight: 700;
+  font-family: var(--heading-font-family);
+  margin: 0 0 16px;
+  line-height: 1.15;
+  text-align: left;
+}
+
+.columns.columns7 p {
+  color: #757575;
+  font-size: 16px;
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  margin: 0 0 32px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.columns.columns7 p.button-container {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.columns.columns7 a.button {
+  background: #1663E7;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--body-font-family);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  text-align: center;
+  box-shadow: none;
+  margin: 0;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.columns.columns7 a.button:hover,
+.columns.columns7 a.button:focus {
+  background: #0d40a5;
+}
+
+.columns.columns7 > div > div:last-child {
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80') center center / cover no-repeat;
+  min-height: 380px;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+}
+
+@media (width >= 900px) {
+  .columns > div {
+    align-items: center;
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .columns > div > div {
+    flex: 1;
+    order: unset;
+  }
+}
+
+@media (width <= 1024px) {
+  .columns.columns34 > div {
+    gap: 14px;
+  }
+}
+
+@media (width <= 900px) {
+  .columns > div {
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+  }
+
+  .columns > div > div {
+    min-height: 0;
+    padding: 18px 4px 16px;
+  }
+
+  .columns > div > div > h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .columns > div > div > ul {
+    gap: 7px;
+  }
+
+  .columns.columns34 > div {
+    flex-direction: column;
+    gap: 24px;
+    max-width: 95vw;
+  }
+
+  .columns.columns7 > div {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .columns.columns7 > div > div,
+  .columns.columns7 > div > div:first-child,
+  .columns.columns7 > div > div:last-child {
+    min-height: 180px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .columns.columns7 > div > div:first-child > div {
+    padding: 24px 8px;
+  }
+
+  .columns.columns7 h2 {
+    font-size: 28px;
+  }
+}
+
 @media (width <= 600px) {
   .columns.columns34 {
     padding: 18px 0;
@@ -273,170 +422,19 @@
   .columns.columns34 ul li a {
     font-size: 13px;
   }
-}
 
-/* --- GENERATED CSS BELOW --- */
-
-.columns {
-  background: transparent;
-  padding: 0;
-}
-
-/* Layout five columns side by side, tight gap, align by card height */
-.columns > div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Card style: all columns */
-.columns > div > div {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 16px 0 rgb(90 143 230 / 8%);
-  min-width: 178px;
-  max-width: 202px;
-  height: 205px;
-  padding: 18px 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* vertical centering of inner content */
-  box-sizing: border-box;
-  text-align: center;
-  margin: 0;
-  overflow: hidden;
-  position: relative;
-  transition: box-shadow 0.18s;
-}
-
-/* Subtle visual backgrounds for first two columns only, with darker text for contrast */
-.columns > div > div:nth-child(1) {
-  background:
-    linear-gradient(120deg, #f5faff 75%, #eaf1fa 100%);
-}
-
-.columns > div > div:nth-child(2) {
-  background:
-    repeating-linear-gradient(0deg, #e6f0ff, #cbe2fa 2px, transparent 2px, transparent 18px),
-    repeating-linear-gradient(90deg, #e6f0ff, #cbe2fa 2px, transparent 2px, transparent 18px),
-    linear-gradient(120deg, #bdd1f6 60%, #eaf1fa 100%);
-}
-
-/* Headings: stronger color for contrast, centered */
-.columns > div > div > h3 {
-  color: #234179;
-  font-family: var(--heading-font-family);
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0 0 10px;
-  width: 100%;
-  text-align: center;
-  letter-spacing: 0.01em;
-}
-
-/* List: tight spacing, centered */
-.columns > div > div > ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-  width: 100%;
-}
-
-/* List items: centered, clean */
-.columns > div > div > ul > li {
-  text-align: center;
-  font-size: 1rem;
-  font-family: var(--body-font-family);
-  color: #234179;
-  font-weight: 400;
-  line-height: 1.45;
-  margin: 0;
-}
-
-/* Links: modern style, high contrast */
-.columns > div > div > ul > li a {
-  color: #234179;
-  text-decoration: none;
-  border-radius: 4px;
-  padding: 2px 4px;
-  display: inline-block;
-  transition: color 0.16s, background 0.16s;
-}
-
-.columns > div > div > ul > li a:hover,
-.columns > div > div > ul > li a:focus {
-  color: #3b63fb;
-  background: #f5faff;
-}
-
-/* Responsive tweaks: stack vertically on mobile, adjust sizing */
-@media (width <= 1200px) {
-  .columns > div {
-    gap: 6px;
+  .columns.columns7 > div > div:first-child > div {
+    padding: 14px 4px;
   }
 
-  .columns > div > div {
-    min-width: 120px;
-    max-width: 1fr;
-    padding: 10px 6px;
-    height: 150px;
-  }
-}
-
-@media (width <= 900px) {
-  .columns > div {
-    flex-wrap: wrap;
-    gap: 6px;
+  .columns.columns7 h2 {
+    font-size: 22px;
   }
 
-  .columns > div > div {
-    min-width: 44vw;
-    max-width: 100vw;
-    height: 120px;
+  .columns.columns7 > div > div,
+  .columns.columns7 > div > div:first-child,
+  .columns.columns7 > div > div:last-child {
+    min-height: 120px;
+    padding: 0;
   }
-}
-
-@media (width <= 600px) {
-  .columns > div {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .columns > div > div {
-    min-width: 0;
-    width: 100%;
-    max-width: 100%;
-    padding: 7px 2px;
-    height: auto;
-    min-height: 80px;
-  }
-
-  .columns > div > div > h3 {
-    font-size: 0.97rem;
-    margin-bottom: 4px;
-  }
-}
-
-/* --- MERGED SELECTOR FOR .columns --- */
-
-.columns {
-  background: transparent;
-  padding: 0;
-}
-
-/* --- MERGED SELECTOR FOR .columns.columns34 --- */
-.columns.columns34 {
-  background: #06335b;
-  padding: 32px 0;
-  width: 100%;
-  box-sizing: border-box;
 }
