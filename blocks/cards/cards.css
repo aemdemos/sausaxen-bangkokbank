@@ -1,3 +1,4 @@
+
 /* Core grid for cards */
 .cards > ul {
   list-style: none;
@@ -552,38 +553,46 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
   .cards.cards8 > ul > li {
     max-width: 100%;
     border-radius: 6px;
   }
+
   .cards.cards8 > ul > li > .cards-card-body:first-child {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     height: 90px;
   }
+
   .cards.cards8 > ul > li > .cards-card-body:last-child {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     padding: 0 10px 10px;
   }
+
   .cards.cards38 ul {
     grid-template-columns: 1fr;
     gap: 10px;
   }
+
   .cards.cards38 ul > li {
     max-width: 100%;
     min-height: 0;
     border-radius: 8px;
   }
+
   .cards.cards38 ul > li > .cards-card-body:first-child {
     height: 60px;
     border-radius: 8px 8px 0 0;
   }
+
   .cards.cards38 ul > li > .cards-card-body:last-child {
     border-radius: 0 0 8px 8px;
     padding: 10px 8px 8px;
     min-height: 50px;
   }
+
   .cards.cards38 ul > li .button-container .button {
     width: 100%;
     min-width: 0;
@@ -595,11 +604,13 @@
   .cards.cards15 > ul > li {
     min-height: 260px;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:first-child {
     min-width: 180px;
     min-height: 100px;
     aspect-ratio: 4 / 3;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:last-child {
     padding: 32px 14px 28px 10px;
     max-width: 100%;
@@ -611,11 +622,13 @@
   .cards.cards15 > ul {
     gap: 22px;
   }
+
   .cards.cards15 > ul > li {
     flex-direction: column;
     min-height: 0;
     border-radius: 3px;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:first-child {
     border-radius: 3px 3px 0 0;
     min-width: 140px;
@@ -624,36 +637,44 @@
     flex-basis: auto;
     aspect-ratio: 4/3;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 3px 3px;
     padding: 15px 6px 18px;
     margin-left: 0;
     max-width: 100%;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:first-child {
     width: 56px;
     height: 72px;
     margin-top: 0;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:last-child {
     padding: 1px 4px 2px;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:last-child h3 {
     font-size: 1.04rem;
   }
+
   .cards.cards37 > ul {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
+
   .cards.cards37 > ul > li {
     min-height: 140px;
     aspect-ratio: 1/1;
   }
+
   .cards.cards37 > ul > li > .cards-card-body:first-child {
     margin-top: 10px;
     height: 38px;
     min-height: 38px;
   }
+
   .cards.cards37 > ul > li > .cards-card-body:first-child::before {
     width: 32px;
     height: 32px;
@@ -666,6 +687,7 @@
     max-width: 98vw;
     min-width: 0;
   }
+
   .cards > ul > li > .cards-card-body:first-child {
     width: 100%;
     max-width: 100%;
@@ -674,6 +696,7 @@
     height: 100px;
     border-radius: 14px 14px 0 0;
   }
+
   .cards > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 14px 14px;
     padding: 28px 18px;
@@ -686,51 +709,63 @@
     grid-template-columns: 1fr;
     gap: 10px;
   }
+
   .cards.cards2 > ul > li {
     border-radius: 6px;
   }
+
   .cards.cards2 > ul > li > .cards-card-body:first-child {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     height: 60px;
   }
+
   .cards.cards2 > ul > li > .cards-card-body:last-child {
     padding: 10px 5px;
   }
+
   .cards.cards31 > ul > li {
     border-radius: 6px;
     min-height: 62px;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:first-child {
     border-radius: 6px;
     width: 25px;
     height: 30px;
     margin-top: 0;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 6px 6px;
     padding: 0 1px 1px;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:last-child h3 {
     font-size: 0.93rem;
   }
+
   .cards.cards37 > ul {
     grid-template-columns: 1fr;
     gap: 14px;
   }
+
   .cards.cards37 > ul > li {
     min-height: 100px;
     border-radius: 8px;
   }
+
   .cards.cards37 > ul > li > .cards-card-body:first-child {
     margin-top: 6px;
     height: 20px;
     min-height: 20px;
   }
+
   .cards.cards37 > ul > li > .cards-card-body:first-child::before {
     width: 20px;
     height: 20px;
   }
+
   .cards.cards37 > ul > li::after {
     left: 10px;
     bottom: 10px;
@@ -897,15 +932,18 @@
     grid-template-columns: repeat(2, minmax(180px, 1fr));
     gap: 8px;
   }
+
   .cards.cards39 > ul > li {
     border-radius: 8px;
     min-height: 0;
   }
+
   .cards.cards39 > ul > li > .cards-card-body:first-child {
     height: 80px;
     min-height: 80px;
     border-radius: 8px 8px 0 0;
   }
+
   .cards.cards39 > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 8px 8px;
     padding: 12px 10px 16px;
@@ -917,20 +955,24 @@
     grid-template-columns: 1fr;
     gap: 7px;
   }
+
   .cards.cards39 > ul > li {
     border-radius: 6px;
     max-width: 100%;
     min-height: 0;
   }
+
   .cards.cards39 > ul > li > .cards-card-body:first-child {
     height: 52px;
     min-height: 52px;
     border-radius: 6px 6px 0 0;
   }
+
   .cards.cards39 > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 6px 6px;
     padding: 8px 7px 11px;
   }
+
   .cards.cards39 > ul > li > .cards-card-body:last-child .button-container .button {
     width: 100%;
     font-size: 14px;
@@ -941,4 +983,159 @@
 .cards.cards39 {
   width: 100%;
   margin: 0 auto;
+}
+
+/* ======== MERGED .cards.cards46 ======== */
+
+.cards.cards46 {
+}
+
+.cards.cards46 > ul {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  place-items: stretch stretch;
+}
+
+.cards.cards46 > ul > li {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgb(24 49 92 / 4%);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  min-height: 360px;
+}
+
+.cards.cards46 > ul > li > .cards-card-body:first-child {
+  width: 100%;
+  height: 144px;
+  background: #d8dce3;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* Content section */
+.cards.cards46 > ul > li > .cards-card-body:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 14px 24px 16px;
+  background: #fff;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Heading styles */
+.cards.cards46 > ul > li > .cards-card-body:last-child > h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+  line-height: 1.22;
+  text-align: left;
+  letter-spacing: 0;
+  padding: 0;
+  word-break: break-word;
+  position: relative;
+}
+
+/* Divider under heading */
+.cards.cards46 > ul > li > .cards-card-body:last-child > h3::after {
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: #e0e0e0;
+  border-radius: 1px;
+  margin: 10px 0 16px;
+}
+
+/* Button container styles */
+.cards.cards46 > ul > li > .cards-card-body:last-child .button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Button styles - specific override */
+.cards.cards46 > ul > li > .cards-card-body:last-child .button-container .button {
+  width: 100%;
+  background: #0070f3;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  padding: 12px 0;
+  box-shadow: none;
+  text-align: center;
+  display: block;
+  margin: 0;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+  max-width: none;
+}
+
+.cards.cards46 > ul > li > .cards-card-body:last-child .button-container .button:hover,
+.cards.cards46 > ul > li > .cards-card-body:last-child .button-container .button:focus {
+  background: #0059c9;
+}
+
+/* Responsive: 3 columns on <=1200px */
+@media (width <= 1200px) {
+  .cards.cards46 > ul {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+  }
+}
+
+/* Responsive: 2 columns on <=900px */
+@media (width <= 900px) {
+  .cards.cards46 > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+  }
+}
+
+/* Responsive: 1 column on <=600px */
+@media (width <= 600px) {
+  .cards.cards46 > ul {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .cards.cards46 > ul > li {
+    border-radius: 7px;
+    min-height: 0;
+  }
+
+  .cards.cards46 > ul > li > .cards-card-body:first-child {
+    height: 74px;
+    border-radius: 7px 7px 0 0;
+  }
+
+  .cards.cards46 > ul > li > .cards-card-body:last-child {
+    border-radius: 0 0 7px 7px;
+    padding: 8px 12px 12px;
+  }
+
+  .cards.cards46 > ul > li > .cards-card-body:last-child .button-container .button {
+    font-size: 15px;
+    padding: 10px 0;
+  }
 }
