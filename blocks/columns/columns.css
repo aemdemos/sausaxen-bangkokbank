@@ -1,4 +1,5 @@
 
+
 /* --- Base Columns Styles --- */
 
 .columns {
@@ -15,10 +16,11 @@
 
 /* Merged .columns.columns34 block starts here */
 .columns.columns34 {
-  background: #00294F;
-  padding: 32px 0;
+  background: #032B4A;
+  padding: 40px 0;
   width: 100%;
   box-sizing: border-box;
+  display: block;
 }
 
 /* Merged .columns.columns34 block ends here */
@@ -366,33 +368,35 @@
 
 /* --- Generated Columns34 Styles --- */
 
-/* Merged .columns.columns34 block starts here */
-.columns.columns34 {
-  background: #00294F;
-  padding: 32px 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Merged .columns.columns34 block ends here */
 
 .columns.columns34 > div {
   display: grid;
   grid-template-columns: repeat(5, minmax(140px, max-content));
-  gap: 24px;
+  gap: 60px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
 
+@media (width <= 1100px) {
+  .columns.columns34 > div {
+    gap: 32px;
+    padding: 0 16px;
+  }
+}
+
 @media (width <= 900px) {
   .columns.columns34 > div {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 36px;
+    padding: 0 8px;
   }
 }
 
 .columns.columns34 > div > div {
+  min-width: 0;
+  max-width: none;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -400,10 +404,10 @@
 
 .columns.columns34 h3 {
   color: #fff;
-  font-family: var(--heading-font-family);
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0 0 12px;
+  font-family: var(--heading-font-family), Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 16px;
   line-height: 1.25;
   text-align: left;
   letter-spacing: 0;
@@ -420,12 +424,13 @@
 }
 
 .columns.columns34 ul li {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-size: 15px;
-  font-family: var(--body-font-family);
+  font-family: var(--body-font-family), Arial, Helvetica, sans-serif;
   font-weight: 400;
   line-height: 1.6;
   text-align: left;
+  color: #C8D8E4;
   word-break: break-word;
 }
 
@@ -434,14 +439,13 @@
 }
 
 .columns.columns34 ul li a {
-  color: #D1E1EF;
+  color: #C8D8E4;
   text-decoration: none;
   font-size: 15px;
-  font-family: var(--body-font-family);
+  font-family: var(--body-font-family), Arial, Helvetica, sans-serif;
   font-weight: 400;
   transition: color 0.2s;
   line-height: 1.6;
-  word-break: break-word;
 }
 
 .columns.columns34 ul li a:hover,
@@ -449,3 +453,14 @@
   color: #fff;
   text-decoration: underline;
 }
+
+/* --- Merged columns.columns34 selector --- */
+
+.columns.columns34 {
+  background: #032B4A;
+  padding: 40px 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
