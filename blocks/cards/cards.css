@@ -1,3 +1,4 @@
+
 /* Core grid for cards */
 .cards {
   background: #f7f7f7;
@@ -828,4 +829,156 @@
 .cards.cards43 .button:focus,
 .cards.cards43 a.button:focus {
   background: #1252b9;
+}
+
+.cards.cards44 {
+  background: #f5f6fa;
+  padding: 40px 0;
+}
+
+/* 1. Grid Layout for Cards */
+.cards.cards44 > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* 2. Card Container */
+.cards.cards44 > ul > li {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+  overflow: hidden;
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  transition: box-shadow 0.2s;
+}
+
+/* 3. Card Image Area (first .cards-card-body is always the image - empty div for bg) */
+.cards.cards44 > ul > li > .cards-card-body:first-child {
+  height: 140px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #e5e5e5;
+  margin: 0;
+  padding: 0;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Example images (replace with your own images as needed) */
+.cards.cards44 > ul > li:nth-child(1) > .cards-card-body:first-child {
+  background-image: url('image1.jpg');
+}
+
+.cards.cards44 > ul > li:nth-child(2) > .cards-card-body:first-child {
+  background-image: url('image2.jpg');
+}
+
+.cards.cards44 > ul > li:nth-child(3) > .cards-card-body:first-child {
+  background-image: url('image3.jpg');
+}
+
+/* 4. Card Content Area */
+.cards.cards44 > ul > li > .cards-card-body:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 18px 20px 14px;
+  flex: 1 1 auto;
+  background: #fff;
+  min-height: 90px;
+  box-sizing: border-box;
+}
+
+/* 5. Card Heading */
+.cards.cards44 > ul > li > .cards-card-body:nth-child(2) h3 {
+  font-size: 1.11rem;
+  font-weight: bold;
+  color: #000;
+  margin: 0 0 8px;
+  line-height: 1.3;
+  text-align: left;
+  letter-spacing: 0.01em;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  word-break: break-word;
+}
+
+/* 6. "See more" Link Styling */
+.cards.cards44 > ul > li > .cards-card-body:nth-child(2) .button-container {
+  margin-top: 0;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  display: block;
+}
+
+.cards.cards44 > ul > li > .cards-card-body:nth-child(2) .button-container .button {
+  background: none;
+  color: #06F;
+  text-decoration: underline;
+  font-size: 1rem;
+  font-weight: 400;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  min-width: 0;
+  width: auto;
+  cursor: pointer;
+  vertical-align: middle;
+  line-height: 1.28;
+  position: relative;
+
+  /* Space for inline arrow (simulate with background-image SVG) */
+  padding-right: 16px;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%230066FF" stroke-width="2" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M2 5h6M6 3l2 2-2 2"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 13px;
+}
+
+.cards.cards44 > ul > li > .cards-card-body:nth-child(2) .button-container .button:hover,
+.cards.cards44 > ul > li > .cards-card-body:nth-child(2) .button-container .button:focus {
+  color: #1d3ecf;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%231d3ecf" stroke-width="2" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M2 5h6M6 3l2 2-2 2"/></svg>');
+}
+
+/* 7. Responsive Adjustments */
+@media (width <= 900px) {
+  .cards.cards44 {
+    padding: 16px 0;
+  }
+
+  .cards.cards44 > ul {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 430px;
+  }
+
+  .cards.cards44 > ul > li > .cards-card-body:first-child {
+    height: 80px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .cards.cards44 > ul > li > .cards-card-body:nth-child(2) {
+    padding: 10px 8px 6px;
+  }
+
+  .cards.cards44 > ul > li {
+    border-radius: 6px;
+  }
 }
