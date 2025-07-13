@@ -106,7 +106,80 @@
 
 /* ========== ORDERED ACCORDION LABELS FOR NO-DESCENDING-SPECIFICITY ========== */
 
-/* Accordion 11 label styles (comes first for specificity) */
+/* Accordion 17 label styles (should come before accordion11 focus/hover/open for specificity) */
+.accordion.accordion17 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 11px 0;
+  margin: 0;
+  min-height: 32px;
+  background: #fff;
+  border: none;
+  outline: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: #222;
+  user-select: none;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  padding-right: 0;
+  padding-left: 0;
+  margin-left: 0;
+  box-sizing: border-box;
+}
+
+.accordion.accordion17 details > summary {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.accordion.accordion17 summary.accordion-item-label::-webkit-details-marker {
+  display: none;
+}
+
+.accordion.accordion17 summary.accordion-item-label > p {
+  margin: 0;
+  color: #222;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.2;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+  margin-left: 0;
+  box-sizing: border-box;
+}
+
+.accordion.accordion17 summary.accordion-item-label::before,
+.accordion.accordion17 summary.accordion-item-label::after {
+  content: "";
+  position: absolute;
+  background: #222;
+  border-radius: 1px;
+  right: 0;
+  transition: all 0.2s;
+}
+
+.accordion.accordion17 summary.accordion-item-label::before {
+  top: 50%;
+  width: 15px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.accordion.accordion17 summary.accordion-item-label::after {
+  top: 50%;
+  width: 2px;
+  height: 15px;
+  transform: translateY(-50%);
+}
+
+/* Accordion 11 label styles (comes next for specificity) */
 .accordion.accordion11 summary.accordion-item-label {
   display: flex;
   flex-direction: row;
@@ -194,79 +267,6 @@
   content: "";
 }
 
-/* Accordion 17 label styles (comes next) */
-.accordion.accordion17 summary.accordion-item-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  padding: 11px 0;
-  margin: 0;
-  min-height: 32px;
-  background: #fff;
-  border: none;
-  outline: none;
-  font-weight: 600;
-  font-size: 15px;
-  color: #222;
-  user-select: none;
-  list-style: none;
-  -webkit-tap-highlight-color: transparent;
-  position: relative;
-  padding-right: 0;
-  padding-left: 0;
-  margin-left: 0;
-  box-sizing: border-box;
-}
-
-.accordion.accordion17 details > summary {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.accordion.accordion17 summary.accordion-item-label::-webkit-details-marker {
-  display: none;
-}
-
-.accordion.accordion17 summary.accordion-item-label > p {
-  margin: 0;
-  color: #222;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 1.2;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  padding-left: 0;
-  margin-left: 0;
-  box-sizing: border-box;
-}
-
-.accordion.accordion17 summary.accordion-item-label::before,
-.accordion.accordion17 summary.accordion-item-label::after {
-  content: "";
-  position: absolute;
-  background: #222;
-  border-radius: 1px;
-  right: 0;
-  transition: all 0.2s;
-}
-
-.accordion.accordion17 summary.accordion-item-label::before {
-  top: 50%;
-  width: 15px;
-  height: 2px;
-  transform: translateY(-50%);
-}
-
-.accordion.accordion17 summary.accordion-item-label::after {
-  top: 50%;
-  width: 2px;
-  height: 15px;
-  transform: translateY(-50%);
-}
-
 /* Accordion 6 label styles (comes next for specificity) */
 .accordion.accordion6 summary.accordion-item-label:focus-visible {
   outline: 2px solid #3b63fb;
@@ -319,10 +319,13 @@
   right: 17px;
 }
 
-/* Open state plus/hide bar for all variants */
-.accordion.accordion17 details[open] summary.accordion-item-label::after,
-.accordion.accordion6 details[open] summary.accordion-item-label::after,
-.accordion.accordion11 details[open] summary.accordion-item-label::after {
+/* Accordion 6 focus-visible comes before open state for specificity linting */
+.accordion.accordion6 summary.accordion-item-label:focus-visible,
+.accordion.accordion11 details[open] summary.accordion-item-label,
+.accordion.accordion17 details[open] summary.accordion-item-label,
+.accordion.accordion6 details[open] summary.accordion-item-label {
+  outline: 2px solid #3b63fb;
+  outline-offset: 2px;
   height: 0;
 }
 
@@ -677,5 +680,16 @@
   margin: 0 auto;
   padding-top: 24px;
   padding-bottom: 24px;
+  display: block;
+}
+
+/* ====== BEGIN MERGED SELECTOR FOR .accordion.accordion48 ====== */
+.accordion.accordion48 {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 0;
   display: block;
 }
