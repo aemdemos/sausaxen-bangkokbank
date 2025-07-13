@@ -1,8 +1,9 @@
+
 /* Core grid for cards */
 .cards {
   background: #f7f7f7;
   width: 100%;
-  padding: 32px 0;
+  padding: 40px 0;
   box-sizing: border-box;
 }
 
@@ -768,4 +769,175 @@
     border-radius: 0 0 8px 8px;
     padding: 6px 2px;
   }
+}
+
+/* Generated CSS */
+.cards > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 28px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.cards > ul > li {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(34 60 99 / 10%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  min-height: 340px;
+  height: 370px;
+  margin: 0 auto;
+  transition: box-shadow 0.2s;
+  border: none;
+}
+
+/* Card hover shadow */
+.cards > ul > li:hover {
+  box-shadow: 0 4px 16px rgb(24 49 92 / 13%);
+}
+
+/* Top blue header: slightly shorter relative to new card height */
+.cards > ul > li > .cards-card-body:first-child {
+  background: #223C63;
+  min-height: 66px;
+  max-height: 74px;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px 12px 0 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Content area: more top padding, much less bottom padding */
+.cards > ul > li > .cards-card-body:last-child {
+  background: #fff;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 30px 22px 6px;
+  box-sizing: border-box;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 0;
+}
+
+/* Button wrapper: anchor to bottom */
+.cards > ul > li > .cards-card-body:last-child .button-container {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0;
+}
+
+/* Button styling: matches original block proportions */
+.cards > ul > li > .cards-card-body:last-child .button {
+  display: block;
+  width: 210px;
+  max-width: 100%;
+  background: #1765F2;
+  color: #fff;
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 12px;
+  padding: 13px 0 12px;
+  text-align: center;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgb(23 101 242 / 9%);
+  border: none;
+  letter-spacing: 0.5px;
+  transition: background 0.22s, color 0.22s;
+}
+
+/* Button hover/focus for block only */
+.cards > ul > li > .cards-card-body:last-child .button:hover,
+.cards > ul > li > .cards-card-body:last-child .button:focus {
+  background: #1d3ecf;
+  color: #fff;
+}
+
+/* Responsive tweaks */
+@media (width <= 950px) {
+  .cards > ul {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 18px;
+    max-width: 860px;
+  }
+
+  .cards > ul > li {
+    max-width: 100%;
+    height: 250px;
+    min-height: 150px;
+    border-radius: 11px;
+  }
+
+  .cards > ul > li > .cards-card-body:first-child {
+    border-radius: 11px 11px 0 0;
+    min-height: 48px;
+    height: 54px;
+  }
+
+  .cards > ul > li > .cards-card-body:last-child {
+    border-radius: 0 0 11px 11px;
+    padding: 14px 10px 4px;
+  }
+}
+
+@media (width <= 600px) {
+  .cards > ul {
+    grid-template-columns: 1fr;
+    max-width: 99vw;
+    gap: 10px;
+  }
+
+  .cards > ul > li {
+    max-width: 99vw;
+    height: auto;
+    min-height: 99px;
+    border-radius: 8px;
+  }
+
+  .cards > ul > li > .cards-card-body:first-child {
+    border-radius: 8px 8px 0 0;
+    min-height: 36px;
+    height: 36px;
+  }
+
+  .cards > ul > li > .cards-card-body:last-child {
+    border-radius: 0 0 8px 8px;
+    padding: 6px 4px 2px;
+  }
+
+  .cards > ul > li > .cards-card-body:last-child .button {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    font-size: 15px;
+    padding: 10px 0;
+    border-radius: 8px;
+  }
+}
+
+/* Merged .cards selector */
+.cards {
+  background: #f7f7f7;
+  width: 100%;
+  padding: 40px 0;
+  box-sizing: border-box;
 }
