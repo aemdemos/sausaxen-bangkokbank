@@ -74,17 +74,18 @@
 }
 
 /* Accordion 11 Styles */
+.accordion.accordion11,
+.accordion.accordion11 *,
+.accordion.accordion11 *::before,
+.accordion.accordion11 *::after {
+  box-sizing: border-box;
+}
+
 .accordion.accordion11 {
   background: #fff;
   width: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-.accordion.accordion11 *,
-.accordion.accordion11 *::before,
-.accordion.accordion11 *::after {
   box-sizing: border-box;
 }
 
@@ -97,6 +98,13 @@
 }
 
 /* Accordion 17 Styles */
+.accordion.accordion17,
+.accordion.accordion17 *,
+.accordion.accordion17 *::before,
+.accordion.accordion17 *::after {
+  box-sizing: border-box;
+}
+
 .accordion.accordion17 {
   max-width: 600px;
   margin-left: auto;
@@ -104,12 +112,6 @@
   background: #fff;
   box-sizing: border-box;
   padding: 32px 0;
-}
-
-.accordion.accordion17 *,
-.accordion.accordion17 *::before,
-.accordion.accordion17 *::after {
-  box-sizing: border-box;
 }
 
 .accordion.accordion17 > details {
@@ -123,104 +125,101 @@
   transition: background 0.2s;
 }
 
-/* Accordion 6 details must come after 11/17 for specificity */
-.accordion.accordion6 > details {
+/* Accordion 33 Styles (must come before 11/17/6 for specificity) */
+.accordion.accordion33 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  background: #fff;
   border: none;
-  border-bottom: 1px solid #eee;
   margin: 0;
-  padding: 0;
-  background: #fff;
-  width: 100%;
-  box-sizing: border-box;
-  transition: background 0.2s;
 }
 
-.accordion.accordion6 > details:last-child,
-.accordion.accordion11 > details:last-child,
-.accordion.accordion17 > details:last-child {
-  border-bottom: none;
-}
-
-.accordion.accordion6 .accordion-item-body {
-  padding: 0 16px 16px;
-  color: #222;
-  font-size: 13px;
-  line-height: 1.6;
-  background: #fff;
-  margin: 0;
+.accordion.accordion33 details {
   border: none;
-}
-
-.accordion.accordion6 .accordion-item-body ul {
-  margin: 0 0 0 12px;
-  padding: 0;
-}
-
-.accordion.accordion6 .accordion-item-body li {
-  line-height: 1.6;
-  margin-bottom: 4px;
-}
-
-.accordion.accordion11 .accordion-item-body {
-  padding: 0 0 10px;
-  color: #222;
-  font-size: 14px;
-  margin: 0;
   background: #fff;
+  margin: 0;
 }
 
-.accordion.accordion11 .accordion-item-body ul {
-  margin-left: 24px;
-  padding: 0;
-}
-
-.accordion.accordion11 .accordion-item-body li {
-  line-height: 1.6;
-  margin-bottom: 4px;
-}
-
-.accordion.accordion17 .accordion-item-body {
-  padding: 0 0 16px;
-  color: #222;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.accordion.accordion17 .accordion-item-body p,
-.accordion.accordion17 .accordion-item-body ul {
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-
-.accordion.accordion17 .accordion-item-body ul {
-  margin-left: 24px;
-  padding-left: 0;
-}
-
-.accordion.accordion17 .accordion-item-body li {
-  line-height: 1.6;
-  margin-bottom: 4px;
-}
-
-/* Accordion 6 label styles */
-.accordion.accordion6 summary.accordion-item-label {
+/* Accordion summary row */
+.accordion.accordion33 summary.accordion-item-label {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  min-height: 44px;
-  padding-left: 16px;
-  padding-right: 32px;
-  margin: 0;
+  padding-left: 12px;
+  padding-right: 34px;
+  min-height: 26px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
   background: #fff;
   border: none;
   outline: none;
-  font-weight: bold;
-  font-size: 14px;
-  color: #000;
+  margin: 0;
+  box-shadow: none;
+  border-bottom: 1px solid #e0e0e0;
   user-select: none;
   position: relative;
-  box-sizing: border-box;
+}
+
+/* Remove browser marker */
+.accordion.accordion33 summary.accordion-item-label::-webkit-details-marker {
+  display: none;
+}
+
+/* Properly align the label text */
+.accordion.accordion33 summary.accordion-item-label > p {
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Accordion body spacing/typography */
+.accordion.accordion33 .accordion-item-body {
+  padding: 8px 12px 0;
+  color: #000;
+  font-size: 13px;
+  background: #fff;
+  margin: 0;
+  border: none;
+}
+
+/* Remove any extra spacing from nested paragraphs */
+.accordion.accordion33 .accordion-item-body p {
+  margin: 0 0 0.5em;
+  padding: 0;
+}
+
+/* Plus/minus icon as two thin, overlapped bars, perfectly centered and balanced */
+.accordion.accordion33 summary.accordion-item-label::before,
+.accordion.accordion33 summary.accordion-item-label::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  background: #000;
+  border-radius: 1px;
+  transition: all 0.2s;
+  display: block;
+}
+
+/* Horizontal bar */
+.accordion.accordion33 summary.accordion-item-label::before {
+  width: 14px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+/* Vertical bar (for plus sign) */
+.accordion.accordion33 summary.accordion-item-label::after {
+  width: 1px;
+  height: 14px;
+  transform: translateY(-50%);
 }
 
 /* Accordion 11 label styles */
@@ -245,6 +244,69 @@
   list-style: none;
   -webkit-tap-highlight-color: transparent;
   padding-right: 18px;
+}
+
+.accordion.accordion11 summary.accordion-item-label:focus {
+  background-color: #fff;
+}
+
+.accordion.accordion11 summary.accordion-item-label:hover {
+  background-color: #fff;
+}
+
+.accordion.accordion11 details[open] summary.accordion-item-label {
+  background-color: #fff;
+}
+
+.accordion.accordion11 summary.accordion-item-label::-webkit-details-marker {
+  display: none;
+}
+
+.accordion.accordion11 summary.accordion-item-label > p {
+  margin: 0;
+  color: #222;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 1.2;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+}
+
+.accordion.accordion11 summary.accordion-item-label.hide-icons::after {
+  display: none;
+}
+
+.accordion.accordion11 summary.accordion-item-label::before {
+  display: block;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 18px;
+  height: 3px;
+  background: #222;
+  border-radius: 2px;
+  transform: translateY(-50%);
+  content: "";
+}
+
+.accordion.accordion11 summary.accordion-item-label::after {
+  display: block;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  background: #222;
+  border-radius: 2px;
+  transform: translateY(-50%);
+  transition: height 0.2s;
+  content: "";
+}
+
+.accordion.accordion11 details[open] summary.accordion-item-label::after {
+  height: 0;
 }
 
 /* Accordion 17 label styles */
@@ -278,39 +340,6 @@
   margin-left: 0;
 }
 
-/* Ensure 11 and 17 labels come before 6's :focus-visible for specificity */
-.accordion.accordion11 summary.accordion-item-label:focus {
-  background-color: #fff;
-}
-
-.accordion.accordion11 summary.accordion-item-label:hover {
-  background-color: #fff;
-}
-
-.accordion.accordion11 details[open] summary.accordion-item-label {
-  background-color: #fff;
-}
-
-.accordion.accordion11 summary.accordion-item-label::-webkit-details-marker {
-  display: none;
-}
-
-.accordion.accordion11 summary.accordion-item-label > p {
-  margin: 0;
-  color: #222;
-  font-weight: bold;
-  font-size: 15px;
-  line-height: 1.2;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  padding-left: 0;
-}
-
-.accordion.accordion11 summary.accordion-item-label.hide-icons::after {
-  display: none;
-}
-
 .accordion.accordion17 summary.accordion-item-label::-webkit-details-marker {
   display: none;
 }
@@ -326,6 +355,55 @@
   align-items: center;
   padding-left: 0;
   margin-left: 0;
+  box-sizing: border-box;
+}
+
+.accordion.accordion17 summary.accordion-item-label::before,
+.accordion.accordion17 summary.accordion-item-label::after {
+  content: "";
+  position: absolute;
+  background: #222;
+  border-radius: 1px;
+  right: 0;
+  transition: all 0.2s;
+}
+
+.accordion.accordion17 summary.accordion-item-label::before {
+  top: 50%;
+  width: 15px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.accordion.accordion17 summary.accordion-item-label::after {
+  top: 50%;
+  width: 2px;
+  height: 15px;
+  transform: translateY(-50%);
+}
+
+.accordion.accordion17 details[open] summary.accordion-item-label::after {
+  height: 0;
+}
+
+/* Accordion 6 label styles */
+.accordion.accordion6 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding-left: 16px;
+  padding-right: 32px;
+  margin: 0;
+  background: #fff;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 14px;
+  color: #000;
+  user-select: none;
+  position: relative;
   box-sizing: border-box;
 }
 
@@ -383,67 +461,13 @@
   right: 17px;
 }
 
-/* When open, hide vertical bar for minus sign (specificity: after ::after for 11/17) */
+/* When open, hide vertical bar for minus sign (specificity: after ::after for 11/17/33) */
 .accordion.accordion6 details[open] summary.accordion-item-label::after {
   height: 0;
 }
 
-.accordion.accordion11 summary.accordion-item-label::before {
-  display: block;
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  width: 18px;
-  height: 3px;
-  background: #222;
-  border-radius: 2px;
-  transform: translateY(-50%);
-  content: "";
-}
-
-.accordion.accordion11 summary.accordion-item-label::after {
-  display: block;
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  width: 3px;
-  height: 18px;
-  background: #222;
-  border-radius: 2px;
-  transform: translateY(-50%);
-  transition: height 0.2s;
-  content: "";
-}
-
-.accordion.accordion11 details[open] summary.accordion-item-label::after {
-  height: 0;
-}
-
-.accordion.accordion17 summary.accordion-item-label::before,
-.accordion.accordion17 summary.accordion-item-label::after {
-  content: "";
-  position: absolute;
-  background: #222;
-  border-radius: 1px;
-  right: 0;
-  transition: all 0.2s;
-}
-
-.accordion.accordion17 summary.accordion-item-label::before {
-  top: 50%;
-  width: 15px;
-  height: 2px;
-  transform: translateY(-50%);
-}
-
-.accordion.accordion17 summary.accordion-item-label::after {
-  top: 50%;
-  width: 2px;
-  height: 15px;
-  transform: translateY(-50%);
-}
-
-.accordion.accordion17 details[open] summary.accordion-item-label::after {
+/* When open, hide the vertical bar so only minus remains (for .accordion33) - moved after other ::after rules for specificity */
+.accordion.accordion33 details[open] summary.accordion-item-label::after {
   height: 0;
 }
 
@@ -464,5 +488,40 @@
     max-width: 100%;
     padding-left: 4px;
     padding-right: 4px;
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (width <= 600px) {
+  .accordion.accordion33 {
+    padding: 2px 0;
+  }
+
+  .accordion.accordion33 summary.accordion-item-label {
+    padding-left: 6px;
+    padding-right: 16px;
+    font-size: 13px;
+    min-height: 22px;
+  }
+
+  .accordion.accordion33 .accordion-item-body {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 12px;
+  }
+
+  .accordion.accordion33 summary.accordion-item-label::before,
+  .accordion.accordion33 summary.accordion-item-label::after {
+    right: 7px;
+    width: 10px;
+  }
+
+  .accordion.accordion33 summary.accordion-item-label::before {
+    height: 1px;
+  }
+
+  .accordion.accordion33 summary.accordion-item-label::after {
+    height: 10px;
+    width: 1px;
   }
 }
