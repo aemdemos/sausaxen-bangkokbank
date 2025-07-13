@@ -55,6 +55,139 @@
   padding: 0 16px;
 }
 
+/* Accordion 33 Styles (must come before 6/11/17 for specificity) */
+.accordion.accordion33 {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding: 0;
+  background: #fff;
+  border: none;
+}
+
+.accordion.accordion33 details {
+  border: none;
+  background: #fff;
+  margin: 0;
+}
+
+.accordion.accordion33 .accordion-item-body {
+  padding: 16px 24px;
+  color: #000;
+  font-size: 15px;
+  background: #fff;
+  margin: 0;
+  border: none;
+}
+
+.accordion.accordion33 .accordion-item-body p {
+  margin: 0 0 0.5em;
+  padding: 0;
+}
+
+.accordion.accordion33 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 40px;
+  padding-left: 24px;
+  padding-right: 44px;
+  background: #fff;
+  border: none;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #000;
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.4;
+  background-image:
+    linear-gradient(to right, transparent 0 70%, #000 70% 100%),
+    linear-gradient(to bottom, transparent 0 22%, #000 22% 78%, transparent 78% 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-size: 18px 3px, 3px 18px;
+  background-position: right 16px center, right 27px center;
+  transition: background-size 0.2s;
+}
+
+.accordion.accordion33 summary.accordion-item-label::-webkit-details-marker,
+.accordion.accordion33 summary.accordion-item-label::marker {
+  display: none;
+}
+
+.accordion.accordion33 summary.accordion-item-label > p {
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  font-size: 17px;
+  color: #000;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  line-height: 1.4;
+}
+
+.accordion.accordion33 details[open] > summary.accordion-item-label {
+  background-size: 18px 3px, 0 0;
+}
+
+@media (width <= 700px) {
+  .accordion.accordion33 {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  .accordion.accordion33 summary.accordion-item-label {
+    padding-left: 10px;
+    padding-right: 28px;
+    font-size: 15px;
+    min-height: 32px;
+    background-size: 12px 2px, 2px 12px;
+    background-position: right 8px center, right 16px center;
+  }
+  .accordion.accordion33 .accordion-item-body {
+    padding: 10px;
+    font-size: 13px;
+  }
+  .accordion.accordion33 details[open] > summary.accordion-item-label {
+    background-size: 12px 2px, 0 0;
+  }
+}
+
+@media (width <= 600px) {
+  .accordion.accordion33 {
+    padding: 2px 0;
+  }
+  .accordion.accordion33 summary.accordion-item-label {
+    padding-left: 6px;
+    padding-right: 16px;
+    font-size: 13px;
+    min-height: 22px;
+  }
+  .accordion.accordion33 .accordion-item-body {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 12px;
+  }
+  .accordion.accordion33 summary.accordion-item-label::before,
+  .accordion.accordion33 summary.accordion-item-label::after {
+    right: 7px;
+    width: 10px;
+  }
+  .accordion.accordion33 summary.accordion-item-label::before {
+    height: 1px;
+  }
+  .accordion.accordion33 summary.accordion-item-label::after {
+    height: 10px;
+    width: 1px;
+  }
+}
+
 /* Accordion 6 Styles */
 .accordion.accordion6,
 .accordion.accordion6 *,
@@ -71,6 +204,81 @@
   box-sizing: border-box;
   padding: 0;
   display: block;
+}
+
+.accordion.accordion6 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding-left: 16px;
+  padding-right: 32px;
+  margin: 0;
+  background: #fff;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 14px;
+  color: #000;
+  user-select: none;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.accordion.accordion6 summary.accordion-item-label:focus-visible {
+  outline: 2px solid #3b63fb;
+  outline-offset: 2px;
+}
+
+.accordion.accordion6 summary.accordion-item-label::-webkit-details-marker {
+  display: none;
+}
+
+.accordion.accordion6 summary.accordion-item-label > p {
+  margin: 0;
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.2;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.accordion.accordion6 summary.accordion-item-label::before,
+.accordion.accordion6 summary.accordion-item-label::after {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  background: #000;
+  border-radius: 1px;
+  transition: all 0.2s;
+  z-index: 1;
+  content: "";
+}
+
+.accordion.accordion6 summary.accordion-item-label::before {
+  width: 18px;
+  height: 2px;
+  transform: translateY(-50%);
+  left: auto;
+}
+
+.accordion.accordion6 summary.accordion-item-label::after {
+  width: 2px;
+  height: 18px;
+  left: auto;
+  transform: translateY(-50%);
+  margin-left: -8px;
+  margin-right: auto;
+  right: 17px;
+}
+
+.accordion.accordion6 details[open] summary.accordion-item-label::after {
+  height: 0;
 }
 
 /* Accordion 11 Styles */
@@ -97,132 +305,6 @@
   border-bottom: 1px solid #eaeaea;
 }
 
-/* Accordion 17 Styles */
-.accordion.accordion17,
-.accordion.accordion17 *,
-.accordion.accordion17 *::before,
-.accordion.accordion17 *::after {
-  box-sizing: border-box;
-}
-
-.accordion.accordion17 {
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  background: #fff;
-  box-sizing: border-box;
-  padding: 32px 0;
-}
-
-.accordion.accordion17 > details {
-  border: none;
-  border-bottom: 1px solid #e0e0e0;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  width: 100%;
-  box-sizing: border-box;
-  transition: background 0.2s;
-}
-
-/* Accordion 33 Styles (must come before 11/17/6 for specificity) */
-.accordion.accordion33 {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  background: #fff;
-  border: none;
-  margin: 0;
-}
-
-.accordion.accordion33 details {
-  border: none;
-  background: #fff;
-  margin: 0;
-}
-
-/* Accordion summary row */
-.accordion.accordion33 summary.accordion-item-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 12px;
-  padding-right: 34px;
-  min-height: 26px;
-  font-weight: 700;
-  font-size: 14px;
-  color: #000;
-  background: #fff;
-  border: none;
-  outline: none;
-  margin: 0;
-  box-shadow: none;
-  border-bottom: 1px solid #e0e0e0;
-  user-select: none;
-  position: relative;
-}
-
-/* Remove browser marker */
-.accordion.accordion33 summary.accordion-item-label::-webkit-details-marker {
-  display: none;
-}
-
-/* Properly align the label text */
-.accordion.accordion33 summary.accordion-item-label > p {
-  margin: 0;
-  padding: 0;
-  font-weight: 700;
-  font-size: 14px;
-  color: #000;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-}
-
-/* Accordion body spacing/typography */
-.accordion.accordion33 .accordion-item-body {
-  padding: 8px 12px 0;
-  color: #000;
-  font-size: 13px;
-  background: #fff;
-  margin: 0;
-  border: none;
-}
-
-/* Remove any extra spacing from nested paragraphs */
-.accordion.accordion33 .accordion-item-body p {
-  margin: 0 0 0.5em;
-  padding: 0;
-}
-
-/* Plus/minus icon as two thin, overlapped bars, perfectly centered and balanced */
-.accordion.accordion33 summary.accordion-item-label::before,
-.accordion.accordion33 summary.accordion-item-label::after {
-  content: "";
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  background: #000;
-  border-radius: 1px;
-  transition: all 0.2s;
-  display: block;
-}
-
-/* Horizontal bar */
-.accordion.accordion33 summary.accordion-item-label::before {
-  width: 14px;
-  height: 1px;
-  transform: translateY(-50%);
-}
-
-/* Vertical bar (for plus sign) */
-.accordion.accordion33 summary.accordion-item-label::after {
-  width: 1px;
-  height: 14px;
-  transform: translateY(-50%);
-}
-
-/* Accordion 11 label styles */
 .accordion.accordion11 summary.accordion-item-label {
   display: flex;
   flex-direction: row;
@@ -309,7 +391,34 @@
   height: 0;
 }
 
-/* Accordion 17 label styles */
+/* Accordion 17 Styles */
+.accordion.accordion17,
+.accordion.accordion17 *,
+.accordion.accordion17 *::before,
+.accordion.accordion17 *::after {
+  box-sizing: border-box;
+}
+
+.accordion.accordion17 {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 32px 0;
+}
+
+.accordion.accordion17 > details {
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+
 .accordion.accordion17 summary.accordion-item-label {
   display: flex;
   flex-direction: row;
@@ -386,142 +495,20 @@
   height: 0;
 }
 
-/* Accordion 6 label styles */
-.accordion.accordion6 summary.accordion-item-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 44px;
-  padding-left: 16px;
-  padding-right: 32px;
-  margin: 0;
-  background: #fff;
-  border: none;
-  outline: none;
-  font-weight: bold;
-  font-size: 14px;
-  color: #000;
-  user-select: none;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.accordion.accordion6 summary.accordion-item-label:focus-visible {
-  outline: 2px solid #3b63fb;
-  outline-offset: 2px;
-}
-
-.accordion.accordion6 summary.accordion-item-label::-webkit-details-marker {
-  display: none;
-}
-
-.accordion.accordion6 summary.accordion-item-label > p {
-  margin: 0;
-  color: #000;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 1.2;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 0;
-}
-
-/* Plus icon: intersect both bars perfectly for 6 */
-.accordion.accordion6 summary.accordion-item-label::before,
-.accordion.accordion6 summary.accordion-item-label::after {
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  background: #000;
-  border-radius: 1px;
-  transition: all 0.2s;
-  z-index: 1;
-  content: "";
-}
-
-/* Horizontal bar */
-.accordion.accordion6 summary.accordion-item-label::before {
-  width: 18px;
-  height: 2px;
-  transform: translateY(-50%);
-  left: auto;
-}
-
-/* Vertical bar */
-.accordion.accordion6 summary.accordion-item-label::after {
-  width: 2px;
-  height: 18px;
-  left: auto;
-  transform: translateY(-50%);
-  margin-left: -8px;
-  margin-right: auto;
-  right: 17px;
-}
-
-/* When open, hide vertical bar for minus sign (specificity: after ::after for 11/17/33) */
-.accordion.accordion6 details[open] summary.accordion-item-label::after {
-  height: 0;
-}
-
-/* When open, hide the vertical bar so only minus remains (for .accordion33) - moved after other ::after rules for specificity */
-.accordion.accordion33 details[open] summary.accordion-item-label::after {
-  height: 0;
-}
-
 @media (width <= 700px) {
   .accordion.accordion6 {
     max-width: 100%;
     padding-left: 4px;
     padding-right: 4px;
   }
-
   .accordion.accordion11 {
     max-width: 100%;
     padding-left: 4px;
     padding-right: 4px;
   }
-
   .accordion.accordion17 {
     max-width: 100%;
     padding-left: 4px;
     padding-right: 4px;
-  }
-}
-
-/* Responsive adjustments for smaller screens */
-@media (width <= 600px) {
-  .accordion.accordion33 {
-    padding: 2px 0;
-  }
-
-  .accordion.accordion33 summary.accordion-item-label {
-    padding-left: 6px;
-    padding-right: 16px;
-    font-size: 13px;
-    min-height: 22px;
-  }
-
-  .accordion.accordion33 .accordion-item-body {
-    padding-left: 6px;
-    padding-right: 6px;
-    font-size: 12px;
-  }
-
-  .accordion.accordion33 summary.accordion-item-label::before,
-  .accordion.accordion33 summary.accordion-item-label::after {
-    right: 7px;
-    width: 10px;
-  }
-
-  .accordion.accordion33 summary.accordion-item-label::before {
-    height: 1px;
-  }
-
-  .accordion.accordion33 summary.accordion-item-label::after {
-    height: 10px;
-    width: 1px;
   }
 }
