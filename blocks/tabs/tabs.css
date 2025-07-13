@@ -1,4 +1,6 @@
-
+/* ----------------------
+   Base Tabs Styles
+----------------------- */
 .tabs .tabs-list {
   display: flex;
   gap: 0.5ch;
@@ -40,7 +42,6 @@
   margin: 0;
 }
 
-
 .tabs .tabs-list button[aria-selected='true'] {
   border-bottom: 1px solid var(--background-color);
   background-color: var(--background-color);
@@ -58,35 +59,21 @@
   display: none;
 }
 
+/* ----------------------
+   Tabs Variant .tabs29
+----------------------- */
 .tabs.tabs29 {
-  position: relative;
-  background: #fff;
+  display: grid;
+  grid-template-rows: auto auto;
+  width: 100%;
   max-width: 1264px;
   margin: 0 auto;
-  padding-top: 220px;
-  background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=1264&q=80');
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: 100% 220px;
+  padding: 0;
+  background: #fff;
+  box-sizing: border-box;
   overflow: visible;
 }
 
-/* Tabs-list sits immediately below the illustration, in white area */
-.tabs.tabs29 > .tabs-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 40px;
-  background: #fff;
-  box-shadow: none;
-  border: none;
-  margin: 0 auto;
-  padding: 40px 0 24px;
-  max-width: 100%;
-}
-
-/* Responsive: shrink illustration and adjust spacing */
 @media (width <= 900px) {
   .tabs.tabs29 {
     padding-top: 120px;
@@ -111,7 +98,33 @@
   }
 }
 
-/* Clean up tab appearance */
+.tabs.tabs29 > .tabs-list {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  background: #fff;
+  box-shadow: none;
+  border: none;
+  margin: 0 auto;
+  padding: 40px 0 24px;
+  max-width: 100%;
+  width: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  line-height: 1;
+  grid-row: 2;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Remove any vertical space from all direct children of .tabs-list */
+.tabs.tabs29 > .tabs-list > * {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1;
+}
+
+/* Tab button styles */
 .tabs.tabs29 .tabs-list button {
   background: none;
   border: none;
@@ -127,33 +140,36 @@
   outline: none;
   min-width: 0;
   transition: color 0.2s;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.tabs.tabs29 .tabs-list button:focus-visible {
+  outline: 2px solid #2563FF;
+  z-index: 1;
 }
 
 .tabs.tabs29 .tabs-list button p {
-  margin: 0;
-  padding: 0 8px;
+  margin: 0 !important;
+  padding: 0 10px !important;
   font-size: 18px;
-  line-height: 1.5;
+  font-weight: 400;
   color: inherit;
-  font-weight: inherit;
+  line-height: 1.2;
+  border: none;
 }
 
-/* Selected tab: blue text and underline */
 .tabs.tabs29 .tabs-list button[aria-selected="true"] p {
-  color: #2f60d9;
-  border-bottom: 3px solid #2f60d9;
+  color: #2563FF;
+  font-weight: 500;
+  border-bottom: 3px solid #2563FF;
   padding-bottom: 6px;
 }
 
-/* Unselected tabs: black text, no underline */
 .tabs.tabs29 .tabs-list button[aria-selected="false"] p {
   color: #222;
   border-bottom: none;
-}
-
-/* Focus outline for accessibility */
-.tabs.tabs29 .tabs-list button:focus-visible {
-  outline: 2px solid #2f60d9;
+  font-weight: 400;
 }
 
 /* Tabs panel: white, aligned with tabs, no border */
@@ -168,7 +184,6 @@
   min-height: 120px;
 }
 
-/* Hide inactive panels */
 .tabs.tabs29 .tabs-panel[aria-hidden="true"] {
   display: none;
 }
@@ -180,4 +195,43 @@
 /* Add spacing below tabs-list for breathing room */
 .tabs.tabs29 .tabs-list + .tabs-panel {
   margin-top: 20px;
+}
+
+/* The panel background/illustration block */
+.tabs.tabs29 > .tabs-panel {
+  grid-row: 1;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3/1;
+  min-height: 340px;
+  max-height: 440px;
+  background: url('https://images.pexels.com/photos/4778627/pexels-photo-4778627.jpeg?auto=compress&w=900&q=80') no-repeat center center;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  position: relative;
+  line-height: 0;
+}
+
+/* Remove all gap/margin/padding between illustration and tabs */
+.tabs.tabs29 > .tabs-panel,
+.tabs.tabs29 > .tabs-panel[aria-hidden="false"] {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none;
+}
+
+.tabs.tabs29 > .tabs-panel[aria-hidden="true"] {
+  display: none;
+}
+
+/* Remove any margin or padding between panel and tabs-list in any stacking order */
+.tabs.tabs29 > .tabs-list + .tabs-panel,
+.tabs.tabs29 > .tabs-panel + .tabs-list {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
