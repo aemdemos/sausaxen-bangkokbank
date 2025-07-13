@@ -106,7 +106,85 @@
 
 /* ========== ORDERED ACCORDION LABELS FOR NO-DESCENDING-SPECIFICITY ========== */
 
-/* Accordion 17 label styles (should come before accordion11 focus/hover/open for specificity) */
+.accordion.accordion17 > details {
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+
+.accordion.accordion11 > details {
+  border: none;
+  border-bottom: 1px solid #eaeaea;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+
+/* Accordion 33 Styles (must come after .accordion.accordion6, .accordion.accordion11, .accordion.accordion17 for specificity) */
+.accordion.accordion33 details[open] > summary.accordion-item-label {
+  background-size: 18px 3px, 0 0;
+}
+
+.accordion.accordion11 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 56px;
+  width: 100%;
+  padding: 9px 0;
+  margin: 0;
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: Inter, BangkokBank-Regular, Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111;
+  user-select: none;
+  position: relative;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  transition: background 0.2s;
+  z-index: 1;
+  border-bottom: none;
+  padding-right: 18px;
+}
+
+.accordion.accordion41 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 22px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  border: none;
+  outline: none;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.2s;
+  position: relative;
+  line-height: 1;
+  text-align: left;
+}
+
 .accordion.accordion17 summary.accordion-item-label {
   display: flex;
   flex-direction: row;
@@ -130,6 +208,29 @@
   padding-left: 0;
   margin-left: 0;
   box-sizing: border-box;
+}
+
+.accordion.accordion41 > details {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+}
+
+.accordion.accordion41 > details:last-child {
+  border-bottom: none;
+}
+
+.accordion.accordion41 summary.accordion-item-label:focus-visible {
+  outline: 2px solid #3b63fb;
+  outline-offset: 2px;
+}
+
+.accordion.accordion6 summary.accordion-item-label:focus-visible {
+  outline: 2px solid #3b63fb;
+  outline-offset: 2px;
 }
 
 .accordion.accordion17 details > summary {
@@ -177,35 +278,6 @@
   width: 2px;
   height: 15px;
   transform: translateY(-50%);
-}
-
-/* Accordion 11 label styles (comes next for specificity) */
-.accordion.accordion11 summary.accordion-item-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 56px;
-  width: 100%;
-  padding: 9px 0;
-  margin: 0;
-  background: #fff;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-family: Inter, BangkokBank-Regular, Tahoma, Helvetica, Arial, sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-  color: #111;
-  user-select: none;
-  position: relative;
-  list-style: none;
-  -webkit-tap-highlight-color: transparent;
-  box-sizing: border-box;
-  transition: background 0.2s;
-  z-index: 1;
-  border-bottom: none;
-  padding-right: 18px;
 }
 
 .accordion.accordion11 summary.accordion-item-label:focus {
@@ -267,12 +339,6 @@
   content: "";
 }
 
-/* Accordion 6 label styles (comes next for specificity) */
-.accordion.accordion6 summary.accordion-item-label:focus-visible {
-  outline: 2px solid #3b63fb;
-  outline-offset: 2px;
-}
-
 .accordion.accordion6 summary.accordion-item-label::-webkit-details-marker {
   display: none;
 }
@@ -319,8 +385,6 @@
   right: 17px;
 }
 
-/* Accordion 6 focus-visible comes before open state for specificity linting */
-.accordion.accordion6 summary.accordion-item-label:focus-visible,
 .accordion.accordion11 details[open] summary.accordion-item-label,
 .accordion.accordion17 details[open] summary.accordion-item-label,
 .accordion.accordion6 details[open] summary.accordion-item-label {
@@ -329,33 +393,6 @@
   height: 0;
 }
 
-.accordion.accordion17 > details {
-  border: none;
-  border-bottom: 1px solid #e0e0e0;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  width: 100%;
-  box-sizing: border-box;
-  transition: background 0.2s;
-}
-
-.accordion.accordion11 > details {
-  border: none;
-  border-bottom: 1px solid #eaeaea;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  box-sizing: border-box;
-  transition: background 0.2s;
-}
-
-/* Accordion 33 Styles (must come after .accordion.accordion6, .accordion.accordion11, .accordion.accordion17 for specificity) */
-.accordion.accordion33 details[open] > summary.accordion-item-label {
-  background-size: 18px 3px, 0 0;
-}
-
-/* Responsive adjustments (modern range notation) */
 @media (width <= 700px) {
   .accordion.accordion33 {
     margin-top: 12px;
@@ -422,6 +459,38 @@
     height: 16px;
     right: 17px;
   }
+  
+  .accordion.accordion41 {
+    max-width: 100%;
+    margin: 8px 0;
+    padding: 0 0.5px;
+  }
+
+  .accordion.accordion41 summary.accordion-item-label {
+    font-size: 13px;
+    min-height: 18px;
+    line-height: 1;
+  }
+
+  .accordion.accordion41 summary.accordion-item-label > p {
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .accordion.accordion41 summary.accordion-item-label::before {
+    width: 5px;
+    height: 1px;
+  }
+
+  .accordion.accordion41 summary.accordion-item-label::after {
+    width: 1px;
+    height: 5px;
+  }
+
+  .accordion.accordion41 .accordion-item-body {
+    font-size: 13px;
+    padding: 0 0 4px;
+  }
 }
 
 @media (width <= 600px) {
@@ -481,165 +550,7 @@
     height: 12px;
     right: 9px;
   }
-}
-
-/* --------- GENERATED CSS --------- */
-
-/* BEGIN MERGED SELECTOR */
-.accordion.accordion41 {
-  width: 100%;
-  max-width: 600px;
-  margin: 40px auto;
-  background: #fff;
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.accordion.accordion41 > details {
-  border: none;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  box-sizing: border-box;
-  border-bottom: 1px solid #eee;
-}
-
-.accordion.accordion41 > details:last-child {
-  border-bottom: none;
-}
-
-/* Remove all possible left-padding/margin on all levels */
-.accordion.accordion41 > details,
-.accordion.accordion41 summary.accordion-item-label,
-.accordion.accordion41 summary.accordion-item-label > p {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-/* Accordion row - summary flush left, flex row */
-.accordion.accordion41 summary.accordion-item-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 22px;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  background: #fff;
-  border: none;
-  outline: none;
-  font-family: var(--body-font-family);
-  font-size: 15px;
-  font-weight: 600;
-  color: #111;
-  user-select: none;
-  cursor: pointer;
-  box-sizing: border-box;
-  transition: background 0.2s;
-  position: relative;
-  line-height: 1;
-  text-align: left;
-}
-
-/* Accordion title text, flush left */
-.accordion.accordion41 summary.accordion-item-label > p {
-  margin: 0;
-  padding: 0;
-  color: #111;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 1;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  text-align: left;
-}
-
-/* Plus icon - extra thin/short, flush right, no margin */
-.accordion.accordion41 summary.accordion-item-label::before,
-.accordion.accordion41 summary.accordion-item-label::after {
-  position: absolute;
-  display: block;
-  background: #111;
-  border-radius: 1px;
-  pointer-events: none;
-  top: 50%;
-  right: 0;
-  margin-right: 0;
-  transition: all 0.2s;
-}
-
-/* Horizontal bar (always visible) */
-.accordion.accordion41 summary.accordion-item-label::before {
-  width: 7px;
-  height: 1px;
-  transform: translateY(-50%);
-}
-
-/* Vertical bar (hidden when expanded) */
-.accordion.accordion41 summary.accordion-item-label::after {
-  width: 1px;
-  height: 7px;
-  transform: translateY(-50%);
-}
-
-.accordion.accordion41 > details[open] summary.accordion-item-label::after {
-  height: 0;
-}
-
-/* Accordion body, left aligned with text row */
-.accordion.accordion41 .accordion-item-body {
-  padding: 0 0 7px;
-  font-size: 15px;
-  color: #222;
-  background: #fff;
-  box-sizing: border-box;
-  text-align: left;
-}
-
-/* Remove default browser marker */
-.accordion.accordion41 summary.accordion-item-label::-webkit-details-marker {
-  display: none;
-}
-
-/* Responsive tweaks: keep flush alignment, reduce font/spacing on mobile */
-@media (width <= 700px) {
-  .accordion.accordion41 {
-    max-width: 100%;
-    margin: 8px 0;
-    padding: 0 0.5px;
-  }
-
-  .accordion.accordion41 summary.accordion-item-label {
-    font-size: 13px;
-    min-height: 18px;
-    line-height: 1;
-  }
-
-  .accordion.accordion41 summary.accordion-item-label > p {
-    font-size: 13px;
-    line-height: 1;
-  }
-
-  .accordion.accordion41 summary.accordion-item-label::before {
-    width: 5px;
-    height: 1px;
-  }
-
-  .accordion.accordion41 summary.accordion-item-label::after {
-    width: 1px;
-    height: 5px;
-  }
-
-  .accordion.accordion41 .accordion-item-body {
-    font-size: 13px;
-    padding: 0 0 4px;
-  }
-}
-
-@media (width <= 480px) {
+  
   .accordion.accordion41 {
     padding-left: 0.5px;
     padding-right: 0.5px;
@@ -672,6 +583,59 @@
   }
 }
 
+/* Remove all possible left-padding/margin on all levels (kept after @media for no-descending-specificity rule) */
+.accordion.accordion41 > details,
+.accordion.accordion41 summary.accordion-item-label,
+.accordion.accordion41 summary.accordion-item-label > p {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Accordion body, left aligned with text row (kept after @media for no-descending-specificity rule) */
+.accordion.accordion41 .accordion-item-body {
+  padding: 0 0 7px;
+  font-size: 15px;
+  color: #222;
+  background: #fff;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Plus icon - extra thin/short, flush right, no margin (kept after @media for no-descending-specificity rule) */
+.accordion.accordion41 summary.accordion-item-label::before,
+.accordion.accordion41 summary.accordion-item-label::after {
+  position: absolute;
+  display: block;
+  background: #111;
+  border-radius: 1px;
+  pointer-events: none;
+  top: 50%;
+  right: 0;
+  margin-right: 0;
+  transition: all 0.2s;
+}
+
+.accordion.accordion41 summary.accordion-item-label::before {
+  width: 7px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.accordion.accordion41 summary.accordion-item-label::after {
+  width: 1px;
+  height: 7px;
+  transform: translateY(-50%);
+}
+
+.accordion.accordion41 > details[open] summary.accordion-item-label::after {
+  height: 0;
+}
+
+/* Remove default browser marker (kept after @media for no-descending-specificity rule) */
+.accordion.accordion41 summary.accordion-item-label::-webkit-details-marker {
+  display: none;
+}
+
 /* Merged .accordion.accordion47 selector */
 .accordion.accordion47 {
   box-sizing: border-box;
@@ -690,6 +654,18 @@
   max-width: 600px;
   margin: 0 auto;
   background: #fff;
+  padding: 0;
+  display: block;
+}
+
+/* ====== GENERATED CSS ====== */
+
+/* ====== MERGED .accordion.accordion50 SELECTOR ====== */
+.accordion.accordion50 {
+  max-width: 600px;
+  margin: 40px auto 0;
+  background: #fff;
+  box-sizing: border-box;
   padding: 0;
   display: block;
 }
