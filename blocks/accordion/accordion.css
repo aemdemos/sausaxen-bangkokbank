@@ -55,7 +55,146 @@
   padding: 0 16px;
 }
 
-.accordion details[open] .accordion-item-body {
+.accordion.accordion6 .accordion-item-body {
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #222;
+  margin-top: 12px;
   border-top: 1px solid #dadada;
   background-color: var(--background-color);
+}
+
+.accordion.accordion6 {
+  max-width: 620px;
+  margin: 0 auto;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 0;
+  display: block;
+}
+
+/* Accordion Items */
+.accordion.accordion6 > details {
+  border: none;
+  border-bottom: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+
+.accordion.accordion6 > details:last-child {
+  border-bottom: none;
+}
+
+/* Header flex row layout, improved vertical alignment and padding */
+.accordion.accordion6 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 16px 0;
+  margin: 0;
+  min-height: 32px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 14px;
+  color: #111;
+  user-select: none;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  padding-right: 32px; /* Reserve space for plus/minus icon */
+}
+
+/* Remove native marker space */
+.accordion.accordion6 summary.accordion-item-label::-webkit-details-marker {
+  display: none;
+}
+
+/* Remove block margin from <p> in header */
+.accordion.accordion6 summary.accordion-item-label > p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #111;
+  line-height: 1.2;
+  flex: 1 1 auto;
+  align-items: center;
+  display: flex;
+}
+
+/* Plus/Minus visual icon using two bars (before & after) */
+.accordion.accordion6 summary.accordion-item-label::after {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 18px;
+  height: 2px;
+  background: #111;
+  border-radius: 1px;
+  transform: translateY(-50%);
+  display: block;
+  content: "";
+  z-index: 1;
+}
+
+.accordion.accordion6 summary.accordion-item-label::before {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 2px;
+  height: 18px;
+  background: #111;
+  border-radius: 1px;
+  transform: translateY(-50%);
+  display: block;
+  content: "";
+  z-index: 1;
+  transition: height 0.2s;
+}
+
+/* When open, hide vertical bar (minus) */
+.accordion.accordion6 details[open] summary.accordion-item-label::before {
+  height: 0;
+}
+
+/* List styling */
+.accordion.accordion6 .accordion-item-body ul {
+  margin: 0 0 0 24px;
+  padding: 0;
+}
+
+.accordion.accordion6 .accordion-item-body li {
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+/* Remove default padding/margin on all levels to avoid unwanted whitespace */
+.accordion.accordion6,
+.accordion.accordion6 *,
+.accordion.accordion6 *::before,
+.accordion.accordion6 *::after {
+  box-sizing: border-box;
+}
+
+/* Responsive: Full width on small screens */
+@media (width <= 700px) {
+  .accordion.accordion6 {
+    max-width: 100%;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+
+/* Accessibility: Focus visible */
+.accordion.accordion6 summary.accordion-item-label:focus-visible {
+  outline: 2px solid #3b63fb;
+  outline-offset: 2px;
 }
