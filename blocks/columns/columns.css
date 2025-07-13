@@ -1,10 +1,9 @@
+/* --- Base Columns Styles --- */
 
 .columns {
   background: #fff;
-  padding: 40px 0;
+  padding: 0;
 }
-  
-/* --- CLEANED AND VALIDATED CSS --- */
 
 .columns.columns7 {
   width: 100%;
@@ -337,6 +336,84 @@
   display: flex;
 }
 
+/* ---- GENERATED CSS ---- */
+
+/* Merged and deduped selectors below */
+
+.columns > div {
+  justify-content: flex-start;
+  padding: 32px 0 0 32px;
+  min-width: 0;
+}
+
+.columns > div > div {
+  flex: 0 0 132px;
+  width: 132px;
+  height: 172px;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 18px;
+  background: #f6f7f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: none;
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.columns > div > div:nth-child(1) {
+  background: #fff;
+}
+
+.columns > div > div:nth-child(2) {
+  background:
+    linear-gradient(to bottom, transparent, transparent),
+    repeating-linear-gradient(0deg, #fff4, #fff4 1px, transparent 1px, transparent 22px),
+    repeating-linear-gradient(90deg, #fff4, #fff4 1px, transparent 1px, transparent 22px),
+    #a4cafe;
+  position: relative;
+}
+
+.columns > div > div:nth-child(2)::before,
+.columns > div > div:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.94;
+  pointer-events: none;
+}
+
+.columns > div > div:nth-child(2)::before {
+  width: 28px;
+  height: 28px;
+  background: #2541b2;
+  top: 20px;
+  left: 18px;
+}
+
+.columns > div > div:nth-child(2)::after {
+  width: 18px;
+  height: 18px;
+  background: #001254;
+  bottom: 20px;
+  right: 18px;
+}
+
+.columns > div > div:nth-child(n+3) {
+  background: #ededed;
+}
+
+.columns > div > div > h3,
+.columns > div > div > ul,
+.columns > div > div > p,
+.columns > div > div > a,
+.columns > div > div > span {
+  display: none !important;
+}
+
 @media (width >= 900px) {
   .columns > div {
     align-items: center;
@@ -358,12 +435,18 @@
 
 @media (width <= 900px) {
   .columns > div {
+    gap: 12px;
     flex-direction: column;
-    gap: 16px;
     min-height: 0;
+    padding: 18px 0 0 12px;
   }
 
   .columns > div > div {
+    width: 46vw;
+    min-width: 120px;
+    max-width: 300px;
+    height: 128px;
+    border-radius: 14px;
     min-height: 0;
     padding: 18px 4px 16px;
   }
@@ -437,134 +520,5 @@
   .columns.columns7 > div > div:last-child {
     min-height: 120px;
     padding: 0;
-  }
-}
-
-/* ---- GENERATED CSS ---- */
-
-.columns.columns34 {
-  background: #fff;
-  padding: 40px 0;
-}
-
-.columns.columns34 > div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 16px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.columns.columns34 > div > div {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 7px 0 rgb(90 143 230 / 3.5%);
-  padding: 20px 22px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 210px;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.columns.columns34 h3 {
-  color: #191919;
-  font-family: var(--heading-font-family);
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 0 0 10px;
-  line-height: 1.18;
-  text-align: left;
-}
-
-.columns.columns34 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-start;
-}
-
-.columns.columns34 ul li {
-  margin: 0;
-  text-align: left;
-  font-size: 0.97rem;
-  font-family: var(--body-font-family);
-  font-weight: 400;
-  line-height: 1.6;
-}
-
-.columns.columns34 ul li a {
-  color: #2176FF;
-  text-decoration: none;
-  transition: color 0.15s;
-  font-size: 0.97rem;
-  font-family: var(--body-font-family);
-  font-weight: 400;
-}
-
-.columns.columns34 ul li a:hover,
-.columns.columns34 ul li a:focus {
-  color: #174ea6;
-  text-decoration: underline;
-}
-
-@media (width <= 1100px) {
-  .columns.columns34 > div {
-    gap: 12px;
-  }
-
-  .columns.columns34 > div > div {
-    width: 175px;
-    padding: 14px 10px 11px;
-  }
-}
-
-@media (width <= 900px) {
-  .columns.columns34 > div {
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: flex-start;
-  }
-
-  .columns.columns34 > div > div {
-    width: 46%;
-    min-width: 140px;
-    margin-bottom: 6px;
-  }
-}
-
-@media (width <= 600px) {
-  .columns.columns34 {
-    padding: 8px 0;
-  }
-
-  .columns.columns34 > div {
-    flex-direction: column;
-    gap: 8px;
-    max-width: 96vw;
-  }
-
-  .columns.columns34 > div > div {
-    width: 100%;
-    min-width: 0;
-    padding: 9px 4px 8px;
-    border-radius: 10px;
-  }
-
-  .columns.columns34 h3 {
-    font-size: 0.92rem;
-    margin-bottom: 5px;
-  }
-
-  .columns.columns34 ul li,
-  .columns.columns34 ul li a {
-    font-size: 0.95rem;
   }
 }
