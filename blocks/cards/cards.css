@@ -85,7 +85,9 @@
 
 .cards .button,
 .cards.cards1 ul > li .button-container .button,
-.cards.cards15 > ul > li > .cards-card-body:last-child .button {
+.cards > ul > li > .cards-card-body:last-child .button,
+.cards.cards15 > ul > li > .cards-card-body:last-child .button,
+.cards.cards8 > ul > li > .cards-card-body:last-child > .button-container .button {
   background: none;
   color: #2563EB;
   border-radius: 0;
@@ -121,6 +123,24 @@
   transition: background 0.2s;
   letter-spacing: 0.4px;
   align-self: flex-start;
+}
+
+.cards.cards15 > ul > li > .cards-card-body:last-child .button {
+  background: #2d6bff;
+  color: #fff;
+  border-radius: 40px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  padding: 19px 54px;
+  min-width: 170px;
+  margin: 0;
+  box-shadow: 0 2px 16px 0 rgb(45 107 255 / 13%);
+  border: none;
+  text-align: left;
+  display: inline-block;
+  line-height: 1.12;
+  letter-spacing: 0.005em;
+  transition: background 0.18s;
 }
 
 .cards.cards1 ul > li {
@@ -217,6 +237,7 @@
   content: "";
 }
 
+/* Reduce margin/padding above the button-container and make sure it is visible and left-aligned */
 .cards.cards8 > ul > li > .cards-card-body:last-child > .button-container {
   margin: 0;
   margin-top: 8px;
@@ -225,6 +246,29 @@
   align-self: flex-start;
   text-align: left;
   display: block;
+}
+
+.cards.cards8 > ul > li > .cards-card-body:last-child > .button-container .button {
+  background: none;
+  color: #2563eb;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  text-align: left;
+  display: inline-block;
+  min-width: 0;
+  max-width: none;
+  width: auto;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: color 0.2s;
+  vertical-align: middle;
+  position: relative;
 }
 
 .cards.cards15 {
@@ -269,47 +313,6 @@
   border: none;
   position: relative;
   transition: box-shadow 0.15s;
-}
-
-.cards.cards15 > ul > li > .cards-card-body:last-child .button {
-  background: #2d6bff;
-  color: #fff;
-  border-radius: 40px;
-  font-size: 1.12rem;
-  font-weight: 700;
-  padding: 19px 54px;
-  min-width: 170px;
-  margin: 0;
-  box-shadow: 0 2px 16px 0 rgb(45 107 255 / 13%);
-  border: none;
-  text-align: left;
-  display: inline-block;
-  line-height: 1.12;
-  letter-spacing: 0.005em;
-  transition: background 0.18s;
-}
-
-.cards.cards8 > ul > li > .cards-card-body:last-child > .button-container .button {
-  background: none;
-  color: #2563eb;
-  border-radius: 0;
-  font-size: 14px;
-  font-weight: 400;
-  padding: 0;
-  box-shadow: none;
-  border: none;
-  text-align: left;
-  display: inline-block;
-  min-width: 0;
-  max-width: none;
-  width: auto;
-  line-height: 1.25;
-  margin: 0;
-  letter-spacing: 0;
-  cursor: pointer;
-  transition: color 0.2s;
-  vertical-align: middle;
-  position: relative;
 }
 
 .cards.cards2 > ul > li {
@@ -447,30 +450,106 @@
   box-shadow: 0 12px 56px rgb(39 56 99 / 11%);
 }
 
-/* Divider below the title: short, left-aligned, light gray */
-.cards.cards8 > ul > li > .cards-card-body:last-child > h3::after {
-  display: block;
-  width: 32px;
-  height: 2px;
-  background: #e5e5e5;
-  border-radius: 1px;
-  margin-top: 6px;
-  margin-bottom: 4px;
-  content: "";
-}
-
-/* Reduce margin/padding above the button-container and make sure it is visible and left-aligned */
-.cards.cards8 > ul > li > .cards-card-body:last-child > .button-container {
-  margin: 0;
-  margin-top: 8px;
+.cards.cards37 > ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px 24px;
+  list-style: none;
   padding: 0;
+  margin: 0;
+  justify-items: stretch;
+}
+
+.cards.cards37 > ul > li {
+  background: #fff;
+  border: 1px solid #e9e9e9;
+  border-radius: 12px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  min-height: 220px;
+  aspect-ratio: 1.25/1;
+  padding: 0;
+  margin: 0;
+  transition: box-shadow 0.16s;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.cards.cards8 > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  justify-items: stretch;
+}
+
+.cards.cards31 > ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.cards.cards37 > ul > li > .cards-card-body:first-child {
   width: 100%;
-  align-self: flex-start;
-  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 26px;
+  margin-bottom: 4px;
+  height: 68px;
+  min-height: 68px;
+}
+
+.cards.cards37 > ul > li > .cards-card-body:first-child::before {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.cards.cards37 > ul > li > .cards-card-body:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0 18px;
+}
+
+.cards.cards37 > ul > li > .cards-card-body:last-child h3 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 2px;
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  width: 100%;
+  border: none;
+  padding: 0;
+}
+
+.cards.cards37 > ul > li::after {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  width: 28px;
+  height: 2px;
+  background: #e9e9e9;
+  border-radius: 1px;
   display: block;
 }
 
-/* Responsive: stack cards vertically on small screens */
 @media (width <= 700px) {
   .cards.cards8 > ul {
     grid-template-columns: 1fr;
@@ -499,11 +578,13 @@
   .cards.cards15 > ul > li {
     min-height: 260px;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:first-child {
     min-width: 180px;
     min-height: 100px;
     aspect-ratio: 4 / 3;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:last-child {
     padding: 32px 14px 28px 10px;
     max-width: 100%;
@@ -515,11 +596,13 @@
   .cards.cards15 > ul {
     gap: 22px;
   }
+
   .cards.cards15 > ul > li {
     flex-direction: column;
     min-height: 0;
     border-radius: 3px;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:first-child {
     border-radius: 3px 3px 0 0;
     min-width: 140px;
@@ -528,57 +611,47 @@
     flex-basis: auto;
     aspect-ratio: 4/3;
   }
+
   .cards.cards15 > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 3px 3px;
     padding: 15px 6px 18px;
     margin-left: 0;
     max-width: 100%;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:first-child {
     width: 56px;
     height: 72px;
     margin-top: 0;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:last-child {
     padding: 1px 4px 2px;
   }
+
   .cards.cards31 > ul > li > .cards-card-body:last-child h3 {
     font-size: 1.04rem;
   }
-}
 
-@media (width <= 600px) {
-  .cards.cards2 > ul {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  .cards.cards37 > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
-  .cards.cards2 > ul > li {
-    border-radius: 6px;
+
+  .cards.cards37 > ul > li {
+    min-height: 140px;
+    aspect-ratio: 1/1;
   }
-  .cards.cards2 > ul > li > .cards-card-body:first-child {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    height: 60px;
+
+  .cards.cards37 > ul > li > .cards-card-body:first-child {
+    margin-top: 10px;
+    height: 38px;
+    min-height: 38px;
   }
-  .cards.cards2 > ul > li > .cards-card-body:last-child {
-    padding: 10px 5px;
-  }
-  .cards.cards31 > ul > li {
-    border-radius: 6px;
-    min-height: 62px;
-  }
-  .cards.cards31 > ul > li > .cards-card-body:first-child {
-    border-radius: 6px;
-    width: 25px;
-    height: 30px;
-    margin-top: 0;
-  }
-  .cards.cards31 > ul > li > .cards-card-body:last-child {
-    border-radius: 0 0 6px 6px;
-    padding: 0 1px 1px;
-  }
-  .cards.cards31 > ul > li > .cards-card-body:last-child h3 {
-    font-size: 0.93rem;
+
+  .cards.cards37 > ul > li > .cards-card-body:first-child::before {
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -605,13 +678,73 @@
   }
 }
 
-.cards.cards31 > ul {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px 6px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+@media (width <= 600px) {
+  .cards.cards2 > ul {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .cards.cards2 > ul > li {
+    border-radius: 6px;
+  }
+
+  .cards.cards2 > ul > li > .cards-card-body:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    height: 60px;
+  }
+
+  .cards.cards2 > ul > li > .cards-card-body:last-child {
+    padding: 10px 5px;
+  }
+
+  .cards.cards31 > ul > li {
+    border-radius: 6px;
+    min-height: 62px;
+  }
+
+  .cards.cards31 > ul > li > .cards-card-body:first-child {
+    border-radius: 6px;
+    width: 25px;
+    height: 30px;
+    margin-top: 0;
+  }
+
+  .cards.cards31 > ul > li > .cards-card-body:last-child {
+    border-radius: 0 0 6px 6px;
+    padding: 0 1px 1px;
+  }
+
+  .cards.cards31 > ul > li > .cards-card-body:last-child h3 {
+    font-size: 0.93rem;
+  }
+
+  .cards.cards37 > ul {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .cards.cards37 > ul > li {
+    min-height: 100px;
+    border-radius: 8px;
+  }
+
+  .cards.cards37 > ul > li > .cards-card-body:first-child {
+    margin-top: 6px;
+    height: 20px;
+    min-height: 20px;
+  }
+
+  .cards.cards37 > ul > li > .cards-card-body:first-child::before {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cards.cards37 > ul > li::after {
+    left: 10px;
+    bottom: 10px;
+    width: 20px;
+  }
 }
 
 @media (width <= 1200px) {
@@ -633,14 +766,4 @@
     grid-template-columns: 1fr;
     gap: 4px;
   }
-}
-
-.cards.cards8 > ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 32px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  justify-items: stretch;
 }
