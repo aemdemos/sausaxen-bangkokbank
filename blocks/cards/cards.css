@@ -1,4 +1,5 @@
 
+
 /* Core grid for cards */
 .cards {
   background: #f7f7f7;
@@ -935,9 +936,8 @@
 }
 
 /* Merged .cards selector */
-.cards {
-  background: #f7f7f7;
-  width: 100%;
-  padding: 40px 0;
-  box-sizing: border-box;
+.cards.cards5 {
+  background: transparent;
+  padding: 0;
 }
+
