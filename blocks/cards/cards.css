@@ -1,5 +1,6 @@
 
 
+
 /* Core grid for cards */
 .cards {
   background: #f7f7f7;
@@ -1070,4 +1071,11 @@
 .cards.cards31 {
   background: #f8f8f8;
   padding: 44px 0;
+}
+
+.cards.cards37 {
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
