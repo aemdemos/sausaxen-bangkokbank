@@ -1,4 +1,5 @@
 
+
 /* Core grid for cards */
 .cards {
   background: #f7f7f7;
@@ -981,4 +982,12 @@
   .cards.cards44 > ul > li {
     border-radius: 6px;
   }
+}
+
+/* ----- MERGED SELECTOR FOR .cards.cards46 BELOW ----- */
+.cards.cards46 {
+  background: #f7f7f7;
+  width: 100%;
+  padding: 40px 0;
+  box-sizing: border-box;
 }
