@@ -67,10 +67,6 @@
   transition: box-shadow 0.2s;
 }
 
-.cards.cards1 ul > li:hover {
-  box-shadow: 0 4px 12px rgb(80 80 120 / 8%);
-}
-
 .cards.cards15 > ul > li {
   display: flex;
   flex-direction: row;
@@ -85,6 +81,21 @@
   border: none;
   position: relative;
   transition: box-shadow 0.15s;
+}
+
+.cards.cards2 > ul > li {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  min-width: 0;
+}
+
+.cards.cards1 ul > li:hover {
+  box-shadow: 0 4px 12px rgb(80 80 120 / 8%);
 }
 
 .cards.cards15 > ul > li:hover {
@@ -113,7 +124,9 @@
   align-items: flex-start;
   justify-content: flex-start;
   position: relative;
+
   /* Optionally: Add an illustration as a background image here */
+
   /* background: url('/path/to/illustration.svg') left top/92% no-repeat, #9dc6f7; */
 }
 
@@ -341,5 +354,135 @@
   .cards.cards1 ul > li > .cards-card-body:first-child {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
+  }
+}
+
+.cards.cards2 {
+  width: 100%;
+  background: #fff;
+}
+
+/* Grid layout for cards */
+.cards.cards2 > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  align-items: stretch;
+}
+
+/* Top image area */
+.cards.cards2 > ul > li > .cards-card-body:first-child {
+  height: 128px;
+  background-color: #f6f8fa;
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Optionally add image backgrounds per card
+.cards.cards2 > ul > li:nth-child(1) > .cards-card-body:first-child { background-image: url('economy.jpg'); }
+.cards.cards2 > ul > li:nth-child(2) > .cards-card-body:first-child { background-image: url('society.jpg'); }
+.cards.cards2 > ul > li:nth-child(3) > .cards-card-body:first-child { background-image: url('environment.jpg'); }
+*/
+
+/* Card body/content area */
+.cards.cards2 > ul > li > .cards-card-body:last-child {
+  padding: 28px 24px 32px;
+  background: #fff;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.cards.cards2 > ul > li > .cards-card-body:last-child p {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0;
+  font-family: var(--body-font-family, inherit);
+  width: 100%;
+}
+
+/* Card title with standalone short divider using background */
+.cards.cards2 > ul > li > .cards-card-body:last-child h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-align: left;
+  font-family: var(--heading-font-family, inherit);
+  position: relative;
+  display: block;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+  background: linear-gradient(
+    to right,
+    #e0e0e0 0,
+    #e0e0e0 32px,
+    transparent 32px,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 32px 2px;
+  background-position: left bottom;
+}
+
+/* Space between divider and paragraph text */
+.cards.cards2 > ul > li > .cards-card-body:last-child h3 + p {
+  margin-top: 0;
+}
+
+/* Responsive adjustments */
+@media (width <= 900px) {
+  .cards.cards2 > ul {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cards.cards2 > ul > li {
+    border-radius: 9px;
+  }
+
+  .cards.cards2 > ul > li > .cards-card-body:first-child {
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    height: 90px;
+  }
+
+  .cards.cards2 > ul > li > .cards-card-body:last-child {
+    padding: 16px 8px 18px;
+  }
+}
+
+@media (width <= 600px) {
+  .cards.cards2 > ul {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .cards.cards2 > ul > li {
+    border-radius: 6px;
+  }
+
+  .cards.cards2 > ul > li > .cards-card-body:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    height: 60px;
+  }
+
+  .cards.cards2 > ul > li > .cards-card-body:last-child {
+    padding: 10px 5px;
   }
 }
