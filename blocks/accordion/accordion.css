@@ -317,18 +317,6 @@
   box-sizing: border-box;
 }
 
-.accordion.accordion17 summary.accordion-item-label > p {
-  margin: 0;
-  color: #000;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 1.25;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-}
-
 .accordion.accordion47 > details + details {
   margin-top: 0;
 }
@@ -522,6 +510,7 @@
   padding: 0;
   display: block;
 }
+
 /* ====== END MERGED SELECTOR FOR .accordion.accordion48 ====== */
 
 @media (width <= 700px) {
