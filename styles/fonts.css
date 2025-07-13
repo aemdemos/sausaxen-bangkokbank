@@ -27,7 +27,7 @@
 }
 
 @font-face {
-  font-family: "BangkokBank-Medium";      
+  font-family: BangkokBank-Medium;      
   src: url('../fonts/bangkokbank-medium-normal-normal.woff') format('woff');
   font-weight: normal;
   font-style: normal;
