@@ -1,5 +1,6 @@
 
 
+
 /* --- BASE CARDS --- */
 
 .cards {
@@ -1019,3 +1020,9 @@
   }
 }
 
+/* ---- MERGED SELECTOR ---- */
+.cards.cards8 {
+  background: transparent;
+  padding: 0;
+  width: 100%;
+}
