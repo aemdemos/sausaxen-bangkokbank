@@ -1,6 +1,3 @@
-
-
-
 /* --- BASE CARDS --- */
 
 .cards {
@@ -38,50 +35,41 @@
   .cards {
     padding: 16px 0;
   }
-
   .cards > ul {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     max-width: 700px;
   }
-
   .cards > ul > li > .cards-card-body:first-child,
   .cards.cards8 > ul > li > .cards-card-body:first-child {
     height: 90px;
     min-height: 90px;
     border-radius: 8px 8px 0 0;
   }
-
   .cards > ul > li > .cards-card-body:last-child,
   .cards.cards8 > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 8px 8px;
     padding: 10px 8px 12px;
   }
-
   .cards.cards1 ul > li > .cards-card-body:last-child {
     padding: 4px 8px;
     border-radius: 0 0 8px 8px;
   }
-
   .cards.cards44 {
     padding: 16px 0;
   }
-
   .cards.cards44 > ul {
     grid-template-columns: 1fr;
     gap: 16px;
     max-width: 430px;
   }
-
   .cards.cards44 > ul > li > .cards-card-body:first-child {
     height: 80px;
     border-radius: 6px 6px 0 0;
   }
-
   .cards.cards44 > ul > li > .cards-card-body:nth-child(2) {
     padding: 10px 8px 6px;
   }
-
   .cards.cards44 > ul > li {
     border-radius: 6px;
   }
@@ -101,7 +89,6 @@
     border-radius: 6px;
     min-height: 0;
   }
-
   .cards > ul > li > .cards-card-body:first-child,
   .cards.cards8 > ul > li > .cards-card-body:first-child {
     border-radius: 6px 6px 0 0;
@@ -109,24 +96,20 @@
     min-height: 90px;
     max-height: 90px;
   }
-
   .cards > ul > li > .cards-card-body:last-child,
   .cards.cards8 > ul > li > .cards-card-body:last-child {
     border-radius: 0 0 6px 6px;
     padding: 8px 6px 10px;
   }
-
   .cards > ul {
     gap: 8px;
     grid-template-columns: 1fr;
     max-width: 96vw;
   }
-
   .cards > ul > li {
     max-width: 100%;
     border-radius: 6px;
   }
-
   .cards.cards1 ul > li > .cards-card-body:last-child {
     border-radius: 0 0 6px 6px;
     padding: 2px 6px;
@@ -573,229 +556,6 @@
   content: "";
 }
 
-/* --- CARDS38 --- */
-
-.cards.cards38 {
-  background: #fff;
-  padding: 40px 0;
-}
-
-.cards.cards38 > ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 32px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-}
-
-.cards.cards38 > ul > li {
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgb(30 34 40 / 8%);
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  max-width: 100%;
-  min-height: 430px;
-  padding: 0;
-  overflow: hidden;
-  transition: box-shadow 0.15s;
-  justify-content: flex-start;
-}
-
-.cards.cards38 > ul > li:hover {
-  box-shadow: 0 8px 32px rgb(24 49 92 / 13%);
-}
-
-.cards.cards38 > ul > li > .cards-card-body:last-child {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background: #fff;
-  border-radius: 0 0 16px 16px;
-  min-height: 160px;
-  box-sizing: border-box;
-  padding: 0 24px 40px;
-  width: 100%;
-  position: relative;
-}
-
-.cards.cards38 > ul > li > .cards-card-body:first-child {
-  height: 200px;
-  min-height: 200px;
-  max-height: 230px;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-color: #f2f2f2;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.cards.cards38 > ul > li:nth-child(1) > .cards-card-body:first-child {
-  background-image: url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80');
-}
-
-.cards.cards38 > ul > li:nth-child(2) > .cards-card-body:first-child {
-  background-image: url('https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80');
-}
-
-.cards.cards38 > ul > li:nth-child(3) > .cards-card-body:first-child {
-  background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80');
-}
-
-.cards.cards38 > ul > li:nth-child(4) > .cards-card-body:first-child {
-  background-image: url('https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80');
-}
-
-.cards.cards38 > ul > li > .cards-card-body:last-child .button {
-  background: #007aff;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 500;
-  box-shadow: 0 1px 2px rgb(0 0 0 / 3%);
-  width: 85%;
-  max-width: 220px;
-  min-width: 140px;
-  padding: 10px 0 12px;
-  margin: 0 auto 10px;
-  text-align: center;
-  transition: background 0.2s;
-  outline: none;
-  cursor: pointer;
-  letter-spacing: 0.01em;
-  display: block;
-  text-transform: none;
-}
-
-.cards.cards38 > ul > li > .cards-card-body:last-child .button:hover,
-.cards.cards38 > ul > li > .cards-card-body:last-child .button:focus {
-  background: #005bb5;
-}
-
-.cards.cards38 > ul > li > .cards-card-body:last-child .button-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding: 0;
-  flex-grow: 0;
-}
-
-/* --- CARDS51 --- */
-
-.cards.cards51 ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  list-style: none;
-  padding: 0;
-  margin: 0 auto;
-  max-width: 1100px;
-}
-
-.cards.cards51 ul li {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 32px 24px 24px;
-  display: flex;
-  flex-direction: column;
-  min-height: 320px;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.cards.cards51 .cards-card-body:first-child {
-  margin-bottom: 20px;
-  width: 100%;
-  height: 96px;
-  border-radius: 4px;
-  background-color: #e5e7eb;
-  background-size: cover;
-  background-position: center;
-}
-
-.cards.cards51 .cards-card-body:last-child {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: flex-start;
-}
-
-/* --- CARDS44 --- */
-
-.cards.cards44 > ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-}
-
-.cards.cards44 > ul > li {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
-  overflow: hidden;
-  margin: 0;
-  min-width: 0;
-  width: 100%;
-  max-width: 100%;
-  transition: box-shadow 0.2s;
-}
-
-.cards.cards44 > ul > li > .cards-card-body:first-child {
-  height: 140px;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #e5e5e5;
-  margin: 0;
-  padding: 0;
-  border-radius: 8px 8px 0 0;
-}
-
-.cards.cards44 > ul > li:nth-child(1) > .cards-card-body:first-child {
-  background-image: url('image1.jpg');
-}
-
-.cards.cards44 > ul > li:nth-child(2) > .cards-card-body:first-child {
-  background-image: url('image2.jpg');
-}
-
-.cards.cards44 > ul > li:nth-child(3) > .cards-card-body:first-child {
-  background-image: url('image3.jpg');
-}
-
-.cards.cards44 > ul > li > .cards-card-body:nth-child(2) {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 18px 20px 14px;
-  flex: 1 1 auto;
-  background: #fff;
-  min-height: 90px;
-  box-sizing: border-box;
-}
-
 /* ---- GENERATED CSS ---- */
 
 .cards.cards7 {
@@ -851,10 +611,6 @@
   border-radius: 0;
   box-shadow: none;
   overflow: hidden;
-}
-
-/* Use flex for the two controls only -- force space-between */
-.cards.cards7 > ul > li {
   gap: 0;
 }
 
@@ -878,7 +634,6 @@
   padding-left: 32px;
 }
 
-/* Hide inner text of the button */
 .cards.cards7 .cards-card-body .button {
   width: 36px;
   height: 36px;
@@ -904,13 +659,11 @@
   overflow: hidden;
 }
 
-/* Hide all possible text in the button */
 .cards.cards7 .cards-card-body .button span,
 .cards.cards7 .cards-card-body .button strong {
   display: none;
 }
 
-/* Insert chevron using background image on the button itself */
 .cards.cards7 .cards-card-body .button {
   background-image: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 13L5.5 8L10.5 3" stroke="%23b8c7d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
   background-repeat: no-repeat;
@@ -918,7 +671,6 @@
   background-size: 16px 16px;
 }
 
-/* Right "Services Highlights" button */
 .cards.cards7 .cards-card-body:last-child {
   justify-content: flex-end;
   flex: 0 0 auto;
@@ -953,10 +705,6 @@
   letter-spacing: 0.2px;
   cursor: pointer;
   white-space: nowrap;
-}
-
-/* Add dropdown chevron using background SVG */
-.cards.cards7 .cards-card-body:last-child p strong {
   background-image: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5L6 8L9 5" stroke="%23b8c7d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
   background-repeat: no-repeat;
   background-position: right 12px center;
@@ -964,18 +712,15 @@
   padding-right: 28px;
 }
 
-/* Hide links after the strong label */
 .cards.cards7 .cards-card-body:last-child p a {
   display: none;
 }
 
-/* Remove default spacing */
 .cards.cards7 .cards-card-body p {
   margin: 0;
   padding: 0;
 }
 
-/* Remove border-radius from anything inside the bar */
 .cards.cards7,
 .cards.cards7 > ul,
 .cards.cards7 > ul > li,
@@ -984,7 +729,6 @@
   border-radius: 0;
 }
 
-/* Responsive: stack vertically on small screens */
 @media (width <= 700px) {
   .cards.cards7,
   .cards.cards7 > ul,
@@ -998,7 +742,6 @@
     justify-content: flex-start;
     padding: 0;
   }
-
   .cards.cards7 .cards-card-body,
   .cards.cards7 .cards-card-body:first-child,
   .cards.cards7 .cards-card-body:last-child {
@@ -1009,7 +752,6 @@
     padding: 0;
     height: auto;
   }
-
   .cards.cards7 .cards-card-body .button-container,
   .cards.cards7 .cards-card-body:last-child p {
     justify-content: center;
@@ -1020,9 +762,16 @@
   }
 }
 
-/* ---- MERGED SELECTOR ---- */
 .cards.cards8 {
   background: transparent;
   padding: 0;
   width: 100%;
+}
+
+.cards.cards3 {
+  background: #fff;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 560px;
+  box-sizing: border-box;
 }
