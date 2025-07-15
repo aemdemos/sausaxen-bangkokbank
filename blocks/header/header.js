@@ -52,6 +52,38 @@ function focusNavSection() {
 }
 
 /**
+ * Sets up scroll detection to toggle nav-scrolled class on second row
+ * @param {Element} navBrand The first row element to observe
+ * @param {Element} navSections The second row element to modify
+ */
+function setupScrollDetection(navBrand, navSections) {
+  // Create intersection observer to detect when first row is visible
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // First row is visible, remove scrolled class
+          navSections.classList.remove('nav-scrolled');
+        } else {
+          // First row is not visible, add scrolled class
+          navSections.classList.add('nav-scrolled');
+        }
+      });
+    },
+    {
+      threshold: 0,
+      rootMargin: '0px',
+    }
+  );
+
+  // Start observing the first row
+  observer.observe(navBrand);
+
+  // Return observer for cleanup if needed
+  return observer;
+}
+
+/**
  * Toggles all nav sections
  * @param {Element} sections The container element
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
@@ -134,7 +166,12 @@ export default async function decorate(block) {
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
+    // Add dropdown arrows to navigation links that should have them
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+      const link = navSection.querySelector('a');
+      if (link && (link.textContent.trim() === 'Personal Banking' || link.textContent.trim() === 'Business Banking')) {
+        navSection.classList.add('nav-drop');
+      }
       if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
       navSection.addEventListener('click', () => {
         if (isDesktop.matches) {
@@ -163,4 +200,32 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // Setup scroll detection for background change
+  if (navBrand && navSections) {
+    let currentObserver = null;
+    
+    function handleResponsiveChange() {
+      // Clean up existing observer
+      if (currentObserver) {
+        currentObserver.disconnect();
+        currentObserver = null;
+      }
+      
+      if (isDesktop.matches) {
+        // Desktop: setup scroll detection
+        navSections.classList.remove('nav-scrolled');
+        currentObserver = setupScrollDetection(navBrand, navSections);
+      } else {
+        // Mobile: always show dark background since first row is hidden
+        navSections.classList.add('nav-scrolled');
+      }
+    }
+    
+    // Initial setup
+    handleResponsiveChange();
+    
+    // Handle responsive changes
+    isDesktop.addEventListener('change', handleResponsiveChange);
+  }
 }
