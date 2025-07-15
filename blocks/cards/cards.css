@@ -132,8 +132,7 @@
 
 /* --- CARD ITEM --- */
 
-.cards > ul > li,
-.cards.cards1 ul > li {
+.cards > ul > li {
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -153,7 +152,22 @@
 }
 
 .cards.cards1 ul > li {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
   box-shadow: 0 2px 12px rgb(24 49 92 / 12%);
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0 0 32px;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 320px;
 }
 
 .cards > ul > li:hover {
@@ -174,9 +188,23 @@
   object-fit: cover;
 }
 
-/* --- CARD BODY (FIRST & LAST) --- */
+.cards > ul > li > .cards-card-body:first-child {
+  width: 100%;
+  min-width: 0;
+  height: 140px;
+  min-height: 140px;
+  max-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px 8px 0 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #002060;
+}
 
-.cards > ul > li > .cards-card-body:first-child,
 .cards.cards8 > ul > li > .cards-card-body:first-child {
   width: 100%;
   min-width: 0;
@@ -191,18 +219,10 @@
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
-}
-
-.cards > ul > li > .cards-card-body:first-child {
-  background: #002060;
-}
-
-.cards.cards8 > ul > li > .cards-card-body:first-child {
   background: #f2f2f2;
 }
 
-.cards > ul > li > .cards-card-body:last-child,
-.cards.cards8 > ul > li > .cards-card-body:last-child {
+.cards > ul > li > .cards-card-body:last-child {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -218,8 +238,18 @@
 }
 
 .cards.cards8 > ul > li > .cards-card-body:last-child {
-  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+  flex: 1 1 auto;
+  width: 100%;
+  gap: 0;
+  justify-content: flex-end;
   padding: 16px 16px 18px;
+  min-height: 80px;
+  box-sizing: border-box;
   margin: 0;
 }
 
@@ -331,8 +361,7 @@
   background: #005bb5;
 }
 
-.cards > ul > li > .cards-card-body:last-child .button,
-.cards.cards8 > ul > li > .cards-card-body:last-child > .button-container .button {
+.cards > ul > li > .cards-card-body:last-child .button {
   width: 100%;
   margin: 0;
   border-radius: 4px;
@@ -425,13 +454,6 @@
 
 /* --- CARD HEADINGS --- */
 
-.cards.cards51 .cards-card-body h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #000;
-  margin: 0 0 12px;
-}
-
 .cards.cards38 ul > li h3 {
   font-size: 1.07rem;
   color: #181818;
@@ -462,6 +484,13 @@
   border: none;
   display: block;
   position: relative;
+}
+
+.cards.cards51 .cards-card-body h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 12px;
 }
 
 .cards.cards8 > ul > li > .cards-card-body:last-child > h3 {
@@ -777,167 +806,175 @@
 
 /* ---- GENERATED CSS ---- */
 
-.cards.cards13 {
-  background: #f7f7f7;
-  padding: 40px 0;
+.cards.cards2 {
+  background-color: #002850;
+  width: 100vw;
+  height: 64px;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid rgb(196 210 226 / 12%);
 }
 
-.cards.cards13 ul {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+.cards.cards2 > ul {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  height: 100%;
+}
+
+.cards.cards2 > ul > li {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.cards.cards2 .cards-card-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 32px;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Left: Circular 'Back' Button */
+.cards.cards2 .cards-card-body > p {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Only show the first character of the BACK link, hide the rest */
+.cards.cards2 .cards-card-body > p > a[title="BACK"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgb(196 210 226 / 40%);
+  background: transparent;
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 16px;
+  margin-right: 0;
+  box-shadow: none;
+  overflow: hidden;
+  line-height: 1;
+  letter-spacing: normal;
+  position: relative;
+  white-space: nowrap;
+}
+
+.cards.cards2 .cards-card-body > p > a[title="BACK"]::first-letter {
+  color: #fff;
+}
+
+.cards.cards2 .cards-card-body > p > a[title="BACK"]::after {
+  display: none;
+}
+
+.cards.cards2 .cards-card-body > p > a[title="BACK"] strong,
+.cards.cards2 .cards-card-body > p > a[title="BACK"] span {
+  display: none;
+}
+
+/* Right: Rectangular Action Button */
+.cards.cards2 .cards-card-body > ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
   padding: 0;
   list-style: none;
-  justify-content: start;
-  place-items: stretch stretch;
-  width: 100%;
+  height: 100%;
+  background: none;
+  gap: 0;
 }
 
-@media (width <= 1050px) {
-  .cards.cards13 ul {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 700px;
-  }
+.cards.cards2 .cards-card-body > ul > li:not(:first-child) {
+  display: none;
+}
+
+.cards.cards2 .cards-card-body > ul > li:first-child > a {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(196 210 226 / 40%);
+  border-radius: 6px;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 24px;
+  height: 40px;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  justify-content: center;
+  min-width: 140px;
+  box-sizing: border-box;
+  position: relative;
+  margin-right: 16px;
+}
+
+/* Placeholder for dropdown arrow icon (add a span/svg in HTML for a real icon if possible) */
+.cards.cards2 .cards-card-body > ul > li:first-child > a::after {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* Remove any following strong heading */
+.cards.cards2 .cards-card-body > p > strong {
+  display: none;
 }
 
 @media (width <= 700px) {
-  .cards.cards13 ul {
-    grid-template-columns: 1fr;
-    max-width: 96vw;
-    gap: 16px;
+  .cards.cards2 .cards-card-body {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding: 8px 5vw;
+    height: auto;
+    gap: 8px;
   }
-}
 
-.cards.cards13 ul li {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 430px;
-  transition: box-shadow 0.2s;
-  border: none;
-  padding: 0;
-  width: 100%;
-  align-items: stretch;
-  justify-content: flex-start;
-  margin: 0;
-}
+  .cards.cards2 .cards-card-body > ul {
+    justify-content: flex-end;
+  }
 
-.cards.cards13 ul li:hover {
-  box-shadow: 0 8px 24px rgb(0 0 0 / 13%);
-}
-
-.cards.cards13 .cards-card-image {
-  width: 100%;
-  height: 160px;
-  overflow: hidden;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  margin: 0;
-  padding: 0;
-  background: #f7f7f7;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-.cards.cards13 .cards-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  margin: 0;
-  padding: 0;
-}
-
-.cards.cards13 .cards-card-body {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  background: #fff;
-  margin: 0;
-  justify-content: flex-start;
-  align-items: flex-start;
-  box-sizing: border-box;
-  min-height: 220px;
-}
-
-.cards.cards13 .cards-card-body h3 {
-  font-size: 20px;
-  font-weight: 700;
-  color: #222;
-  margin: 0 0 15px;
-  line-height: 1.3;
-  position: relative;
-  border-bottom: 2px solid #e0e0e0;
-  width: 100%;
-  padding-bottom: 9px;
-  margin-bottom: 18px;
-}
-
-.cards.cards13 .cards-card-body p {
-  color: #757575;
-  font-size: 1rem;
-  margin: 0 0 12px;
-  line-height: 1.6;
-}
-
-.cards.cards13 .cards-card-body p:last-of-type:not(.button-container) {
-  margin-bottom: 0;
-}
-
-.cards.cards13 .cards-card-body .button-container {
-  margin-top: auto;
-  margin-bottom: 0;
-  width: 100%;
-  padding: 0;
-  display: block;
-}
-
-.cards.cards13 .cards-card-body .button-container .button {
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: 14px 0;
-  border-radius: 6px;
-  background: #06f;
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  margin: 0;
-  border: none;
-  box-shadow: none;
-  transition: background 0.2s;
-  letter-spacing: 0.01em;
-}
-
-.cards.cards13 .cards-card-body .button-container {
-  margin-top: auto;
-}
-
-.cards.cards13 .cards-card-body .button-container .button:hover,
-.cards.cards13 .cards-card-body .button-container .button:focus {
-  background: #0051cc;
-}
-
-.cards.cards13 .cards-card-image + .cards-card-body {
-  margin-top: 0;
-  padding-top: 0;
-}
-
-.cards.cards13 ul {
-  gap: 24px;
-}
-
-.cards.cards13 {
-  background: #f7f7f7;
-  padding: 40px 0;
+  .cards.cards2 > ul > li {
+    height: auto;
+    min-height: 56px;
+  }
 }
