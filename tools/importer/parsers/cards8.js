@@ -1,45 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as specified in the requirements and markdown example
-  const cells = [['Cards (cards8)']];
+  // Table header exactly as specified
+  const headerRow = ['Cards (cards8)'];
+  const cells = [headerRow];
 
-  // Extract all card columns
-  const cardCols = element.querySelectorAll('.row > .col-md-4');
+  // Get all cards (each .col-md-4 under .row)
+  const cardCols = element.querySelectorAll(':scope .row > .col-md-4');
 
   cardCols.forEach(col => {
-    // Image: .thumb-info .visual-img img
-    const img = col.querySelector('.thumb-info .visual-img img');
-    // Title: .caption h3
-    const title = col.querySelector('.thumb-info .caption h3');
-    // Description: .caption p (can be empty)
-    const desc = col.querySelector('.thumb-info .caption p');
-    // CTA: .button-group a (contains <p> inside)
-    const cta = col.querySelector('.thumb-info .button-group a');
-
-    // First cell: image (or blank string if missing)
-    const cell1 = img || '';
-
-    // Second cell: group text content
-    const cell2Content = [];
-    if (title) cell2Content.push(title);
-    // If description has text, include it; if not, include a blank <p> for layout (only if a title is present)
-    if (desc) {
-      if (desc.textContent.trim()) {
-        cell2Content.push(desc);
-      } else if (title) {
-        // For visual/structural parity
-        const emptyP = document.createElement('p');
-        cell2Content.push(emptyP);
-      }
+    // First cell: The card image (img element, not background)
+    let imgEl = null;
+    const img = col.querySelector('.thumb img');
+    if (img) {
+      imgEl = img;
     }
-    if (cta) cell2Content.push(cta);
 
-    // Always make sure there's at least one element in the text cell
-    if (cell2Content.length === 0) cell2Content.push('');
-
-    cells.push([cell1, cell2Content]);
+    // Second cell: text content (title, desc, CTA)
+    const textContent = [];
+    const caption = col.querySelector('.caption');
+    if (caption) {
+      const title = caption.querySelector('h3');
+      if (title) textContent.push(title);
+      const desc = caption.querySelector('.desc');
+      if (desc) textContent.push(desc);
+    }
+    // Call-to-action button
+    const buttonGroup = col.querySelector('.button-group');
+    if (buttonGroup) {
+      const btn = buttonGroup.querySelector('a');
+      if (btn) textContent.push(btn);
+    }
+    cells.push([
+      imgEl,
+      textContent
+    ]);
   });
 
+  // Create and replace with table
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
