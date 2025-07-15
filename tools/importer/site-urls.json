@@ -5,15 +5,13 @@
       "url": "https://www.bangkokbank.com/en/Business-Banking/Investment-Banking/Capital-Markets",
       "source": "MANUAL",
       "targetPath": "/en/business-banking/investment-banking/capital-markets",
-      "id": "32fddca1d1169fc42ab0d4bdc9c8e667cea57d32",
-      "status": "EXCLUDED"
+      "id": "32fddca1d1169fc42ab0d4bdc9c8e667cea57d32"
     },
     {
       "url": "https://www.bangkokbank.com/en/Business-Banking/My-International-Trade/Import",
       "source": "MANUAL",
       "targetPath": "/en/business-banking/my-international-trade/import",
-      "id": "34b5392b34c5c8be885a2687ea5a51202fbbc74a",
-      "status": "EXCLUDED"
+      "id": "34b5392b34c5c8be885a2687ea5a51202fbbc74a"
     }
   ],
   "crawlOptions": {
