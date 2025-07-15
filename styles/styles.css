@@ -28,7 +28,7 @@
   --heading-font-size-m: 16px;
   --heading-font-size-s: 16px;
   --heading-font-size-xs: 16px;
-  --nav-height: 64px;
+  --nav-height: 121px;
   --header-height: var(--nav-height);
 }
 
@@ -45,7 +45,7 @@
 }
 
 @font-face {
-  font-family:"Muli-Regular Fallback";
+  font-family:"BangkokBank-Regular Fallback";
   font-style:normal;
   font-weight:normal;
   src:local("Arial");
@@ -56,7 +56,7 @@
 }
 
 @font-face {
-  font-family:"BangkokBank-Regular Fallback";
+  font-family:"Muli-Regular Fallback";
   font-style:normal;
   font-weight:normal;
   src:local("Arial");
@@ -111,17 +111,6 @@
 }
 
 @font-face {
-  font-family:"BangkokBank-Light Fallback";
-  font-style:normal;
-  font-weight:normal;
-  src:local("Arial");
-  ascent-override:100.48%;
-  descent-override:30.14%;
-  line-gap-override:0.00%;
-  size-adjust:99.53%;
-}
-
-@font-face {
   font-family:"BangkokBank_Text-Medium Fallback";
   font-style:normal;
   font-weight:normal;
@@ -130,6 +119,17 @@
   descent-override:38.28%;
   line-gap-override:0.00%;
   size-adjust:104.48%;
+}
+
+@font-face {
+  font-family:"BangkokBank-Light Fallback";
+  font-style:normal;
+  font-weight:normal;
+  src:local("Arial");
+  ascent-override:100.48%;
+  descent-override:30.14%;
+  line-gap-override:0.00%;
+  size-adjust:99.53%;
 }
 
 @media (width>=900px) {
@@ -143,6 +143,7 @@
     --heading-font-size-m: 16px;
     --heading-font-size-s: 16px;
     --heading-font-size-xs: 16px;
+    --nav-height: 121px;
   }
 }
 
@@ -328,4 +329,20 @@ main .section.light, main .section.highlight {
 
 .section.hidden {
   display: none;
+}
+
+.section.section-1 {
+  background: rgba(0, 0, 0, 0) url("https://www.bangkokbank.com/-/media/feature/page-content/bbl-corporate/banners/photo-large-54/capitalmarketlandingpage_smallbanner.jpg") no-repeat scroll 22% 39% / cover padding-box border-box;
+}
+
+.section.section-2 {
+  background: rgb(0, 40, 80) none repeat scroll 0% 0% / auto padding-box border-box;
+}
+
+.section.section-3 {
+  background: rgba(0, 0, 0, 0) url("https://www.bangkokbank.com/-/media/feature/page-content/bbl-corporate/tools-and-assistant/callcenter_1280x450_v2.jpg") no-repeat scroll 50% 50% / cover padding-box border-box;
+}
+
+.section.section-4 {
+  background: rgba(0, 0, 0, 0) url("https://www.bangkokbank.com/-/media/feature/page-content/bbl-corporate/productservice/transaction-banking/tf/import/import-1280x450.jpg") no-repeat scroll 20% 38% / cover padding-box border-box;
 }

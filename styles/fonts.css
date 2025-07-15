@@ -9,8 +9,8 @@
 }
 
 @font-face {
-  font-family: Muli-Regular;      
-  src: url('../fonts/muli-regular-normal-normal.woff') format('woff');
+  font-family: BangkokBank-Regular;      
+  src: url('../fonts/bangkokbank-regular-normal-normal.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -18,8 +18,8 @@
 }
 
 @font-face {
-  font-family: BangkokBank-Regular;      
-  src: url('../fonts/bangkokbank-regular-normal-normal.woff') format('woff');
+  font-family: Muli-Regular;      
+  src: url('../fonts/muli-regular-normal-normal.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -63,8 +63,8 @@
 }
 
 @font-face {
-  font-family: BangkokBank-Light;      
-  src: url('../fonts/bangkokbank-light-normal-normal.woff') format('woff');
+  font-family: BangkokBank_Text-Medium;      
+  src: url('../fonts/bangkokbank-text-medium-normal-normal.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -72,8 +72,8 @@
 }
 
 @font-face {
-  font-family: "BangkokBank_Text-Medium";      
-  src: url('../fonts/bangkokbank-text-medium-normal-normal.woff') format('woff');
+  font-family: BangkokBank-Light;      
+  src: url('../fonts/bangkokbank-light-normal-normal.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
