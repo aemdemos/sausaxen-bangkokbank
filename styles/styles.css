@@ -28,7 +28,7 @@
   --heading-font-size-m: 16px;
   --heading-font-size-s: 16px;
   --heading-font-size-xs: 16px;
-  --nav-height: 121px;
+  --nav-height: 40px;
   --header-height: var(--nav-height);
 }
 
@@ -143,7 +143,7 @@
     --heading-font-size-m: 16px;
     --heading-font-size-s: 16px;
     --heading-font-size-xs: 16px;
-    --nav-height: 121px;
+    --nav-height: 40px;
   }
 }
 
@@ -224,7 +224,7 @@ pre {
 }
 
 main>div {
-  margin: 40px 16px;
+  margin: 0 16px var(--nav-height) 16px;
 }
 
 input, textarea, select, button {
@@ -301,7 +301,7 @@ main img {
 
 /* sections */
 main>.section {
-  margin: 40px 0;
+  margin: 0 0 var(--nav-height) 0;
 }
 
 main>.section>div {
