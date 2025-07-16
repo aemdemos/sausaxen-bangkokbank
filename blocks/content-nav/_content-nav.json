@@ -1,0 +1,80 @@
+{
+  "definitions": [
+    {
+      "title": "Content Navigation",
+      "id": "content-nav",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Content Navigation",
+              "filter": "content-nav",
+              "model": "content-nav"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Item",
+      "id": "nav-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Navigation Item",
+              "model": "nav-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "content-nav",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "classes",
+          "label": "Style"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "backText",
+          "label": "Back Button Text",
+          "value": "BACK"
+        }
+      ]
+    },
+    {
+      "id": "nav-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "text",
+          "label": "Navigation Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "link",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "content-nav",
+      "components": [
+        "nav-item"
+      ]
+    }
+  ]
+} 
