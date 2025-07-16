@@ -15,13 +15,23 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "accordion",
+      "tabs",
+      "embed",
+      "quote"
     ]
   },
   {
     "id": "accordion",
     "components": [
       "accordion-item"
+    ]
+  },
+  {
+    "id": "bottom-nav",
+    "components": [
+      "nav-item"
     ]
   },
   {
@@ -49,6 +59,18 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "content-nav",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "overview",
+    "components": [
+      "overview"
     ]
   },
   {
