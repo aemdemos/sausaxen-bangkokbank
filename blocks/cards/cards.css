@@ -1,4 +1,4 @@
-/* --- BASE CARDS --- */
+--- BASE CARDS ---
 
 .cards {
   background: #f7f7f7;
@@ -187,6 +187,38 @@
   line-height: 1.12;
   letter-spacing: 0.005em;
   transition: background 0.18s;
+}
+
+.cards.cards8 ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.cards.cards3 ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.cards.cards8 > ul > li {
+  max-width: 270px;
+  width: 100%;
+}
+
+.cards.cards3 > ul > li {
+  max-width: 270px;
+  width: 100%;
 }
 
 .cards.cards8 > ul > li > .cards-card-body:last-child > .button-container .button {
@@ -452,7 +484,7 @@
 }
 
 .cards.cards7 {
-  background: #002a4a;
+  background: rgb(0, 40, 80);
   border-radius: 0;
   box-shadow: none;
   border: none;
@@ -662,8 +694,8 @@
 }
 
 .cards.cards9 .cards-card-image img {
-  max-width: 48px;
-  max-height: 48px;
+  max-width: 64px;
+  max-height: 64px;
   display: block;
 }
 
@@ -678,9 +710,9 @@
 
 .cards.cards9 .cards-card-body h3 {
   font-family: var(--heading-font-family), Arial, sans-serif;
-  font-size: 17px;
+  font-size: 22px;
   font-weight: 600;
-  color: #222;
+  color: #000;
   margin: 0 0 8px;
   line-height: 1.2;
   border-bottom: 2px solid #e5e5e5;
@@ -738,6 +770,10 @@
 .cards.cards9 .cards-card-body .button:focus {
   color: #003fa6;
   text-decoration: underline;
+}
+
+.cards.cards9 .cards-card-dialog {
+  display: none;
 }
 
 @media (width <= 1200px) {
