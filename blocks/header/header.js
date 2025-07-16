@@ -73,7 +73,7 @@ function setupScrollDetection(navBrand, navSections) {
     {
       threshold: 0,
       rootMargin: '0px',
-    }
+    },
   );
 
   // Start observing the first row

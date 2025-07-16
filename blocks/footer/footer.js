@@ -15,7 +15,7 @@ export default async function decorate(block) {
   block.textContent = '';
   const footer = document.createElement('div');
   footer.className = 'footer-content';
-  
+
   while (fragment.firstElementChild) {
     footer.append(fragment.firstElementChild);
   }
@@ -26,32 +26,32 @@ export default async function decorate(block) {
     if (index < sections.length - 1) {
       // Navigation sections
       section.classList.add('footer-nav-section');
-      
+
       // Find and style the main category heading
       const mainLi = section.querySelector('ul > li');
       if (mainLi) {
         mainLi.classList.add('footer-category');
-        
+
         // Extract the category name and create a proper heading
         const categoryText = mainLi.childNodes[0]?.textContent?.trim();
         if (categoryText) {
           const heading = document.createElement('h3');
           heading.textContent = categoryText;
           heading.className = 'footer-category-title';
-          
+
           // Remove the text node and replace with heading
           mainLi.childNodes[0].remove();
           mainLi.insertBefore(heading, mainLi.firstChild);
         }
-        
+
         // Style the sub-navigation
         const subUl = mainLi.querySelector('ul');
         if (subUl) {
           subUl.classList.add('footer-nav-list');
-          
+
           // Add classes to navigation items
           const navItems = subUl.querySelectorAll('li');
-          navItems.forEach(item => {
+          navItems.forEach((item) => {
             item.classList.add('footer-nav-item');
             const link = item.querySelector('a');
             if (link) {
@@ -63,7 +63,7 @@ export default async function decorate(block) {
     } else {
       // Copyright section
       section.classList.add('footer-copyright-section');
-      
+
       // Style copyright content
       const paragraphs = section.querySelectorAll('p');
       paragraphs.forEach((p, pIndex) => {
@@ -88,7 +88,7 @@ export default async function decorate(block) {
 
   // Initial setup
   handleResize();
-  
+
   // Listen for resize events
   window.addEventListener('resize', handleResize);
 
